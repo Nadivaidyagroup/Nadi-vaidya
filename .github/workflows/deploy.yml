@@ -4,19 +4,20 @@
 # Website: https://nadivaidya.in
 # Hosting: cPanel
 #
-# Required GitHub Repository Secrets:
+# REQUIRED GITHUB REPOSITORY SECRETS:
 # FTP_SERVER
 # FTP_USERNAME
 # FTP_PASSWORD
 # DB_PASSWORD
 #
-# FTP_SERVER example: ftp.joinus.co.in
+# FTP_SERVER: ftp.joinus.co.in
 # FTP_USERNAME: nadivaidya@nadivaidya.in
-# FTP_PORT: 21
+# FTP PORT: 21
+# FTP PROTOCOL: Explicit FTPS
 #
 # DB_PASSWORD is optional.
-# If missing, existing server-side API files are preserved
-# because the API folder is not included in deployment.
+# If missing, the existing remote API folder is excluded
+# from deployment.
 #
 # Deployment logs are saved in deploy-logs branch.
 # ============================================================
@@ -81,7 +82,7 @@ jobs:
           } | tee /tmp/deploylog/log.txt
 
       # --------------------------------------------------------
-      # 4. CHECK REQUIRED SECRETS
+      # 4. VALIDATE GITHUB SECRETS
       # --------------------------------------------------------
 
       - name: Validate GitHub secrets
@@ -127,7 +128,7 @@ jobs:
           npm ci --no-audit --no-fund 2>&1 | tee -a /tmp/deploylog/log.txt
 
       # --------------------------------------------------------
-      # 6. BUILD WEBSITE
+      # 6. BUILD PRODUCTION WEBSITE
       # --------------------------------------------------------
 
       - name: Build production website
@@ -183,25 +184,60 @@ jobs:
 
             chmod 600 dist/api/config/db.secret.php
 
-            echo "SUCCESS: PHP API prepared for deployment" | tee -a /tmp/deploylog/log.txt
+            echo "SUCCESS: PHP API prepared" | tee -a /tmp/deploylog/log.txt
 
           else
 
-            echo "INFO: DB_PASSWORD missing; existing server API will be preserved" | tee -a /tmp/deploylog/log.txt
+            echo "INFO: DB_PASSWORD missing; API deployment skipped" | tee -a /tmp/deploylog/log.txt
 
           fi
 
       # --------------------------------------------------------
-      # 8. VERIFY FTP DIRECTORY
+      # 8. FTP DNS AND PORT DIAGNOSTICS
+      # --------------------------------------------------------
+
+      - name: Diagnose FTP DNS and connectivity
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+
+        run: |
+          set -e
+
+          echo "Checking FTP hostname..." | tee -a /tmp/deploylog/log.txt
+
+          echo "FTP hostname: $FTP_SERVER"
+
+          if ! getent ahosts "$FTP_SERVER"; then
+            echo "ERROR: FTP hostname cannot be resolved" | tee -a /tmp/deploylog/log.txt
+            exit 1
+          fi
+
+          echo "SUCCESS: FTP DNS resolved" | tee -a /tmp/deploylog/log.txt
+
+          echo "Checking FTP port 21..." | tee -a /tmp/deploylog/log.txt
+
+          if ! nc -vz -w 15 "$FTP_SERVER" 21 2>&1 | tee -a /tmp/deploylog/log.txt; then
+            echo "ERROR: FTP port 21 is unreachable" | tee -a /tmp/deploylog/log.txt
+            exit 1
+          fi
+
+          echo "SUCCESS: FTP port 21 is reachable" | tee -a /tmp/deploylog/log.txt
+
+      # --------------------------------------------------------
+      # 9. VERIFY DEPLOYMENT DIRECTORY
       # --------------------------------------------------------
 
       - name: Verify deployment directory
         run: |
-          echo "Local deployment directory: ./dist/" | tee -a /tmp/deploylog/log.txt
-          echo "Remote deployment directory: ./" | tee -a /tmp/deploylog/log.txt
+          echo "Local directory: ./dist/" | tee -a /tmp/deploylog/log.txt
+          echo "Remote directory: ./" | tee -a /tmp/deploylog/log.txt
+
+          if [ ! -f "dist/index.html" ]; then
+            echo "WARNING: dist/index.html not found"
+          fi
 
       # --------------------------------------------------------
-      # 9. DEPLOY WEBSITE THROUGH EXPLICIT FTPS
+      # 10. UPLOAD WEBSITE USING EXPLICIT FTPS
       # --------------------------------------------------------
 
       - name: Upload website to cPanel hosting
@@ -230,7 +266,7 @@ jobs:
             **/error_log
 
       # --------------------------------------------------------
-      # 10. SAVE DEPLOYMENT LOG
+      # 11. SAVE DEPLOYMENT LOGS
       # --------------------------------------------------------
 
       - name: Save deployment log
@@ -248,6 +284,7 @@ jobs:
           echo "Job status: ${{ job.status }}" >> /tmp/deploylog/log.txt
           echo "FTP status: ${{ steps.ftp.outcome }}" >> /tmp/deploylog/log.txt
           echo "Run ID: $GITHUB_RUN_ID" >> /tmp/deploylog/log.txt
+          echo "Commit: $GITHUB_SHA" >> /tmp/deploylog/log.txt
           echo "======================================" >> /tmp/deploylog/log.txt
 
           tail -c 60000 /tmp/deploylog/log.txt > /tmp/deploylog/last.txt
