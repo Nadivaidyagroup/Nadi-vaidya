@@ -2,29 +2,6 @@
 # NADI VAIDYA - AUTOMATIC DEPLOYMENT
 # Website: https://nadivaidya.in
 # Hosting: cPanel
-#
-# REQUIRED GITHUB REPOSITORY SECRETS:
-# FTP_SERVER
-# FTP_USERNAME
-# FTP_PASSWORD
-#
-# OPTIONAL GITHUB REPOSITORY SECRET:
-# DB_PASSWORD
-#
-# FTP_SERVER: ftp.joinus.co.in
-# FTP_USERNAME: nadivaidya@nadivaidya.in
-# FTP PORT: 21
-# FTP PROTOCOL: Explicit FTPS
-#
-# DB_PASSWORD configured:
-#   - Frontend and PHP API are deployed.
-#   - db.secret.php is generated during deployment.
-#
-# DB_PASSWORD missing:
-#   - Frontend only is deployed.
-#   - Remote API files are excluded from frontend sync.
-#
-# Deployment logs are saved in deploy-logs branch.
 # ============================================================
 
 name: Deploy website
@@ -117,10 +94,12 @@ jobs:
           check_secret "FTP_USERNAME" "$FTP_USERNAME"
           check_secret "FTP_PASSWORD" "$FTP_PASSWORD"
 
-          if [ "$FTP_SERVER" != "ftp.joinus.co.in" ]; then
-            echo "ERROR: FTP_SERVER must be ftp.joinus.co.in" | tee -a /tmp/deploylog/log.txt
+          if [[ ! "$FTP_SERVER" =~ ^[A-Za-z0-9.-]+$ ]]; then
+            echo "ERROR: FTP_SERVER must contain only a valid hostname." | tee -a /tmp/deploylog/log.txt
             exit 1
           fi
+
+          echo "FTP hostname format is valid." | tee -a /tmp/deploylog/log.txt
 
           if [ -n "$DB_PASSWORD" ]; then
             echo "deploy_api=true" >> "$GITHUB_OUTPUT"
@@ -231,6 +210,10 @@ jobs:
             sudo apt-get install -y dnsutils netcat-openbsd
           fi
 
+          if ! command -v openssl >/dev/null 2>&1; then
+            sudo apt-get install -y openssl
+          fi
+
       # --------------------------------------------------------
       # 9. FTP DNS AND PORT DIAGNOSTICS
       # --------------------------------------------------------
@@ -243,21 +226,15 @@ jobs:
           set -euo pipefail
 
           echo "Checking FTP configuration..." | tee -a /tmp/deploylog/log.txt
+          echo "FTP hostname: $FTP_SERVER" | tee -a /tmp/deploylog/log.txt
 
-          if [ "$FTP_SERVER" != "ftp.joinus.co.in" ]; then
-            echo "ERROR: FTP_SERVER does not match expected hostname." | tee -a /tmp/deploylog/log.txt
-            exit 1
-          fi
-
-          echo "FTP hostname format is correct." | tee -a /tmp/deploylog/log.txt
-
-          echo "Checking DNS using configured hostname..." | tee -a /tmp/deploylog/log.txt
+          echo "Checking DNS resolution..." | tee -a /tmp/deploylog/log.txt
 
           if ! getent ahosts "$FTP_SERVER" 2>&1 | tee -a /tmp/deploylog/log.txt; then
             echo "ERROR: GitHub runner cannot resolve FTP hostname." | tee -a /tmp/deploylog/log.txt
 
             echo "Checking Google DNS..." | tee -a /tmp/deploylog/log.txt
-            nslookup ftp.joinus.co.in 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt || true
+            nslookup "$FTP_SERVER" 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt || true
 
             exit 1
           fi
@@ -265,7 +242,7 @@ jobs:
           echo "SUCCESS: FTP hostname resolved." | tee -a /tmp/deploylog/log.txt
 
           echo "Checking DNS using Google DNS..." | tee -a /tmp/deploylog/log.txt
-          nslookup ftp.joinus.co.in 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt
+          nslookup "$FTP_SERVER" 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt
 
           echo "Checking FTP port 21..." | tee -a /tmp/deploylog/log.txt
 
@@ -275,6 +252,22 @@ jobs:
           fi
 
           echo "SUCCESS: FTP port 21 is reachable." | tee -a /tmp/deploylog/log.txt
+
+          echo "Checking explicit FTPS certificate..." | tee -a /tmp/deploylog/log.txt
+
+          if ! timeout 25 openssl s_client \
+            -starttls ftp \
+            -connect "${FTP_SERVER}:21" \
+            -servername "$FTP_SERVER" \
+            -verify_hostname "$FTP_SERVER" \
+            -verify_return_error \
+            </dev/null 2>&1 | tee -a /tmp/deploylog/log.txt; then
+
+            echo "ERROR: FTPS certificate verification failed." | tee -a /tmp/deploylog/log.txt
+            exit 1
+          fi
+
+          echo "SUCCESS: FTPS certificate verification completed." | tee -a /tmp/deploylog/log.txt
 
       # --------------------------------------------------------
       # 10. VERIFY DEPLOYMENT DIRECTORY
@@ -301,7 +294,6 @@ jobs:
       - name: Upload website and PHP API to cPanel
         id: ftp_full
         if: steps.validate.outputs.deploy_api == 'true'
-
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
 
         with:
@@ -333,7 +325,6 @@ jobs:
       - name: Upload frontend only to cPanel
         id: ftp_frontend
         if: steps.validate.outputs.deploy_api == 'false'
-
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
 
         with:
@@ -368,7 +359,6 @@ jobs:
 
       - name: Save deployment log
         if: always()
-
         env:
           GH_TOKEN: ${{ github.token }}
 
