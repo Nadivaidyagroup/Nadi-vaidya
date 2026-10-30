@@ -68,9 +68,12 @@ export function ClinicCard({ clinic, compact = false }) {
         </a>
         <a
           className="clinic-btn clinic-btn-map"
-          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-            clinic.mapQuery
-          )}`}
+          href={
+            clinic.mapUrl ||
+            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              clinic.mapQuery
+            )}`
+          }
           target="_blank"
           rel="noopener noreferrer"
         >

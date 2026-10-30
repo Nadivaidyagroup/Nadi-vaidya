@@ -128,7 +128,7 @@ export const clinicSchema = (clinic) => ({
       closes: OPD_TIME.closes,
     },
   ],
-  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(clinic.mapQuery)}`,
+  hasMap: clinic.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(clinic.mapQuery)}`,
   parentOrganization: {
     "@type": "Organization",
     name: "Nadi Vaidya Group",

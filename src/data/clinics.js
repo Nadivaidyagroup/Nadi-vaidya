@@ -42,6 +42,8 @@ export const clinics = [
     opdDays: "1st – 10th of every month",
     opdDaysHi: "हर महीने 1 से 10 तारीख़",
     mapQuery: "4, RK Puram, Gali No 10, Kunjpura Road, Karnal, Haryana 132001",
+    // क्लीनिक का असली Google Maps pin (मालिक ने भेजा)
+    mapUrl: "https://maps.app.goo.gl/z2YwcKdLS9Q5JnwS9",
     logo: ayurVaidyaLogo,
   },
   {
