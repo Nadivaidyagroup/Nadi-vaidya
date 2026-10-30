@@ -1,94 +1,275 @@
-# हर बार main branch में बदलाव आते ही वेबसाइट अपने-आप build होकर
-# cPanel hosting (nadivaidya.in) पर चढ़ जाती है।
+
+# ============================================================
+# NADI VAIDYA - AUTOMATIC DEPLOYMENT
+# Website: https://nadivaidya.in
+# Hosting: cPanel
 #
-# GitHub → Settings → Secrets and variables → Actions में ये secrets चाहिए:
-#   FTP_SERVER    — जैसे ftp.nadivaidya.in
-#   FTP_USERNAME  — cPanel में बनाया FTP account (folder: nadivaidya.in)
-#   FTP_PASSWORD  — उसी FTP account का password
-#   DB_PASSWORD   — MySQL user "nadivaidyanewwebsite" का नया password
-# DB_PASSWORD न हो तो api फ़ोल्डर नहीं बदला जाता (server वाला चलता रहता है)।
-# हर run का छोटा log "deploy-logs" branch में सेव होता है (बिना passwords के)।
+# Required GitHub Repository Secrets:
+# FTP_SERVER
+# FTP_USERNAME
+# FTP_PASSWORD
+# DB_PASSWORD
+#
+# FTP_SERVER example: ftp.joinus.co.in
+# FTP_USERNAME: nadivaidya@nadivaidya.in
+# FTP_PORT: 21
+#
+# DB_PASSWORD is optional.
+# If missing, existing server-side API files are preserved
+# because the API folder is not included in deployment.
+#
+# Deployment logs are saved in deploy-logs branch.
+# ============================================================
 
 name: Deploy website
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: deploy
+  group: nadivaidya-production-deploy
   cancel-in-progress: false
 
 jobs:
   deploy:
+    name: Build and Deploy Website
     runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+    steps:
+
+      # --------------------------------------------------------
+      # 1. CHECKOUT REPOSITORY
+      # --------------------------------------------------------
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --------------------------------------------------------
+      # 2. SETUP NODE.JS
+      # --------------------------------------------------------
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
 
-      - name: Check secrets (names only)
+      # --------------------------------------------------------
+      # 3. INITIALIZE DEPLOYMENT LOG
+      # --------------------------------------------------------
+
+      - name: Initialize deployment log
         run: |
           mkdir -p /tmp/deploylog
+
           {
-            echo "run: $GITHUB_RUN_ID  commit: $GITHUB_SHA"
-            for n in FTP_SERVER FTP_USERNAME FTP_PASSWORD DB_PASSWORD; do
-              v="${!n}"; if [ -n "$v" ]; then echo "$n: set"; else echo "$n: MISSING"; fi
-            done
+            echo "======================================"
+            echo "NADI VAIDYA DEPLOYMENT"
+            echo "======================================"
+            echo "Run ID: $GITHUB_RUN_ID"
+            echo "Commit: $GITHUB_SHA"
+            echo "Branch: $GITHUB_REF_NAME"
+            echo "Date: $(date -u)"
+            echo "======================================"
           } | tee /tmp/deploylog/log.txt
+
+      # --------------------------------------------------------
+      # 4. CHECK REQUIRED SECRETS
+      # --------------------------------------------------------
+
+      - name: Validate GitHub secrets
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
-      - name: Install
-        run: npm ci --no-audit --no-fund 2>&1 | tee -a /tmp/deploylog/log.txt; exit ${PIPESTATUS[0]}
-
-      - name: Build
-        run: npm run build 2>&1 | tee -a /tmp/deploylog/log.txt; exit ${PIPESTATUS[0]}
-
-      - name: Add PHP api (only when DB password secret exists)
-        env:
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
+          set -e
+
+          check_secret() {
+            local name="$1"
+            local value="$2"
+
+            if [ -z "$value" ]; then
+              echo "ERROR: $name is missing" | tee -a /tmp/deploylog/log.txt
+              return 1
+            fi
+
+            echo "OK: $name is configured" | tee -a /tmp/deploylog/log.txt
+          }
+
+          check_secret "FTP_SERVER" "$FTP_SERVER"
+          check_secret "FTP_USERNAME" "$FTP_USERNAME"
+          check_secret "FTP_PASSWORD" "$FTP_PASSWORD"
+
           if [ -n "$DB_PASSWORD" ]; then
-            cp -r api dist/api
-            rm -f dist/api/admin/error_log
-            php -r 'file_put_contents("dist/api/config/db.secret.php", "<?php\nreturn [\"password\" => " . var_export(getenv("DB_PASSWORD"), true) . "];\n");'
-            echo "api folder will be deployed" | tee -a /tmp/deploylog/log.txt
+            echo "OK: DB_PASSWORD is configured" | tee -a /tmp/deploylog/log.txt
           else
-            echo "DB_PASSWORD secret missing — skipping api folder" | tee -a /tmp/deploylog/log.txt
+            echo "INFO: DB_PASSWORD missing; API deployment will be skipped" | tee -a /tmp/deploylog/log.txt
           fi
 
-      - name: Upload to hosting
+      # --------------------------------------------------------
+      # 5. INSTALL DEPENDENCIES
+      # --------------------------------------------------------
+
+      - name: Install dependencies
+        run: |
+          set -o pipefail
+
+          npm ci --no-audit --no-fund 2>&1 | tee -a /tmp/deploylog/log.txt
+
+      # --------------------------------------------------------
+      # 6. BUILD WEBSITE
+      # --------------------------------------------------------
+
+      - name: Build production website
+        run: |
+          set -o pipefail
+
+          npm run build 2>&1 | tee -a /tmp/deploylog/log.txt
+
+          if [ ! -d "dist" ]; then
+            echo "ERROR: dist directory not found" | tee -a /tmp/deploylog/log.txt
+            exit 1
+          fi
+
+          echo "SUCCESS: Production build completed" | tee -a /tmp/deploylog/log.txt
+
+      # --------------------------------------------------------
+      # 7. PREPARE PHP API
+      # --------------------------------------------------------
+
+      - name: Prepare PHP API
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+        run: |
+          set -e
+
+          if [ -n "$DB_PASSWORD" ]; then
+
+            if [ ! -d "api" ]; then
+              echo "ERROR: API directory not found" | tee -a /tmp/deploylog/log.txt
+              exit 1
+            fi
+
+            mkdir -p dist/api/config
+
+            cp -a api/. dist/api/
+
+            rm -f dist/api/admin/error_log
+
+            php -r '
+              $password = getenv("DB_PASSWORD");
+
+              $content = "<?php\nreturn [\"password\" => "
+                . var_export($password, true)
+                . "];\n";
+
+              file_put_contents(
+                "dist/api/config/db.secret.php",
+                $content,
+                LOCK_EX
+              );
+            '
+
+            chmod 600 dist/api/config/db.secret.php
+
+            echo "SUCCESS: PHP API prepared for deployment" | tee -a /tmp/deploylog/log.txt
+
+          else
+
+            echo "INFO: DB_PASSWORD missing; existing server API will be preserved" | tee -a /tmp/deploylog/log.txt
+
+          fi
+
+      # --------------------------------------------------------
+      # 8. VERIFY FTP DIRECTORY
+      # --------------------------------------------------------
+
+      - name: Verify deployment directory
+        run: |
+          echo "Local deployment directory: ./dist/" | tee -a /tmp/deploylog/log.txt
+          echo "Remote deployment directory: ./" | tee -a /tmp/deploylog/log.txt
+
+      # --------------------------------------------------------
+      # 9. DEPLOY WEBSITE THROUGH EXPLICIT FTPS
+      # --------------------------------------------------------
+
+      - name: Upload website to cPanel hosting
         id: ftp
+
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+
+          protocol: ftps
+          port: 21
+          security: strict
+
           local-dir: ./dist/
           server-dir: ./
-          log-level: minimal
+
+          log-level: verbose
+
           exclude: |
             **/.git*
             **/.git*/**
             uploads/**
+            **/error_log
 
-      - name: Save log to deploy-logs branch
+      # --------------------------------------------------------
+      # 10. SAVE DEPLOYMENT LOG
+      # --------------------------------------------------------
+
+      - name: Save deployment log
         if: always()
+
+        env:
+          GH_TOKEN: ${{ github.token }}
+
         run: |
-          echo "job status: ${{ job.status }}  ftp step: ${{ steps.ftp.outcome }}" >> /tmp/deploylog/log.txt
+          set +e
+
+          mkdir -p /tmp/deploylog
+
+          echo "======================================" >> /tmp/deploylog/log.txt
+          echo "Job status: ${{ job.status }}" >> /tmp/deploylog/log.txt
+          echo "FTP status: ${{ steps.ftp.outcome }}" >> /tmp/deploylog/log.txt
+          echo "Run ID: $GITHUB_RUN_ID" >> /tmp/deploylog/log.txt
+          echo "======================================" >> /tmp/deploylog/log.txt
+
           tail -c 60000 /tmp/deploylog/log.txt > /tmp/deploylog/last.txt
-          cd /tmp/deploylog && git init -q && git checkout -q -b deploy-logs
-          git config user.name "deploy-bot"; git config user.email "deploy-bot@users.noreply.github.com"
-          cp last.txt "run-$GITHUB_RUN_ID.txt"; cp last.txt latest.txt
-          git add latest.txt "run-$GITHUB_RUN_ID.txt"; git commit -qm "deploy log $GITHUB_RUN_ID"
-          git push -q --force "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" deploy-logs || true
+
+          cd /tmp/deploylog
+
+          git init -q
+          git checkout -q -b deploy-logs
+
+          git config user.name "deploy-bot"
+          git config user.email "deploy-bot@users.noreply.github.com"
+
+          cp last.txt "run-$GITHUB_RUN_ID.txt"
+          cp last.txt latest.txt
+
+          git add latest.txt "run-$GITHUB_RUN_ID.txt"
+
+          git commit -qm "Deployment log $GITHUB_RUN_ID"
+
+          git -c http.extraheader="AUTHORIZATION: bearer $GH_TOKEN" \
+            push -q --force \
+            "https://github.com/${GITHUB_REPOSITORY}.git" \
+            deploy-logs || echo "WARNING: Could not save deployment logs"
+
+          echo "Deployment log processing completed."
