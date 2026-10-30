@@ -7,6 +7,7 @@
 #   FTP_PASSWORD  — उसी FTP account का password
 #   DB_PASSWORD   — MySQL user "nadivaidyanewwebsite" का नया password
 # DB_PASSWORD न हो तो api फ़ोल्डर नहीं बदला जाता (server वाला चलता रहता है)।
+# हर run का छोटा log "deploy-logs" branch में सेव होता है (बिना passwords के)।
 
 name: Deploy website
 
@@ -15,26 +16,43 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: deploy
   cancel-in-progress: false
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 22
+
+      - name: Check secrets (names only)
+        run: |
+          mkdir -p /tmp/deploylog
+          {
+            echo "run: $GITHUB_RUN_ID  commit: $GITHUB_SHA"
+            for n in FTP_SERVER FTP_USERNAME FTP_PASSWORD DB_PASSWORD; do
+              v="${!n}"; if [ -n "$v" ]; then echo "$n: set"; else echo "$n: MISSING"; fi
+            done
+          } | tee /tmp/deploylog/log.txt
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Install
-        run: npm ci
+        run: npm ci --no-audit --no-fund 2>&1 | tee -a /tmp/deploylog/log.txt; exit ${PIPESTATUS[0]}
 
       - name: Build
-        run: npm run build
+        run: npm run build 2>&1 | tee -a /tmp/deploylog/log.txt; exit ${PIPESTATUS[0]}
 
       - name: Add PHP api (only when DB password secret exists)
         env:
@@ -44,12 +62,13 @@ jobs:
             cp -r api dist/api
             rm -f dist/api/admin/error_log
             php -r 'file_put_contents("dist/api/config/db.secret.php", "<?php\nreturn [\"password\" => " . var_export(getenv("DB_PASSWORD"), true) . "];\n");'
-            echo "api folder will be deployed"
+            echo "api folder will be deployed" | tee -a /tmp/deploylog/log.txt
           else
-            echo "DB_PASSWORD secret missing — skipping api folder"
+            echo "DB_PASSWORD secret missing — skipping api folder" | tee -a /tmp/deploylog/log.txt
           fi
 
       - name: Upload to hosting
+        id: ftp
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -57,8 +76,19 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: ./
-          dangerous-clean-slate: false
+          log-level: minimal
           exclude: |
             **/.git*
             **/.git*/**
             uploads/**
+
+      - name: Save log to deploy-logs branch
+        if: always()
+        run: |
+          echo "job status: ${{ job.status }}  ftp step: ${{ steps.ftp.outcome }}" >> /tmp/deploylog/log.txt
+          tail -c 60000 /tmp/deploylog/log.txt > /tmp/deploylog/last.txt
+          cd /tmp/deploylog && git init -q && git checkout -q -b deploy-logs
+          git config user.name "deploy-bot"; git config user.email "deploy-bot@users.noreply.github.com"
+          cp last.txt "run-$GITHUB_RUN_ID.txt"; cp last.txt latest.txt
+          git add latest.txt "run-$GITHUB_RUN_ID.txt"; git commit -qm "deploy log $GITHUB_RUN_ID"
+          git push -q --force "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" deploy-logs || true
