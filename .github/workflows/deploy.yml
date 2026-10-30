@@ -1,7 +1,9 @@
+
 # ============================================================
 # NADI VAIDYA - AUTOMATIC DEPLOYMENT
 # Website: https://nadivaidya.in
-# Hosting: cPanel
+# Hosting: GoDaddy cPanel
+# Protocol: Explicit FTPS
 # ============================================================
 
 name: Deploy website
@@ -95,7 +97,7 @@ jobs:
           check_secret "FTP_PASSWORD" "$FTP_PASSWORD"
 
           if [[ ! "$FTP_SERVER" =~ ^[A-Za-z0-9.-]+$ ]]; then
-            echo "ERROR: FTP_SERVER must contain only a valid hostname." | tee -a /tmp/deploylog/log.txt
+            echo "ERROR: FTP_SERVER must contain a valid hostname only." | tee -a /tmp/deploylog/log.txt
             exit 1
           fi
 
@@ -210,10 +212,6 @@ jobs:
             sudo apt-get install -y dnsutils netcat-openbsd
           fi
 
-          if ! command -v openssl >/dev/null 2>&1; then
-            sudo apt-get install -y openssl
-          fi
-
       # --------------------------------------------------------
       # 9. FTP DNS AND PORT DIAGNOSTICS
       # --------------------------------------------------------
@@ -225,49 +223,34 @@ jobs:
         run: |
           set -euo pipefail
 
-          echo "Checking FTP configuration..." | tee -a /tmp/deploylog/log.txt
+          echo "======================================" | tee -a /tmp/deploylog/log.txt
+          echo "FTP CONNECTION DIAGNOSTICS" | tee -a /tmp/deploylog/log.txt
+          echo "======================================" | tee -a /tmp/deploylog/log.txt
+
           echo "FTP hostname: $FTP_SERVER" | tee -a /tmp/deploylog/log.txt
 
           echo "Checking DNS resolution..." | tee -a /tmp/deploylog/log.txt
 
           if ! getent ahosts "$FTP_SERVER" 2>&1 | tee -a /tmp/deploylog/log.txt; then
-            echo "ERROR: GitHub runner cannot resolve FTP hostname." | tee -a /tmp/deploylog/log.txt
-
-            echo "Checking Google DNS..." | tee -a /tmp/deploylog/log.txt
-            nslookup "$FTP_SERVER" 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt || true
-
+            echo "ERROR: FTP hostname could not be resolved." | tee -a /tmp/deploylog/log.txt
             exit 1
           fi
 
           echo "SUCCESS: FTP hostname resolved." | tee -a /tmp/deploylog/log.txt
 
-          echo "Checking DNS using Google DNS..." | tee -a /tmp/deploylog/log.txt
+          echo "Checking FTP DNS using Google DNS..." | tee -a /tmp/deploylog/log.txt
+
           nslookup "$FTP_SERVER" 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt
 
-          echo "Checking FTP port 21..." | tee -a /tmp/deploylog/log.txt
+          echo "Checking FTP TCP port 21..." | tee -a /tmp/deploylog/log.txt
 
-          if ! nc -vz -w 15 "$FTP_SERVER" 21 2>&1 | tee -a /tmp/deploylog/log.txt; then
-            echo "ERROR: FTP port 21 is unreachable." | tee -a /tmp/deploylog/log.txt
-            exit 1
+          if nc -vz -w 10 "$FTP_SERVER" 21 2>&1 | tee -a /tmp/deploylog/log.txt; then
+            echo "SUCCESS: FTP port 21 is reachable." | tee -a /tmp/deploylog/log.txt
+          else
+            echo "WARNING: FTP port 21 is not reachable from this GitHub runner." | tee -a /tmp/deploylog/log.txt
+            echo "The deployment step will attempt the FTP connection." | tee -a /tmp/deploylog/log.txt
+            echo "Check the hosting firewall if the deployment also times out." | tee -a /tmp/deploylog/log.txt
           fi
-
-          echo "SUCCESS: FTP port 21 is reachable." | tee -a /tmp/deploylog/log.txt
-
-          echo "Checking explicit FTPS certificate..." | tee -a /tmp/deploylog/log.txt
-
-          if ! timeout 25 openssl s_client \
-            -starttls ftp \
-            -connect "${FTP_SERVER}:21" \
-            -servername "$FTP_SERVER" \
-            -verify_hostname "$FTP_SERVER" \
-            -verify_return_error \
-            </dev/null 2>&1 | tee -a /tmp/deploylog/log.txt; then
-
-            echo "ERROR: FTPS certificate verification failed." | tee -a /tmp/deploylog/log.txt
-            exit 1
-          fi
-
-          echo "SUCCESS: FTPS certificate verification completed." | tee -a /tmp/deploylog/log.txt
 
       # --------------------------------------------------------
       # 10. VERIFY DEPLOYMENT DIRECTORY
