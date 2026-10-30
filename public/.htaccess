@@ -2,6 +2,10 @@
 # पुराने Gurukul / Pharmacy पतों को नई वेबसाइटों पर स्थायी (301) redirect,
 # ताकि Google पुराने पेजों की रैंकिंग नई साइटों को दे दे।
 
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+AddDefaultCharset UTF-8
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -34,3 +38,20 @@
 <FilesMatch "^(createtable2\.php|error_log)$">
   Require all denied
 </FilesMatch>
+
+# Security headers + caching
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  <FilesMatch "\.(js|css|png|jpg|jpeg|gif|webp|svg|woff2?|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>

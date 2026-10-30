@@ -543,11 +543,9 @@ AddDefaultCharset UTF-8
 ===================================================== */
 
 export default defineConfig({
-  plugins: [
-    react(),
-    generateSEOFiles(),
-    generateHtaccess(),
-  ],
+  // robots.txt, sitemap.xml, site.webmanifest और .htaccess अब
+  // public/ फ़ोल्डर में सीधे रखे हैं (क्लीनिक साइट के हिसाब से)।
+  plugins: [react()],
 
   build: {
     outDir: "dist",
