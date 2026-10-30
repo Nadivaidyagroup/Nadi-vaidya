@@ -16,14 +16,13 @@
 # FTP PORT: 21
 # FTP PROTOCOL: Explicit FTPS
 #
-# If DB_PASSWORD is configured:
-#   - PHP API is included in deployment.
+# DB_PASSWORD configured:
+#   - Frontend and PHP API are deployed.
 #   - db.secret.php is generated during deployment.
 #
-# If DB_PASSWORD is missing:
-#   - PHP API deployment is skipped.
-#   - Existing remote API files are excluded from the
-#     frontend-only FTP deployment.
+# DB_PASSWORD missing:
+#   - Frontend only is deployed.
+#   - Remote API files are excluded from frontend sync.
 #
 # Deployment logs are saved in deploy-logs branch.
 # ============================================================
@@ -92,6 +91,7 @@ jobs:
       # --------------------------------------------------------
 
       - name: Validate GitHub secrets
+        id: validate
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
@@ -117,9 +117,16 @@ jobs:
           check_secret "FTP_USERNAME" "$FTP_USERNAME"
           check_secret "FTP_PASSWORD" "$FTP_PASSWORD"
 
+          if [ "$FTP_SERVER" != "ftp.joinus.co.in" ]; then
+            echo "ERROR: FTP_SERVER must be ftp.joinus.co.in" | tee -a /tmp/deploylog/log.txt
+            exit 1
+          fi
+
           if [ -n "$DB_PASSWORD" ]; then
+            echo "deploy_api=true" >> "$GITHUB_OUTPUT"
             echo "OK: DB_PASSWORD is configured" | tee -a /tmp/deploylog/log.txt
           else
+            echo "deploy_api=false" >> "$GITHUB_OUTPUT"
             echo "INFO: DB_PASSWORD missing; API deployment will be skipped" | tee -a /tmp/deploylog/log.txt
           fi
 
@@ -160,28 +167,27 @@ jobs:
       # --------------------------------------------------------
 
       - name: Prepare PHP API
+        if: steps.validate.outputs.deploy_api == 'true'
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
         run: |
           set -euo pipefail
 
-          if [ -n "$DB_PASSWORD" ]; then
+          if [ ! -d "api" ]; then
+            echo "ERROR: API directory not found" | tee -a /tmp/deploylog/log.txt
+            exit 1
+          fi
 
-            if [ ! -d "api" ]; then
-              echo "ERROR: API directory not found" | tee -a /tmp/deploylog/log.txt
-              exit 1
-            fi
+          mkdir -p dist/api
 
-            mkdir -p dist/api/config
+          cp -a api/. dist/api/
 
-            cp -a api/. dist/api/
+          mkdir -p dist/api/config
 
-            mkdir -p dist/api/config
+          rm -f dist/api/admin/error_log
 
-            rm -f dist/api/admin/error_log
-
-            php <<'PHP'
+          php <<'PHP'
           <?php
 
           $password = getenv("DB_PASSWORD");
@@ -208,18 +214,25 @@ jobs:
 
           PHP
 
-            chmod 600 dist/api/config/db.secret.php
+          chmod 600 dist/api/config/db.secret.php
 
-            echo "SUCCESS: PHP API prepared" | tee -a /tmp/deploylog/log.txt
+          echo "SUCCESS: PHP API prepared" | tee -a /tmp/deploylog/log.txt
 
-          else
+      # --------------------------------------------------------
+      # 8. INSTALL FTP DIAGNOSTIC UTILITIES
+      # --------------------------------------------------------
 
-            echo "INFO: DB_PASSWORD missing; API deployment skipped" | tee -a /tmp/deploylog/log.txt
+      - name: Install FTP diagnostic utilities
+        run: |
+          set -euo pipefail
 
+          if ! command -v nslookup >/dev/null 2>&1 || ! command -v nc >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y dnsutils netcat-openbsd
           fi
 
       # --------------------------------------------------------
-      # 8. FTP DNS AND PORT DIAGNOSTICS
+      # 9. FTP DNS AND PORT DIAGNOSTICS
       # --------------------------------------------------------
 
       - name: Diagnose FTP DNS and connectivity
@@ -233,28 +246,26 @@ jobs:
 
           if [ "$FTP_SERVER" != "ftp.joinus.co.in" ]; then
             echo "ERROR: FTP_SERVER does not match expected hostname." | tee -a /tmp/deploylog/log.txt
-            echo "Please update the FTP_SERVER GitHub secret." | tee -a /tmp/deploylog/log.txt
             exit 1
           fi
 
-          echo "FTP_SERVER value format is correct." | tee -a /tmp/deploylog/log.txt
+          echo "FTP hostname format is correct." | tee -a /tmp/deploylog/log.txt
 
           echo "Checking DNS using configured hostname..." | tee -a /tmp/deploylog/log.txt
 
-          if ! getent ahosts "$FTP_SERVER"; then
-            echo "ERROR: GitHub cannot resolve FTP hostname." | tee -a /tmp/deploylog/log.txt
+          if ! getent ahosts "$FTP_SERVER" 2>&1 | tee -a /tmp/deploylog/log.txt; then
+            echo "ERROR: GitHub runner cannot resolve FTP hostname." | tee -a /tmp/deploylog/log.txt
+
+            echo "Checking Google DNS..." | tee -a /tmp/deploylog/log.txt
+            nslookup ftp.joinus.co.in 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt || true
+
             exit 1
           fi
 
           echo "SUCCESS: FTP hostname resolved." | tee -a /tmp/deploylog/log.txt
 
           echo "Checking DNS using Google DNS..." | tee -a /tmp/deploylog/log.txt
-
-          if command -v nslookup >/dev/null 2>&1; then
-            nslookup ftp.joinus.co.in 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt
-          else
-            echo "nslookup is unavailable; skipping Google DNS check." | tee -a /tmp/deploylog/log.txt
-          fi
+          nslookup ftp.joinus.co.in 8.8.8.8 2>&1 | tee -a /tmp/deploylog/log.txt
 
           echo "Checking FTP port 21..." | tee -a /tmp/deploylog/log.txt
 
@@ -266,7 +277,7 @@ jobs:
           echo "SUCCESS: FTP port 21 is reachable." | tee -a /tmp/deploylog/log.txt
 
       # --------------------------------------------------------
-      # 9. VERIFY DEPLOYMENT DIRECTORY
+      # 10. VERIFY DEPLOYMENT DIRECTORY
       # --------------------------------------------------------
 
       - name: Verify deployment directory
@@ -284,13 +295,12 @@ jobs:
           echo "SUCCESS: Deployment directory verified" | tee -a /tmp/deploylog/log.txt
 
       # --------------------------------------------------------
-      # 10A. DEPLOY WEBSITE AND API
-      # Runs when DB_PASSWORD is configured.
+      # 11A. DEPLOY FRONTEND AND PHP API
       # --------------------------------------------------------
 
       - name: Upload website and PHP API to cPanel
         id: ftp_full
-        if: ${{ secrets.DB_PASSWORD != '' }}
+        if: steps.validate.outputs.deploy_api == 'true'
 
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
 
@@ -312,16 +322,17 @@ jobs:
             **/.git*
             **/.git*/**
             **/error_log
+            uploads/**
+            **/uploads/**
+            **/uploads/**/*
 
       # --------------------------------------------------------
-      # 10B. DEPLOY FRONTEND ONLY
-      # Runs when DB_PASSWORD is missing.
-      # API paths are excluded from this deployment.
+      # 11B. DEPLOY FRONTEND ONLY
       # --------------------------------------------------------
 
       - name: Upload frontend only to cPanel
         id: ftp_frontend
-        if: ${{ secrets.DB_PASSWORD == '' }}
+        if: steps.validate.outputs.deploy_api == 'false'
 
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
 
@@ -342,14 +353,17 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
+            **/error_log
             api/**
             api/**/*
             **/api/**
             **/api/**/*
-            **/error_log
+            uploads/**
+            **/uploads/**
+            **/uploads/**/*
 
       # --------------------------------------------------------
-      # 11. SAVE DEPLOYMENT LOGS
+      # 12. SAVE DEPLOYMENT LOGS
       # --------------------------------------------------------
 
       - name: Save deployment log
@@ -367,14 +381,16 @@ jobs:
             touch /tmp/deploylog/log.txt
           fi
 
-          echo "======================================" >> /tmp/deploylog/log.txt
-          echo "Job status: ${{ job.status }}" >> /tmp/deploylog/log.txt
-          echo "Full FTP status: ${{ steps.ftp_full.outcome }}" >> /tmp/deploylog/log.txt
-          echo "Frontend FTP status: ${{ steps.ftp_frontend.outcome }}" >> /tmp/deploylog/log.txt
-          echo "Run ID: $GITHUB_RUN_ID" >> /tmp/deploylog/log.txt
-          echo "Commit: $GITHUB_SHA" >> /tmp/deploylog/log.txt
-          echo "Date: $(date -u)" >> /tmp/deploylog/log.txt
-          echo "======================================" >> /tmp/deploylog/log.txt
+          {
+            echo "======================================"
+            echo "Job status: ${{ job.status }}"
+            echo "Full FTP status: ${{ steps.ftp_full.outcome }}"
+            echo "Frontend FTP status: ${{ steps.ftp_frontend.outcome }}"
+            echo "Run ID: $GITHUB_RUN_ID"
+            echo "Commit: $GITHUB_SHA"
+            echo "Date: $(date -u)"
+            echo "======================================"
+          } >> /tmp/deploylog/log.txt
 
           tail -c 60000 /tmp/deploylog/log.txt > /tmp/deploylog/last.txt
 
