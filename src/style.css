@@ -1,0 +1,46 @@
+:root {
+
+  --main-color: #727450;
+  --main-dark: #4f5137;
+  --main-soft: #f5f6ef;
+  --main-border: #dcdccf;
+  --text-dark: #1f2418;
+
+  --gold: #c7a86d;
+  --white: #ffffff;
+}
+body{
+  font-family:"Poppins",sans-serif;
+}
+
+/* REMOVE BLUE LINK STYLE */
+.blog-content h2 a{
+  color:#222;
+  text-decoration:none;
+  transition:0.3s;
+}
+
+/* HOVER EFFECT */
+.blog-content h2 a:hover{
+  color:#727450 !important;
+  text-decoration:none;
+}
+
+/* IMAGE LINK */
+.blog-image{
+  text-decoration:none;
+}
+
+/* READ BUTTON */
+.read-btn{
+  text-decoration:none;
+}
+
+/* REMOVE DEFAULT LINK STYLE */
+a{
+  text-decoration:none;
+}
+a:hover{
+  color:inherit ;
+  text-decoration:none !important;
+}

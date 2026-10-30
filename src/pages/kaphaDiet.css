@@ -1,0 +1,345 @@
+.kapha-page{
+  background:#f4f1ea;
+  overflow:hidden;
+  color:#3e3428;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1300px;
+  margin:auto;
+  padding:0 20px;
+}
+
+/* HERO */
+.kapha-hero{
+  padding:140px 0 120px;
+  background:
+  linear-gradient(
+    135deg,
+    #8b5e3c,
+    #5c3b28
+  );
+  color:#fff;
+  text-align:center;
+  position:relative;
+}
+
+.kapha-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+  radial-gradient(
+    rgba(255,255,255,0.08),
+    transparent 60%
+  );
+}
+
+.kapha-badge{
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:40px;
+  background:rgba(255,255,255,0.12);
+  margin-bottom:25px;
+  font-weight:600;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.15);
+}
+
+.kapha-hero h1{
+  font-size:72px;
+  line-height:1.1;
+  margin-bottom:25px;
+  position:relative;
+}
+
+.kapha-hero p{
+  max-width:800px;
+  margin:auto;
+  font-size:18px;
+  line-height:1.9;
+  opacity:0.92;
+  position:relative;
+}
+
+/* INTRO */
+.kapha-intro{
+  margin-top:-70px;
+  position:relative;
+  z-index:5;
+}
+
+.intro-card{
+  background:#fffdf8;
+  border-radius:35px;
+  padding:50px;
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:40px;
+  box-shadow:
+  0 25px 60px rgba(70,40,10,0.10);
+  border:1px solid #eadfcf;
+}
+
+.intro-left h2{
+  font-size:40px;
+  margin-bottom:20px;
+  color:#5c3b28;
+}
+
+.intro-left p{
+  line-height:1.9;
+  color:#6e6256;
+  font-size:17px;
+}
+
+.dosha-points{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.point{
+  background:#f6ede3;
+  padding:24px;
+  border-radius:20px;
+  font-weight:600;
+  text-align:center;
+  color:#7a5336;
+  border:1px solid #ead8c5;
+}
+
+/* FOODS */
+.kapha-foods{
+  padding:100px 0;
+}
+
+.diet-section{
+  margin-bottom:90px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:35px;
+}
+
+.section-title span{
+  font-size:38px;
+}
+
+.section-title h2{
+  font-size:42px;
+  color:#5b3926;
+}
+
+/* GRID */
+.diet-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+/* CARD */
+.diet-card{
+  background:#fffdf9;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:
+  0 15px 40px rgba(70,40,10,0.07);
+  transition:0.35s;
+  border:1px solid #eee1d2;
+}
+
+.diet-card:hover{
+  transform:translateY(-10px);
+  box-shadow:
+  0 25px 60px rgba(70,40,10,0.14);
+}
+
+.card-head{
+  padding:22px;
+  color:#fff;
+}
+
+.card-head h3{
+  font-size:24px;
+  color: white;
+  margin:0;
+}
+
+/* FAVOR */
+.favor .card-head{
+  background:
+  linear-gradient(
+    135deg,
+    #7c9b4e,
+    #5f7a36
+  );
+}
+
+/* MINOR */
+.minor .card-head{
+  background:
+  linear-gradient(
+    135deg,
+    #c9973d,
+    #a87522
+  );
+}
+
+/* AVOID */
+.avoid .card-head{
+  background:
+  linear-gradient(
+    135deg,
+    #b85b4f,
+    #8c3d34
+  );
+}
+
+.diet-card ul{
+  list-style:none;
+  padding:28px;
+  margin:0;
+}
+
+.diet-card li{
+  padding:14px 0;
+  border-bottom:1px solid #f0e4d8;
+  color:#5e554d;
+  line-height:1.7;
+  font-size:15px;
+}
+
+.diet-card li:last-child{
+  border-bottom:none;
+}
+
+/* TIPS */
+.kapha-tips{
+  padding-bottom:120px;
+}
+
+.tips-box{
+  background:
+  linear-gradient(
+    135deg,
+    #fffaf3,
+    #f3e6d8
+  );
+  padding:60px;
+  border-radius:35px;
+  box-shadow:
+  0 20px 60px rgba(70,40,10,0.08);
+  border:1px solid #ead8c5;
+}
+
+.tips-box h2{
+  text-align:center;
+  font-size:42px;
+  margin-bottom:45px;
+  color:#5c3b28;
+}
+
+.tips-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+}
+
+.tip-item{
+  background:#fff;
+  border-radius:20px;
+  padding:24px;
+  text-align:center;
+  font-weight:600;
+  color:#6d4c37;
+  box-shadow:
+  0 10px 25px rgba(70,40,10,0.05);
+  border:1px solid #efe1d3;
+  transition:0.3s;
+}
+
+.tip-item:hover{
+  transform:translateY(-6px);
+  background:#fff8f0;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{
+  width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#a46d46;
+  border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+  background:#f1e8dd;
+}
+
+/* MOBILE */
+@media(max-width:992px){
+
+  .kapha-hero{
+    padding:110px 0 90px;
+  }
+
+  .kapha-hero h1{
+    font-size:48px;
+  }
+
+  .intro-card{
+    grid-template-columns:1fr;
+    padding:35px;
+  }
+
+  .diet-grid{
+    grid-template-columns:1fr;
+  }
+
+  .tips-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-title h2{
+    font-size:32px;
+  }
+
+  .tips-box{
+    padding:35px;
+  }
+
+}
+
+@media(max-width:576px){
+
+  .kapha-hero h1{
+    font-size:38px;
+  }
+
+  .kapha-hero p{
+    font-size:16px;
+  }
+
+  .intro-left h2{
+    font-size:30px;
+  }
+
+  .tips-box h2{
+    font-size:30px;
+  }
+
+  .dosha-points{
+    grid-template-columns:1fr;
+  }
+
+  .diet-card ul{
+    padding:22px;
+  }
+
+}

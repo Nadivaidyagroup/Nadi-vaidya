@@ -1,0 +1,377 @@
+/* =========================================
+TEAM SECTION
+========================================= */
+
+.team-modern-section {
+
+  padding: 100px 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8f9f2 0%,
+      #ffffff 100%
+    );
+
+}
+
+/* =========================================
+TOP
+========================================= */
+
+.team-top-wrap {
+
+  max-width: 760px;
+
+  margin: 0 auto 60px;
+
+  text-align: center;
+
+}
+
+.team-mini-title {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 42px;
+
+  padding: 0 20px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(114,116,80,0.10);
+
+  color:
+    #727450;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+}
+
+.team-main-title {
+
+  margin-top: 22px;
+
+  margin-bottom: 18px;
+
+  color:
+    #1f2937;
+
+  font-size: 58px;
+
+  line-height: 1.1;
+
+  font-weight: 900;
+
+}
+
+.team-main-text {
+
+  font-size: 18px;
+
+  line-height: 1.8;
+
+  color:
+    #6b7280;
+
+}
+
+/* =========================================
+DESKTOP SLIDER
+========================================= */
+
+.desktop-team-slider {
+
+  display: block;
+
+}
+
+.mobile-team-grid {
+
+  display: none;
+
+}
+
+.slick-list {
+
+  margin: 0 -12px;
+
+}
+
+.team-slide-item {
+
+  padding: 12px;
+
+}
+
+.team-modern-card {
+
+  overflow: hidden;
+
+  border-radius: 30px;
+
+  background:
+    #ffffff;
+
+  border:
+    1px solid rgba(114,116,80,0.10);
+
+  transition: 0.4s ease;
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,0.06);
+
+}
+
+.team-modern-card:hover {
+
+  transform:
+    translateY(-10px);
+
+}
+
+.team-image-wrap {
+
+  position: relative;
+
+  overflow: hidden;
+
+  aspect-ratio: 1 / 1.1;
+
+}
+
+.team-image-wrap img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+}
+
+.team-image-overlay {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,0.25),
+      transparent
+    );
+
+}
+
+.team-card-content {
+
+  padding: 26px 24px;
+
+  text-align: center;
+
+}
+
+.team-card-content h3 {
+
+  margin: 0 0 8px;
+
+  color:
+    #1f2937;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+}
+
+.team-card-content p {
+
+  margin: 0;
+
+  color:
+    #727450;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+}
+
+.slick-dots {
+
+  bottom: -40px;
+
+}
+
+/* =========================================
+TABLET
+========================================= */
+
+@media (max-width: 992px) {
+
+  .team-main-title {
+
+    font-size: 44px;
+
+  }
+
+}
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .desktop-team-slider {
+
+    display: none;
+
+  }
+
+  .mobile-team-grid {
+
+    display: grid;
+
+    gap: 18px;
+
+  }
+
+  .team-modern-section {
+
+    padding: 65px 0;
+
+  }
+
+  .team-top-wrap {
+
+    margin-bottom: 35px;
+
+    padding: 0 14px;
+
+    text-align: left;
+
+  }
+
+  .team-main-title {
+
+    margin-top: 16px;
+
+    margin-bottom: 14px;
+
+    font-size: 34px;
+
+  }
+
+  .team-main-text {
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+  }
+
+  .mobile-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 14px;
+
+    border-radius: 24px;
+
+  }
+
+  .mobile-card .team-image-wrap {
+
+    width: 110px;
+
+    min-width: 110px;
+
+    aspect-ratio: 1 / 1;
+
+    border-radius: 20px;
+
+  }
+
+  .mobile-card .team-card-content {
+
+    padding: 0;
+
+    text-align: left;
+
+  }
+
+  .mobile-card .team-card-content h3 {
+
+    font-size: 20px;
+
+    margin-bottom: 6px;
+
+  }
+
+  .mobile-card .team-card-content p {
+
+    font-size: 13px;
+
+  }
+
+}
+
+/* =========================================
+SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .team-main-title {
+
+    font-size: 28px;
+
+  }
+
+  .mobile-card {
+
+    gap: 14px;
+
+    padding: 12px;
+
+  }
+
+  .mobile-card .team-image-wrap {
+
+    width: 95px;
+
+    min-width: 95px;
+
+    border-radius: 18px;
+
+  }
+
+  .mobile-card .team-card-content h3 {
+
+    font-size: 18px;
+
+  }
+
+  .mobile-card .team-card-content p {
+
+    font-size: 12px;
+
+  }
+
+}

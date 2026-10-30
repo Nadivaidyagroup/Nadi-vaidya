@@ -1,0 +1,55 @@
+
+
+.admin-sidebar h2{
+  margin-bottom:30px;
+}
+
+.admin-sidebar ul{
+  list-style:none;
+  padding:0;
+}
+
+.admin-sidebar li{
+  margin-bottom:14px;
+}
+
+.admin-sidebar a{
+  color:#fff;
+  text-decoration:none;
+}
+
+.admin-content,
+.admin-page{
+  flex:1;
+  padding:40px;
+}
+
+.admin-auth-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.admin-auth-page form{
+  width:400px;
+  background:#fff;
+  padding:40px;
+  border-radius:20px;
+}
+
+.admin-auth-page input,
+.admin-page input,
+.admin-page textarea{
+  width:100%;
+  margin-bottom:16px;
+  padding:14px;
+}
+
+button{
+  padding:14px 22px;
+  border:none;
+  background:#727450;
+  color:#fff;
+  cursor:pointer;
+}

@@ -1,0 +1,356 @@
+/* src/pages/nadiParikshaForm.css */
+
+/* ========================================
+   PAGE
+======================================== */
+
+.npf-page{
+  background:#f7f7f2;
+  overflow:hidden;
+}
+
+/* ========================================
+   HERO
+======================================== */
+
+.npf-hero{
+
+  position:relative;
+
+  padding:130px 0 110px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #4f5137 0%,
+    #727450 100%
+  );
+}
+
+.npf-hero::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:500px;
+  height:500px;
+
+  border-radius:50%;
+
+  top:-180px;
+  right:-120px;
+
+  background:
+  rgba(255,255,255,0.06);
+}
+
+.npf-hero-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+}
+
+.npf-badge{
+
+  display:inline-flex;
+  align-items:center;
+
+  padding:12px 24px;
+
+  border-radius:999px;
+
+  background:
+  rgba(255,255,255,0.12);
+
+  backdrop-filter:blur(10px);
+
+  color:#ffffff;
+
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1px;
+
+  text-transform:uppercase;
+
+  margin-bottom:28px;
+}
+
+.npf-hero h1{
+
+  font-size:64px;
+  line-height:1.1;
+
+  color:#ffffff;
+
+  font-weight:900;
+
+  margin-bottom:22px;
+}
+
+.npf-hero p{
+
+  max-width:760px;
+
+  margin:auto;
+
+  color:
+  rgba(255,255,255,0.88);
+
+  font-size:18px;
+  line-height:1.9;
+}
+
+/* ========================================
+   FORM SECTION
+======================================== */
+
+.npf-form-section{
+  padding:110px 0;
+}
+
+.npf-form-wrapper{
+
+  background:#ffffff;
+
+  border-radius:40px;
+
+  padding:70px;
+
+  border:
+  1px solid #e7e9dd;
+
+  box-shadow:
+  0 18px 50px rgba(31,36,24,0.06);
+}
+
+/* ========================================
+   TOP
+======================================== */
+
+.npf-form-top{
+  text-align:center;
+  margin-bottom:55px;
+}
+
+.npf-mini-title{
+
+  display:inline-block;
+
+  padding:10px 20px;
+
+  border-radius:999px;
+
+  background:#eef1e3;
+
+  color:#4f5137;
+
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:1px;
+
+  text-transform:uppercase;
+
+  margin-bottom:18px;
+}
+
+.npf-form-top h2{
+
+  font-size:52px;
+  line-height:1.2;
+
+  color:#1f2418;
+
+  font-weight:900;
+
+  margin-bottom:16px;
+}
+
+.npf-form-top p{
+
+  max-width:700px;
+
+  margin:auto;
+
+  color:#667061;
+
+  font-size:17px;
+  line-height:1.8;
+}
+
+/* ========================================
+   FORM
+======================================== */
+
+.npf-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:26px;
+}
+
+.npf-field{
+  display:flex;
+  flex-direction:column;
+}
+
+.npf-full{
+  grid-column:1/-1;
+}
+
+.npf-field label{
+
+  margin-bottom:12px;
+
+  color:#1f2418;
+
+  font-size:15px;
+  font-weight:700;
+}
+
+.npf-field input,
+.npf-field select,
+.npf-field textarea{
+
+  width:100%;
+
+  border:none;
+  outline:none;
+
+  background:#f7f8f3;
+
+  border:
+  1px solid transparent;
+
+  border-radius:18px;
+
+  padding:18px 20px;
+
+  color:#1f2418;
+
+  font-size:15px;
+
+  transition:0.3s;
+}
+
+.npf-field input:focus,
+.npf-field select:focus,
+.npf-field textarea:focus{
+
+  background:#ffffff;
+
+  border-color:#727450;
+
+  box-shadow:
+  0 0 0 4px rgba(114,116,80,0.08);
+}
+
+.npf-field textarea{
+  resize:none;
+}
+
+/* ========================================
+   BUTTON
+======================================== */
+
+.npf-submit-btn{
+
+  width:100%;
+
+  margin-top:34px;
+
+  min-height:58px;
+
+  border:none;
+  outline:none;
+
+  cursor:pointer;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #727450,
+    #4f5137
+  );
+
+  color:#ffffff;
+
+  font-size:16px;
+  font-weight:800;
+
+  box-shadow:
+  0 14px 30px rgba(79,81,55,0.18);
+
+  transition:0.3s;
+}
+
+.npf-submit-btn:hover{
+
+  transform:
+  translateY(-3px);
+
+  box-shadow:
+  0 20px 40px rgba(79,81,55,0.24);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media(max-width:992px){
+
+  .npf-hero h1{
+    font-size:52px;
+  }
+
+  .npf-grid{
+    grid-template-columns:1fr;
+  }
+
+  .npf-form-wrapper{
+    padding:50px 30px;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .npf-hero{
+    padding:110px 0 90px;
+  }
+
+  .npf-hero h1{
+    font-size:40px;
+  }
+
+  .npf-form-top h2{
+    font-size:38px;
+  }
+
+}
+
+@media(max-width:576px){
+
+  .npf-hero h1{
+    font-size:32px;
+  }
+
+  .npf-hero p{
+    font-size:16px;
+  }
+
+  .npf-form-wrapper{
+    padding:38px 20px;
+    border-radius:28px;
+  }
+
+  .npf-form-top h2{
+    font-size:30px;
+  }
+
+}

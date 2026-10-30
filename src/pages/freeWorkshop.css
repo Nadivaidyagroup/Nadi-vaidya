@@ -1,0 +1,211 @@
+.fw-page {
+  background: #f8f9f3;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* HERO */
+.fw-hero {
+  padding: 120px 0;
+  background: linear-gradient(135deg,#727450,#4f5137);
+  color: #fff;
+}
+
+.fw-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.fw-hero-content h1 {
+  font-size: 52px;
+  font-weight: 800;
+}
+
+.fw-hero-content p {
+  margin: 20px 0;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.fw-hero-img img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* BUTTONS */
+.fw-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.fw-btn {
+  padding: 12px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.fw-btn.primary {
+  background: #fff;
+  color: #000;
+}
+
+.fw-btn.primary:hover {
+  background: #000;
+  color: #fff;
+}
+
+.fw-btn.ghost {
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.fw-btn.ghost:hover {
+  background: #fff;
+  color: #000;
+}
+
+.fw-btn.outline {
+  border: 2px solid #727450;
+  color: #727450;
+}
+
+.fw-btn.large {
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* CONTENT */
+.fw-content {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.fw-content h2 {
+  font-size: 36px;
+  color: #727450;
+}
+
+.fw-content p {
+  max-width: 800px;
+  margin: 10px auto;
+  line-height: 1.7;
+}
+
+/* HIGHLIGHT */
+.highlight-box {
+  margin-top: 20px;
+  padding: 18px;
+  background: #727450;
+  color: #fff;
+  border-radius: 12px;
+}
+
+/* LIST */
+.fw-list {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 15px;
+}
+
+.fw-list div {
+  background: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* BENEFITS */
+.fw-benefits {
+  margin-top: -50px;
+}
+
+.fw-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+
+.fw-benefit-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* CTA */
+.fw-cta {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.fw-cta h2 {
+  font-size: 36px;
+}
+
+/* SECTION */
+.fw-section {
+  padding: 90px 0;
+}
+
+.fw-section.alt {
+  background: #eef0e4;
+}
+
+/* FLEX */
+.fw-flex {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.reverse {
+  flex-direction: row-reverse;
+}
+
+/* IMG */
+.fw-card-img img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* CONTENT */
+.fw-card-content h3 {
+  font-size: 28px;
+  color: #727450;
+}
+
+.fw-price {
+  margin: 15px 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 15px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .fw-hero-grid,
+  .fw-flex {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .fw-benefit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fw-list {
+    grid-template-columns: 1fr;
+  }
+}

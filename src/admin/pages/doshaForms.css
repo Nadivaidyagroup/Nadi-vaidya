@@ -1,0 +1,328 @@
+/* src/admin/pages/doshaForms.css */
+
+.admin-layout{
+
+  display:flex;
+
+  min-height:100vh;
+
+  background:#f8fafc;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.admin-main{
+
+  flex:1;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.admin-page-content{
+
+  padding:30px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.page-header{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:20px;
+
+  margin-bottom:30px;
+}
+
+.page-header h1{
+
+  margin:0 0 8px;
+
+  color:#0f172a;
+
+  font-size:34px;
+  font-weight:800;
+}
+
+.page-header p{
+
+  margin:0;
+
+  color:#64748b;
+
+  font-size:15px;
+}
+
+.form-count{
+
+  min-width:120px;
+
+  height:50px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:0 20px;
+
+  border-radius:16px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #6366f1,
+    #8b5cf6
+  );
+
+  color:#ffffff;
+
+  font-size:14px;
+  font-weight:700;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrapper{
+
+  overflow:auto;
+
+  background:#ffffff;
+
+  border-radius:24px;
+
+  border:
+  1px solid rgba(15,23,42,0.06);
+
+  box-shadow:
+  0 10px 30px rgba(15,23,42,0.04);
+}
+
+.forms-table{
+
+  width:100%;
+
+  min-width:1000px;
+
+  border-collapse:collapse;
+}
+
+.forms-table thead{
+
+  background:#f8fafc;
+}
+
+.forms-table th{
+
+  padding:18px;
+
+  text-align:left;
+
+  color:#0f172a;
+
+  font-size:14px;
+  font-weight:700;
+
+  border-bottom:
+  1px solid #e2e8f0;
+}
+
+.forms-table td{
+
+  padding:18px;
+
+  border-bottom:
+  1px solid #f1f5f9;
+
+  vertical-align:middle;
+}
+
+/* =========================
+   USER
+========================= */
+
+.user-name{
+
+  font-size:15px;
+  font-weight:700;
+
+  color:#0f172a;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.email-link,
+.phone-link{
+
+  color:#4f46e5;
+
+  text-decoration:none;
+
+  font-size:14px;
+  font-weight:600;
+}
+
+.email-link:hover,
+.phone-link:hover{
+
+  text-decoration:underline;
+}
+
+/* =========================
+   DOSHA BADGES
+========================= */
+
+.dosha-badge{
+
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  min-width:90px;
+
+  height:38px;
+
+  padding:0 16px;
+
+  border-radius:999px;
+
+  color:#ffffff;
+
+  font-size:13px;
+  font-weight:700;
+
+  text-transform:uppercase;
+}
+
+/* VATA */
+.dosha-badge.vata{
+
+  background:
+  linear-gradient(
+    135deg,
+    #8b5cf6,
+    #6366f1
+  );
+}
+
+/* PITTA */
+.dosha-badge.pitta{
+
+  background:
+  linear-gradient(
+    135deg,
+    #f97316,
+    #ef4444
+  );
+}
+
+/* KAPHA */
+.dosha-badge.kapha{
+
+  background:
+  linear-gradient(
+    135deg,
+    #10b981,
+    #059669
+  );
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.delete-btn{
+
+  height:42px;
+
+  padding:0 18px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#ef4444;
+
+  color:#ffffff;
+
+  font-size:13px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:0.3s;
+}
+
+.delete-btn:hover{
+
+  background:#dc2626;
+
+  transform:
+  translateY(-1px);
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.loading-box,
+.empty-box{
+
+  background:#ffffff;
+
+  border-radius:24px;
+
+  padding:50px;
+
+  text-align:center;
+
+  color:#64748b;
+
+  font-size:16px;
+  font-weight:600;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:991px){
+
+  .admin-layout{
+    flex-direction:column;
+  }
+
+  .admin-page-content{
+    padding:20px;
+  }
+
+  .page-header{
+
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+}
+
+@media(max-width:576px){
+
+  .page-header h1{
+    font-size:28px;
+  }
+
+}

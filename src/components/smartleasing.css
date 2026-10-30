@@ -1,0 +1,259 @@
+/* src/components/smartcapex.css */
+
+/* =========================
+MAIN SECTION
+========================= */
+
+.smartcapex-section {
+  position: relative;
+  overflow: hidden;
+  min-height: 543px;
+  padding: 70px 60px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.smartcapex-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* =========================
+ROW
+========================= */
+
+.smartcapex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+LEFT CONTENT
+========================= */
+
+.smartcapex-text-section {
+  flex: 1;
+  min-width: 320px;
+  max-width: 760px;
+}
+
+.smartcapex-heading {
+  font-size: 68px;
+  line-height: 1.1;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 22px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* =========================
+LINE + SUBHEADING
+========================= */
+
+.smartcapex-line-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.smartcapex-line {
+  width: 110px;
+  height: 3px;
+  background: #ffffff;
+}
+
+.smartcapex-subheading {
+  font-size: 34px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* =========================
+PARAGRAPH
+========================= */
+
+.smartcapex-paragraph {
+  font-size: 21px;
+  line-height: 1.9;
+  color: #ffffff;
+  margin-bottom: 32px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* =========================
+MISSION TEXT
+========================= */
+
+.smartcapex-mission-text {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 38px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.smartcapex-button {
+  background: #ffffff;
+  color: #028f99;
+  height: 56px;
+  padding: 0 38px;
+  border-radius: 40px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.smartcapex-button:hover {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.25);
+}
+
+/* =========================
+RIGHT IMAGE
+========================= */
+
+.smartcapex-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+}
+
+.smartcapex-banner-image {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  object-fit: contain;
+  animation: floatAnimation 4s ease-in-out infinite;
+}
+
+/* =========================
+ANIMATION
+========================= */
+
+@keyframes floatAnimation {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+
+  .smartcapex-heading {
+    font-size: 58px;
+  }
+
+  .smartcapex-banner-image {
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 992px) {
+
+  .smartcapex-section {
+    min-height: auto;
+    padding: 70px 25px 50px;
+  }
+
+  .smartcapex-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .smartcapex-line-wrapper {
+    justify-content: center;
+  }
+
+  .smartcapex-image-wrapper {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .smartcapex-section {
+    padding: 70px 20px 50px;
+  }
+
+  .smartcapex-heading {
+    font-size: 42px;
+  }
+
+  .smartcapex-subheading {
+    font-size: 28px;
+  }
+
+  .smartcapex-paragraph {
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  .smartcapex-mission-text {
+    font-size: 22px;
+  }
+
+  .smartcapex-banner-image {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .smartcapex-heading {
+    font-size: 34px;
+  }
+
+  .smartcapex-subheading {
+    font-size: 24px;
+  }
+
+  .smartcapex-line {
+    width: 70px;
+  }
+
+  .smartcapex-button {
+    width: 100%;
+  }
+
+  .smartcapex-banner-image {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,165 @@
+// src/admin/AdminRoutes.jsx
+
+import {
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
+
+/* AUTH */
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+/* DASHBOARD */
+import Dashboard from "./pages/Dashboard";
+
+/* BLOGS */
+import Blogs from "./pages/Blogs";
+import AddBlog from "./pages/AddBlog";
+import EditBlog from "./pages/EditBlog";
+
+/* FORMS */
+import ContactForms from "./pages/ContactForms";
+import NadiForms from "./pages/NadiForms";
+import DoshaForms from "./pages/DoshaForms";
+
+/* PROTECTED ROUTE */
+import ProtectedRoute from "./components/ProtectedRoute";
+
+export default function AdminRoutes() {
+
+  return (
+
+    <Routes>
+
+      {/* =========================
+          DEFAULT REDIRECT
+      ========================= */}
+      <Route
+        path="/"
+        element={
+          <Navigate
+            to="/admin/login"
+            replace
+          />
+        }
+      />
+
+      {/* =========================
+          LOGIN
+      ========================= */}
+      <Route
+        path="/login"
+        element={<Login />}
+      />
+
+      {/* =========================
+          REGISTER
+      ========================= */}
+      <Route
+        path="/register"
+        element={<Register />}
+      />
+
+      {/* =========================
+          DASHBOARD
+      ========================= */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          BLOGS
+      ========================= */}
+      <Route
+        path="/blogs"
+        element={
+          <ProtectedRoute>
+            <Blogs />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          ADD BLOG
+      ========================= */}
+      <Route
+        path="/add-blog"
+        element={
+          <ProtectedRoute>
+            <AddBlog />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          EDIT BLOG
+      ========================= */}
+      <Route
+        path="/edit-blog/:id"
+        element={
+          <ProtectedRoute>
+            <EditBlog />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          CONTACT FORMS
+      ========================= */}
+      <Route
+        path="/contact-forms"
+        element={
+          <ProtectedRoute>
+            <ContactForms />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          NADI FORMS
+      ========================= */}
+      <Route
+        path="/nadi-forms"
+        element={
+          <ProtectedRoute>
+            <NadiForms />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          DOSHA FORMS
+      ========================= */}
+      <Route
+        path="/dosha-forms"
+        element={
+          <ProtectedRoute>
+            <DoshaForms />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          404 REDIRECT
+      ========================= */}
+      <Route
+        path="*"
+        element={
+          <Navigate
+            to="/admin/login"
+            replace
+          />
+        }
+      />
+
+    </Routes>
+
+  );
+
+}

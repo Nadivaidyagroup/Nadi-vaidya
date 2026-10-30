@@ -1,0 +1,2 @@
+[07-May-2026 06:28:49 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /home/jqc8g4vlwzqj/nadivaidya.in/api/config/security.php on line 152) in /home/jqc8g4vlwzqj/nadivaidya.in/api/admin/logout.php on line 41
+[10-May-2026 08:34:46 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /home/jqc8g4vlwzqj/nadivaidya.in/api/config/security.php on line 152) in /home/jqc8g4vlwzqj/nadivaidya.in/api/admin/logout.php on line 41

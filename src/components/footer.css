@@ -1,0 +1,446 @@
+/* src/components/footer.css */
+
+/* =========================================
+FOOTER
+========================================= */
+
+.footer-modern {
+
+  position: relative;
+
+  background-color: #f9faf5;
+
+  background-image:
+    url("../assets/images/footerbackground.png");
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  padding: 90px 0 30px;
+
+  overflow: hidden;
+
+}
+
+/* =========================================
+OVERLAY
+========================================= */
+
+.footer-overlay {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.90),
+      rgba(249,250,245,0.97)
+    );
+
+  z-index: 1;
+
+}
+
+/* =========================================
+CONTAINER
+========================================= */
+
+.footer-container {
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+/* =========================================
+GRID
+========================================= */
+
+.footer-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    1.4fr 1fr 1.1fr 1.2fr;
+
+  gap: 50px;
+
+}
+
+/* =========================================
+LOGO
+========================================= */
+
+.footer-logo {
+
+  width: 170px;
+
+  margin-bottom: 20px;
+
+}
+
+/* =========================================
+ABOUT
+========================================= */
+
+.footer-desc {
+
+  font-size: 15px;
+
+  line-height: 1.9;
+
+  color: #5a5a5a;
+
+  margin-bottom: 25px;
+
+}
+
+/* =========================================
+SOCIAL
+========================================= */
+
+.footer-socials {
+
+  display: flex;
+
+  gap: 12px;
+
+}
+
+.footer-socials a {
+
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: white;
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.08);
+
+  text-decoration: none;
+
+  font-size: 18px;
+
+  transition: 0.3s;
+
+}
+
+.footer-socials a:hover {
+
+  transform:
+    translateY(-4px);
+
+  background: #727450;
+
+  color: white;
+
+}
+
+/* =========================================
+HEADINGS
+========================================= */
+
+.footer-col h4 {
+
+  font-size: 20px;
+
+  margin-bottom: 24px;
+
+  color: #1f1f1f;
+
+  position: relative;
+
+  font-weight: 700;
+
+}
+
+.footer-col h4::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -10px;
+
+  width: 50px;
+
+  height: 3px;
+
+  background: #727450;
+
+  border-radius: 20px;
+
+}
+
+/* =========================================
+LINKS
+========================================= */
+
+.footer-links,
+.footer-org-list {
+
+  list-style: none;
+
+  padding: 0;
+
+  margin: 0;
+
+}
+
+.footer-links li,
+.footer-org-list li {
+
+  margin-bottom: 14px;
+
+}
+
+.footer-links a,
+.footer-org-list a {
+
+  color: #555;
+
+  text-decoration: none;
+
+  transition: 0.3s;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+
+}
+
+.footer-links a:hover,
+.footer-org-list a:hover {
+
+  color: #727450;
+
+  padding-left: 8px;
+
+}
+
+/* =========================================
+ORG
+========================================= */
+
+.footer-org-list li {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 10px;
+
+}
+
+.org-icon {
+
+  font-size: 16px;
+
+  margin-top: 2px;
+
+}
+
+/* =========================================
+CONTACT
+========================================= */
+
+.footer-contact-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+
+}
+
+.footer-contact-item {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+}
+
+.contact-icon {
+
+  min-width: 44px;
+
+  width: 44px;
+
+  height: 44px;
+
+  border-radius: 14px;
+
+  background: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 18px;
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.08);
+
+}
+
+.footer-contact-item a {
+
+  display: block;
+
+  color: #555;
+
+  text-decoration: none;
+
+  margin-bottom: 8px;
+
+  transition: 0.3s;
+
+  font-size: 15px;
+
+}
+
+.footer-contact-item a:hover {
+
+  color: #727450;
+
+}
+
+/* =========================================
+BOTTOM
+========================================= */
+
+.footer-bottom {
+
+  margin-top: 60px;
+
+  border-top:
+    1px solid rgba(0,0,0,0.08);
+
+  padding-top: 22px;
+
+  text-align: center;
+
+}
+
+.footer-bottom p {
+
+  margin: 0;
+
+  color: #666;
+
+  font-size: 14px;
+
+}
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media (max-width: 1200px) {
+
+  .footer-grid {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 40px;
+
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .footer-modern {
+
+    padding: 70px 0 25px;
+
+  }
+
+  .footer-grid {
+
+    grid-template-columns:
+      1fr;
+
+    gap: 35px;
+
+  }
+
+  .footer-col h4 {
+
+    font-size: 18px;
+
+  }
+
+  .footer-desc {
+
+    font-size: 14px;
+
+  }
+
+  .footer-links a,
+  .footer-org-list a,
+  .footer-contact-item a {
+
+    font-size: 14px;
+
+  }
+
+  .footer-logo {
+
+    width: 150px;
+
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .footer-modern {
+
+    padding: 60px 0 20px;
+
+  }
+
+  .footer-socials {
+
+    flex-wrap: wrap;
+
+  }
+
+  .footer-bottom {
+
+    margin-top: 40px;
+
+  }
+
+  .footer-bottom p {
+
+    font-size: 13px;
+
+  }
+
+}

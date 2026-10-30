@@ -1,0 +1,448 @@
+.dosha-page{
+  background:#f8f9f3;
+}
+
+/* HERO */
+.dosha-hero{
+  padding:120px 0;
+  text-align:center;
+  background:linear-gradient(135deg,#727450,#4f5137);
+  color:#fff;
+}
+
+.hero-tag{
+  display:inline-block;
+  padding:10px 20px;
+  border-radius:40px;
+  background:rgba(255,255,255,0.15);
+  margin-bottom:20px;
+}
+
+.dosha-hero h1{
+  font-size:60px;
+  margin-bottom:20px;
+}
+
+.dosha-hero p{
+  max-width:700px;
+  margin:auto;
+  line-height:1.8;
+}
+
+/* BUTTON */
+.start-btn{
+  margin-top:35px;
+  padding:16px 40px;
+  border:none;
+  border-radius:50px;
+  background:#fff;
+  color:#000;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 15px;
+}
+
+/* DOSHA CARDS */
+.dosha-info-section{
+  padding:80px 0;
+}
+
+.dosha-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+.dosha-card{
+  background:#fff;
+  border-radius:24px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.dosha-card img{
+  width:100%;
+  height:240px;
+  object-fit:contain;
+}
+
+.dosha-card h2{
+  margin:20px 0 10px;
+  color:#727450;
+}
+
+/* QUIZ */
+.quiz-section{
+  padding:80px 0;
+}
+
+.quiz-heading{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.quiz-heading h2{
+  font-size:42px;
+  color:#727450;
+}
+
+.quiz-card{
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  margin-bottom:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.quiz-card h3{
+  margin-bottom:20px;
+}
+
+.quiz-card label{
+  display:block;
+  background:#f5f5f5;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:12px;
+  cursor:pointer;
+}
+
+.quiz-card input{
+  margin-right:10px;
+}
+
+/* RESULT BUTTON */
+.quiz-result-btn{
+  text-align:center;
+  margin-top:40px;
+}
+
+.quiz-result-btn button{
+  padding:16px 40px;
+  border:none;
+  border-radius:50px;
+  background:#727450;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* FORM */
+.result-form-section{
+  padding:100px 0;
+}
+
+.result-form-box{
+  max-width:500px;
+  margin:auto;
+  background:#fff;
+  padding:40px;
+  border-radius:24px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.result-form-box h2{
+  text-align:center;
+  margin-bottom:10px;
+  color:#727450;
+}
+
+.result-form-box p{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.result-form-box input{
+  width:100%;
+  padding:16px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  margin-bottom:15px;
+  font-size:16px;
+}
+
+.result-form-box button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:14px;
+  background:#727450;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* RESULT */
+.result-section{
+  padding:100px 0;
+}
+
+.result-box{
+  background:#fff;
+  border-radius:30px;
+  padding:50px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.result-box img{
+  width:250px;
+  display:block;
+  margin:auto;
+}
+
+.result-box h2{
+  text-align:center;
+  margin:30px 0;
+  font-size:42px;
+}
+
+.result-text{
+  white-space:pre-line;
+  line-height:1.9;
+  color:#444;
+}
+
+/* COLORS */
+.result-box.vata h2{
+  color:#795548;
+}
+
+.result-box.pitta h2{
+  color:#e65100;
+}
+
+.result-box.kapha h2{
+  color:#2e7d32;
+}
+
+/* MOBILE */
+@media(max-width:992px){
+
+  .dosha-grid{
+    grid-template-columns:1fr;
+  }
+
+  .dosha-hero h1{
+    font-size:40px;
+  }
+
+  .result-box{
+    padding:30px;
+  }
+
+  .result-box h2{
+    font-size:32px;
+  }
+
+}
+/* MODERN RESULT SECTION */
+.modern-result-section{
+  padding:100px 0;
+}
+
+/* TOP CARD */
+.modern-result-header{
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:50px;
+  align-items:center;
+  background:#fff;
+  border-radius:35px;
+  padding:50px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.08);
+  margin-bottom:40px;
+}
+
+/* IMAGE */
+.modern-result-image{
+  position:relative;
+}
+
+.modern-result-image::before{
+  content:"";
+  position:absolute;
+  inset:-20px;
+  border-radius:30px;
+  opacity:0.15;
+}
+
+.modern-result-section.vata .modern-result-image::before{
+  background:#8d6e63;
+}
+
+.modern-result-section.pitta .modern-result-image::before{
+  background:#ef6c00;
+}
+
+.modern-result-section.kapha .modern-result-image::before{
+  background:#2e7d32;
+}
+
+.modern-result-image img{
+  width:100%;
+  position:relative;
+  z-index:2;
+}
+
+/* INFO */
+.result-tag{
+  display:inline-block;
+  padding:10px 20px;
+  border-radius:40px;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1px;
+  margin-bottom:20px;
+  background:#f3f3f3;
+}
+
+.modern-result-info h2{
+  font-size:58px;
+  margin-bottom:20px;
+}
+
+.modern-result-section.vata h2{
+  color:#795548;
+}
+
+.modern-result-section.pitta h2{
+  color:#e65100;
+}
+
+.modern-result-section.kapha h2{
+  color:#2e7d32;
+}
+
+.result-short{
+  font-size:18px;
+  line-height:1.8;
+  color:#555;
+  margin-bottom:30px;
+}
+
+/* MINI CARDS */
+.result-mini-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.mini-card{
+  background:#f8f8f8;
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+}
+
+.mini-card span{
+  display:block;
+  font-size:13px;
+  color:#777;
+  margin-bottom:10px;
+}
+
+.mini-card h4{
+  font-size:22px;
+}
+
+/* CONTENT GRID */
+.modern-result-content{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:30px;
+}
+
+.result-content-box{
+  background:#fff;
+  padding:35px;
+  border-radius:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.result-content-box.full{
+  grid-column:span 2;
+}
+
+.result-content-box h3{
+  font-size:30px;
+  margin-bottom:20px;
+  color:#222;
+}
+
+.result-content-box p{
+  line-height:1.9;
+  color:#555;
+}
+
+.result-content-box ul{
+  padding-left:20px;
+}
+
+.result-content-box li{
+  margin-bottom:15px;
+  line-height:1.7;
+  color:#555;
+}
+
+/* DIET */
+.diet-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.diet-card{
+  background:#f8f8f8;
+  padding:25px;
+  border-radius:20px;
+}
+
+.diet-card h4{
+  margin-bottom:12px;
+  font-size:22px;
+}
+
+/* LIFESTYLE */
+.lifestyle-box{
+  background:#f5f5f5;
+  padding:30px;
+  border-radius:25px;
+}
+
+/* MOBILE */
+@media(max-width:992px){
+
+  .modern-result-header{
+    grid-template-columns:1fr;
+    padding:30px;
+  }
+
+  .modern-result-info h2{
+    font-size:40px;
+  }
+
+  .result-mini-cards{
+    grid-template-columns:1fr;
+  }
+
+  .modern-result-content{
+    grid-template-columns:1fr;
+  }
+
+  .result-content-box.full{
+    grid-column:span 1;
+  }
+
+  .diet-grid{
+    grid-template-columns:1fr;
+  }
+
+}
