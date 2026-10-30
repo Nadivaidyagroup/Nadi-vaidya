@@ -1,145 +1,179 @@
 // src/pages/Home.jsx
+// होम पेज — अब दोनों क्लीनिक (करनाल व वृंदावन) पर केंद्रित।
 
 import { Link } from "react-router-dom";
-
-import { Helmet } from "react-helmet-async";
-
-import HomeSlider from "../components/HomeSlider.jsx";
-
 import "./home.css";
+import "./clinic.css";
 
-import section2 from "../assets/images/section2.jpg";
-import section3 from "../assets/images/section3.jpg";
-import section4 from "../assets/images/section4.jpg";
-import section5 from "../assets/images/section5.jpg";
-
-import ProductSection from "../components/ProductSection";
 import DietSection from "../components/DietSection";
-import TeamSection from "../components/TeamSection";
-import SmartLeasing from "../components/SmartLeasing";
-
-/* DATA */
+import { diets } from "../data/homeData";
 import {
-  products,
-  diets,
-  team
-} from "../data/homeData";
+  OPD_TIME,
+  clinics,
+  todaysClinic,
+  whatsappLink,
+} from "../data/clinics.js";
+import { ClinicCard, DoctorsStrip } from "./ClinicPage.jsx";
+
+// नाड़ी देखते हुए हाथ — Gurukul Shopify CDN पर पहले से अपलोड फ़ोटो
+const HERO_IMG =
+  "https://cdn.shopify.com/s/files/1/0814/7638/6916/files/nvg-hero-nadi.jpg?v=1792081941";
+
+const reasons = [
+  {
+    icon: "🩺",
+    title: "पारंपरिक नाड़ी परीक्षा",
+    text: "कलाई की नाड़ी से प्रकृति, दोषों के असंतुलन और अग्नि को समझकर परामर्श।",
+  },
+  {
+    icon: "🌿",
+    title: "36+ वर्ष का अनुभव",
+    text: "नाड़ी वैद्य डॉ. अजीत सिंह यादव जी और नाड़ी वैद्य परिवार का क्लीनिकल अनुभव।",
+  },
+  {
+    icon: "🍽️",
+    title: "आहार व दिनचर्या",
+    text: "आपकी प्रकृति के अनुसार भोजन, नींद और दिनचर्या का व्यावहारिक मार्गदर्शन।",
+  },
+  {
+    icon: "📍",
+    title: "दो क्लीनिक",
+    text: "करनाल (हरियाणा) और वृंदावन (मथुरा) — दोनों जगह सुबह 8 से दोपहर 1 बजे तक।",
+  },
+];
 
 export default function Home() {
+  const today = todaysClinic();
 
   return (
-
     <>
+      {/* HERO */}
+      <section
+        className="home-clinic-hero"
+        style={{ "--hero-img": `url(${HERO_IMG})` }}
+      >
+        <div className="container">
+          <h1>
+            Nadi Vaidya Clinics
+            <span>नाड़ी परीक्षा परामर्श — करनाल व वृंदावन</span>
+          </h1>
+          <p>
+            पारंपरिक आयुर्वेदिक नाड़ी परीक्षा से अपने शरीर और मन के संतुलन को
+            समझिए। OPD {OPD_TIME.labelHi}।
+          </p>
 
-      {/* SEO */}
-      <Helmet>
+          <div className="home-today">
+            🗓️ आज नाड़ी वैद्य OPD: <strong>{today.cityHi}</strong> (
+            {today.opdDaysHi})
+          </div>
 
-        <title>
-          Nadi Vaidya | Ayurveda, Nadi Pariksha & Holistic Wellness
-        </title>
-
-        <meta
-          name="description"
-          content="
-            Explore Ayurveda, Nadi Pariksha,
-            Dosha Diet Plans, Wellness Workshops,
-            Ayurvedic Products and Holistic Healing
-            with Nadi Vaidya.
-          "
-        />
-
-      </Helmet>
-
-      {/* HERO SLIDER */}
-      <HomeSlider />
-
-      {/* JOIN SECTION */}
-      <section className="home-image-section join-section">
-
-        {/* FULL IMAGE CLICK */}
-        <Link
-          to="https://www.nadivaidya.com/"
-          className="image-link"
-        >
-
-          <img
-            src={section2}
-            alt="Nadi Vaidya Workshop"
-            loading="lazy"
-          />
-
-        </Link>
-
-        {/* BUTTON */}
-        <div className="image-btn-wrap left-bottom-btn">
-
-          <Link
-            className="image-section-btn join-btn"
-            to="https://www.nadivaidya.com/"
-          >
-
-            Join Workshop
-
-          </Link>
-
+          <div className="home-hero-actions">
+            <a
+              className="clinic-btn clinic-btn-wa"
+              href={whatsappLink(today.phone, `${today.city} clinic`)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp पर अपॉइंटमेंट
+            </a>
+            <a
+              className="clinic-btn clinic-btn-call"
+              href={`tel:+91${today.phone.replace(/\D/g, "")}`}
+            >
+              📞 {today.phone}
+            </a>
+            <a className="clinic-btn clinic-btn-map" href="#clinics">
+              दोनों क्लीनिक देखें
+            </a>
+          </div>
         </div>
-
       </section>
 
-      {/* SHOP SECTION */}
-      <section className="home-image-section shop-section">
-
-        {/* FULL IMAGE CLICK */}
-        <a
-          href="https://nadivaidyapharmacy.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="image-link"
-        >
-
-          <img
-            src={section3}
-            alt="Nadi Vaidya Pharmacy"
-            loading="lazy"
-          />
-
-        </a>
-
-        {/* BUTTON */}
-        <div className="image-btn-wrap left-bottom-btn">
-
-          <a
-            className="image-section-btn shop-btn"
-            href="https://nadivaidyapharmacy.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-
-            Shop Now
-
-          </a>
-
+      {/* CLINICS */}
+      <section className="home-clinics" id="clinics">
+        <div className="container">
+          <h2 className="home-section-title">हमारे क्लीनिक</h2>
+          <p className="home-section-sub">
+            हर महीने 1–10 तारीख़ करनाल और 11–30 तारीख़ वृंदावन में नाड़ी वैद्य
+            OPD।
+          </p>
+          <div className="clinic-grid">
+            {clinics.map((c) => (
+              <ClinicCard clinic={c} compact key={c.slug} />
+            ))}
+          </div>
         </div>
-
       </section>
 
-      {/* HEAL INDIA */}
-      <SmartLeasing/>
+      {/* WHY */}
+      <section className="home-why">
+        <div className="container">
+          <h2 className="home-section-title">नाड़ी वैद्य क्लीनिक क्यों</h2>
+          <p className="home-section-sub">
+            “नाड़ी को केवल छूना नहीं — नाड़ी से जुड़ना पड़ता है।” — नाड़ी वैद्य
+            डॉ. अजीत सिंह यादव
+          </p>
+          <div className="why-grid">
+            {reasons.map((r) => (
+              <div className="why-item" key={r.title}>
+                <b>{r.icon}</b>
+                <h3>{r.title}</h3>
+                <p>{r.text}</p>
+              </div>
+            ))}
+          </div>
+          <p className="clinic-disclaimer" style={{ marginTop: 24 }}>
+            नाड़ी परीक्षा एक पारंपरिक आयुर्वेदिक समग्र मूल्यांकन पद्धति है; यह लैब
+            टेस्ट या आधुनिक जाँचों का विकल्प नहीं है।
+          </p>
+        </div>
+      </section>
 
-      {/* CONTACT SECTION */}
-    
+      {/* DOCTORS */}
+      <section className="home-doctors">
+        <div className="container">
+          <h2 className="home-section-title">हमारे नाड़ी वैद्य</h2>
+          <p className="home-section-sub">
+            <Link to="/about-us">पूरा परिचय पढ़ें →</Link>
+          </p>
+          <DoctorsStrip />
+        </div>
+      </section>
 
-      {/* PRODUCTS */}
-      <ProductSection products={products} />
-
-      {/* DIET */}
+      {/* DOSHA DIET */}
       <DietSection diets={diets} />
 
-      {/* TEAM */}
-      <TeamSection team={team} />
-
+      {/* ORGANISATIONS */}
+      <section className="home-orgs">
+        <div className="container">
+          <h2 className="home-section-title">नाड़ी वैद्य परिवार की दूसरी संस्थाएँ</h2>
+          <p className="home-section-sub">
+            आयुर्वेदिक उत्पाद और नाड़ी परीक्षा प्रशिक्षण अब अपनी-अपनी वेबसाइट पर।
+          </p>
+          <div className="org-grid">
+            <a
+              className="org-card"
+              href="https://nadivaidyapharmacy.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h3>Nadi Vaidya Pharmacy</h3>
+              <p>आयुर्वेदिक उत्पाद — ऑनलाइन ऑर्डर</p>
+              <span>nadivaidyapharmacy.com →</span>
+            </a>
+            <a
+              className="org-card"
+              href="https://nadivaidya.com/pages/nadi-pariksha-course"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h3>Nadi Vaidya Gurukul</h3>
+              <p>नाड़ी परीक्षा कार्यशाला व कोर्स</p>
+              <span>nadivaidya.com →</span>
+            </a>
+          </div>
+        </div>
+      </section>
     </>
-
   );
-
 }

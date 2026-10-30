@@ -7,10 +7,26 @@ FILE: db.php
 =========================================
 */
 
+/*
+ Password अब code में नहीं लिखा जाता।
+ वह server पर db.secret.php फ़ाइल में रहता है, जिसे
+ GitHub का auto-deploy, GitHub Secret "DB_PASSWORD" से बनाता है।
+ (db.secret.php कभी GitHub पर नहीं जाती — .gitignore में है)
+*/
+
 $host = "localhost";
 $user = "nadivaidyanewwebsite";
-$pass = "qaM)*4B#_63?V=MI";
 $dbname = "nadivaidyanewwebsite";
+$pass = "";
+
+$secretFile = __DIR__ . "/db.secret.php";
+
+if (file_exists($secretFile)) {
+    $secret = require $secretFile;
+    $pass = $secret["password"] ?? "";
+    $user = $secret["user"] ?? $user;
+    $dbname = $secret["dbname"] ?? $dbname;
+}
 
 
 /*

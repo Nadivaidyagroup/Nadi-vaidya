@@ -22,6 +22,7 @@ import seoConfig from "./config/seoConfig.js";
 import {
   organizationSchema,
   websiteSchema,
+  allClinicSchemas,
 } from "./utils/seoUtils.js";
 
 /* ADMIN */
@@ -33,12 +34,8 @@ import AboutUs from "./pages/AboutUs.jsx";
 import DoshaQuiz from "./pages/DoshaQuiz.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
 
-/* BLOG */
-import SingleBlog from "./pages/SingleBlog.jsx";
-
-/* EXTRA PAGES */
-import WorkshopSchedule from "./pages/WorkshopSchedule.jsx";
-import NadiParikshaForm from "./pages/NadiParikshaForm.jsx";
+/* CLINICS */
+import ClinicPage from "./pages/ClinicPage.jsx";
 
 /* DOSHA DIET PAGES */
 import VataDiet from "./pages/VataDiet.jsx";
@@ -68,7 +65,7 @@ const GURUKUL_URLS = {
     "https://nadivaidya.com/pages/gallery",
 
   team:
-    "https://nadivaidya.com/pages/team",
+    "https://nadivaidya.com/pages/about-us#team",
 };
 
 /* =====================================================
@@ -77,39 +74,39 @@ const GURUKUL_URLS = {
 
 const PAGE_SEO = {
   "/": {
-    title: "Nadi Vaidya | Ayurveda & Nadi Pariksha",
+    title: "Nadi Vaidya Clinic | Nadi Pariksha in Karnal & Vrindavan",
     description:
-      "Discover Nadi Vaidya, Ayurveda education, traditional Nadi Pariksha, wellness initiatives and holistic health awareness in India.",
+      "Nadi Vaidya clinics in Karnal and Vrindavan — traditional Nadi Pariksha and Ayurveda consultation with the Nadi Vaidya family. OPD 8 AM–1 PM. Book on WhatsApp or call.",
+  },
+
+  "/karnal-clinic": {
+    title: "Nadi Vaidya Clinic Karnal | AyurVaidya Wellness",
+    description:
+      "AyurVaidya Wellness, R.K. Puram, Karnal — Nadi Pariksha and Ayurveda consultation. OPD 8 AM–1 PM; Nadi Vaidya OPD 1st–10th of every month. Call 99922 42267.",
+  },
+
+  "/vrindavan-clinic": {
+    title: "Nadi Vaidya Clinic Vrindavan | Swasthya Seva Kendra",
+    description:
+      "Vrindavan Swasthya Seva Kendra, Parikrama Marg, Vrindavan — Nadi Pariksha and Ayurveda consultation. OPD 8 AM–1 PM; Nadi Vaidya OPD 11th–30th of every month. Call 83960 66555.",
   },
 
   "/about-us": {
-    title: "About Us | Nadi Vaidya",
+    title: "About Us | Nadi Vaidya Clinics",
     description:
-      "Learn about Nadi Vaidya, our Ayurveda initiatives, Nadi Pariksha knowledge and community wellness mission.",
+      "Meet the Nadi Vaidya family — Nadi Vaidya Dr. Ajit Singh Yadav and team, with 36+ years of clinical experience in traditional Nadi Pariksha.",
   },
 
   "/dosha-quiz": {
     title: "Ayurveda Dosha Quiz | Vata, Pitta & Kapha",
     description:
-      "Explore an educational Ayurveda dosha quiz and learn about traditional Vata, Pitta and Kapha wellness concepts.",
+      "Take a simple Ayurveda dosha quiz and learn about traditional Vata, Pitta and Kapha concepts.",
   },
 
   "/contact-us": {
-    title: "Contact Us | Nadi Vaidya",
+    title: "Contact & Appointment | Nadi Vaidya Clinics",
     description:
-      "Contact Nadi Vaidya for wellness programs, Ayurveda enquiries and organizational information.",
-  },
-
-  "/workshop-schedule": {
-    title: "Workshop Schedule | Nadi Vaidya",
-    description:
-      "Explore Nadi Vaidya workshop schedules and educational programs related to Nadi Pariksha and Ayurveda.",
-  },
-
-  "/nadi-pariksha-form": {
-    title: "Nadi Pariksha Registration | Nadi Vaidya",
-    description:
-      "Access the Nadi Vaidya registration form for Nadi Pariksha training and educational program enquiries.",
+      "Book a Nadi Pariksha appointment at our Karnal or Vrindavan clinic by WhatsApp or call. OPD 8 AM–1 PM.",
   },
 
   "/vata-diet": {
@@ -190,6 +187,19 @@ function getExternalRedirect(pathname) {
     path.startsWith("/gallery/")
   ) {
     return GURUKUL_URLS.gallery;
+  }
+
+  // Old Gurukul workshop pages
+  if (
+    path === "/workshop-schedule" ||
+    path === "/nadi-pariksha-form"
+  ) {
+    return GURUKUL_URLS.freeWorkshop;
+  }
+
+  // Old team page
+  if (path === "/team") {
+    return GURUKUL_URLS.team;
   }
 
   // Old News & Blogs listing and blog URLs
@@ -293,6 +303,7 @@ function GlobalSEO() {
               ...websiteSchema,
               url: SITE_URL,
             },
+            ...allClinicSchemas,
           ]}
         />
       )}
@@ -378,16 +389,15 @@ function AppRoutes() {
             element={<ContactUs />}
           />
 
-          {/* WORKSHOP SCHEDULE */}
+          {/* CLINICS */}
           <Route
-            path="workshop-schedule"
-            element={<WorkshopSchedule />}
+            path="karnal-clinic"
+            element={<ClinicPage slug="karnal-clinic" />}
           />
 
-          {/* NADI PARIKSHA FORM */}
           <Route
-            path="nadi-pariksha-form"
-            element={<NadiParikshaForm />}
+            path="vrindavan-clinic"
+            element={<ClinicPage slug="vrindavan-clinic" />}
           />
 
           {/* VATA DIET */}

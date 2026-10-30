@@ -1,0 +1,9 @@
+{
+  "name": "Nadi Vaidya Clinics — Karnal & Vrindavan",
+  "short_name": "Nadi Vaidya",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f5137",
+  "icons": [{ "src": "/logo.png", "sizes": "any", "type": "image/png" }]
+}

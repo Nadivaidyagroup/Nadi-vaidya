@@ -29,6 +29,7 @@ import logoUrl from "../assets/logo/logo.png";
 import FloatingContactButtons from "./FloatingContactButtons.jsx";
 
 import "./footer.css";
+import { OPD_TIME, clinics } from "../data/clinics.js";
 
 export default function Footer() {
 
@@ -58,12 +59,7 @@ export default function Footer() {
 
             <p className="footer-desc">
 
-              Nadi Vaidya Gurukul Pvt. Ltd,
-              Nadi Vaidya Pharmacy Pvt. Ltd,
-              and Nadi Vaidya Trust are dedicated
-              to spreading Ayurveda, Nadi Pariksha,
-              wellness awareness, and holistic healing
-              across India.
+              Nadi Vaidya clinics in Karnal and Vrindavan — traditional Nadi Pariksha and Ayurveda consultation with the Nadi Vaidya family. घर-घर नाड़ी • घर-घर आयुर्वेद
 
             </p>
 
@@ -135,23 +131,14 @@ export default function Footer() {
               </li>
 
               <li>
-
-                <Link to="/gallery">
-
-                  Gallery
-
+                <Link to="/karnal-clinic">
+                  Karnal Clinic
                 </Link>
-
               </li>
-
               <li>
-
-                <Link to="https://www.nadivaidya.com/">
-
-                  Free Workshop
-
+                <Link to="/vrindavan-clinic">
+                  Vrindavan Clinic
                 </Link>
-
               </li>
 
               <li>
@@ -165,13 +152,9 @@ export default function Footer() {
               </li>
 
               <li>
-
-                <Link to="/news-blogs">
-
-                  News & Blogs
-
-                </Link>
-
+                <a href="https://nadivaidya.com/blogs/ayurveda-gyanmala">
+                  Ayurveda Gyanmala (Blog)
+                </a>
               </li>
 
               <li>
@@ -194,88 +177,36 @@ export default function Footer() {
           <div className="footer-col">
 
             <h4>
-
-              Contact Info
-
+              Our Clinics
             </h4>
 
             <div className="footer-contact-list">
-
-              {/* PHONE */}
+              {clinics.map((c) => (
+                <div className="footer-contact-item" key={c.slug}>
+                  <div className="footer-contact-icon">
+                    <FaMapMarkerAlt />
+                  </div>
+                  <div>
+                    <Link to={`/${c.slug}`}>
+                      <strong>{c.name}</strong>
+                    </Link>
+                    <span className="footer-location">{c.address}</span>
+                    <a href={`tel:+91${c.phone.replace(/\D/g, "")}`}>
+                      <FaPhoneAlt /> {c.phone}
+                    </a>
+                  </div>
+                </div>
+              ))}
               <div className="footer-contact-item">
-
                 <div className="footer-contact-icon">
-
-                  <FaPhoneAlt />
-
+                  <FaLeaf />
                 </div>
-
                 <div>
-
-                  <a href="tel:+918950770385">
-
-                    +91 8950770385
-
-                  </a>
-
-                  <a href="tel:+919992242267">
-
-                    +91 9992242267
-
-                  </a>
-
-                </div>
-
-              </div>
-
-              {/* EMAIL */}
-              <div className="footer-contact-item">
-
-                <div className="footer-contact-icon">
-
-                  <FaEnvelope />
-
-                </div>
-
-                <div>
-
-                  <a href="mailto:nadivaidyapharmacy@gmail.com">
-
-                    nadivaidyapharmacy@gmail.com
-
-                  </a>
-
-                  <a href="mailto:nadivaidyatrust@gmail.com">
-
-                    nadivaidyatrust@gmail.com
-
-                  </a>
-
-                </div>
-
-              </div>
-
-              {/* LOCATION */}
-              <div className="footer-contact-item">
-
-                <div className="footer-contact-icon">
-
-                  <FaMapMarkerAlt />
-
-                </div>
-
-                <div>
-
                   <span className="footer-location">
-
-                    Karnal, Haryana, India
-
+                    OPD {OPD_TIME.label} • {OPD_TIME.labelHi}
                   </span>
-
                 </div>
-
               </div>
-
             </div>
 
           </div>

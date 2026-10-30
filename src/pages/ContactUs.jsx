@@ -11,6 +11,7 @@ import {
 } from "react-helmet-async";
 
 import "./contact.css";
+import { OPD_TIME, clinics, whatsappLink } from "../data/clinics.js";
 
 export default function ContactUs() {
 
@@ -212,21 +213,17 @@ export default function ContactUs() {
 
               <span className="hero-badge">
 
-                🌿 Ayurveda • Wellness • Nadi Pariksha
+                🌿 Karnal • Vrindavan • OPD 8 AM–1 PM
 
               </span>
 
               <h1>
-
-                Contact Nadi Vaidya
-
+                Appointment &amp; Contact
               </h1>
 
               <p>
 
-                Connect with us for Ayurveda consultation,
-                wellness support, Nadi Pariksha workshops
-                and holistic healing guidance.
+                नाड़ी परीक्षा परामर्श के लिए अपने नज़दीकी क्लीनिक पर WhatsApp या कॉल करें।
 
               </p>
 
@@ -247,117 +244,42 @@ export default function ContactUs() {
               <div className="contact-info-card">
 
                 <span className="small-title">
-
-                  Get In Touch
-
+                  Our Clinics
                 </span>
 
                 <h2>
-
-                  Let’s Begin Your
-                  Wellness Journey
-
+                  Book Your Nadi Pariksha
                 </h2>
 
                 <p className="info-description">
 
-                  We are here to help you with Ayurvedic
-                  consultations, wellness guidance,
-                  herbal support and Nadi Pariksha programs.
+                  OPD {OPD_TIME.label} ({OPD_TIME.labelHi}). नाड़ी वैद्य OPD: हर महीने 1–10 तारीख़ करनाल, 11–30 तारीख़ वृंदावन।
 
                 </p>
 
                 {/* INFO ITEMS */}
                 <div className="info-list">
-
-                  {/* ADDRESS */}
-                  <div className="info-item">
-
-                    <div className="info-icon">
-
-                      📍
-
+                  {clinics.map((c) => (
+                    <div className="info-item" key={c.slug}>
+                      <div className="info-icon">📍</div>
+                      <div>
+                        <h4>
+                          {c.name} — {c.city}
+                        </h4>
+                        <p>{c.address}</p>
+                        <a href={`tel:+91${c.phone.replace(/\D/g, "")}`}>
+                          📞 {c.phone}
+                        </a>
+                        <a
+                          href={whatsappLink(c.phone, `${c.city} clinic`)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          💬 WhatsApp पर अपॉइंटमेंट
+                        </a>
+                      </div>
                     </div>
-
-                    <div>
-
-                      <h4>
-                        Address
-                      </h4>
-
-                      <p>
-
-                        Nadi Vaidya Pharmacy Pvt Ltd,
-                        India
-
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                  {/* PHONE */}
-                  <div className="info-item">
-
-                    <div className="info-icon">
-
-                      📞
-
-                    </div>
-
-                    <div>
-
-                      <h4>
-                        Phone Number
-                      </h4>
-
-                      <a href="tel:+918950770385">
-
-                        +91 8950770385
-
-                      </a>
-
-                      <a href="tel:+919992242267">
-
-                        +91 9992242267
-
-                      </a>
-
-                    </div>
-
-                  </div>
-
-                  {/* EMAIL */}
-                  <div className="info-item">
-
-                    <div className="info-icon">
-
-                      ✉️
-
-                    </div>
-
-                    <div>
-
-                      <h4>
-                        Email Address
-                      </h4>
-
-                      <a href="mailto:nadivaidyapharmacy@gmail.com">
-
-                        nadivaidyapharmacy@gmail.com
-
-                      </a>
-
-                      <a href="mailto:nadivaidyatrust@gmail.com">
-
-                        nadivaidyatrust@gmail.com
-
-                      </a>
-
-                    </div>
-
-                  </div>
-
+                  ))}
                 </div>
 
               </div>

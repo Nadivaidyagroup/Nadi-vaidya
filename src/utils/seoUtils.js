@@ -1,6 +1,7 @@
 // src/utils/seoUtils.js
 
 import seoConfig from "../config/seoConfig.js";
+import { clinics, OPD_TIME, doctors } from "../data/clinics.js";
 
 /* =========================================
    URL HELPERS
@@ -95,34 +96,52 @@ export const websiteSchema = {
 };
 
 /* =========================================
-   LOCAL BUSINESS SCHEMA
-   Use only if the organization has a real,
-   publicly accessible business location.
+   CLINIC (MEDICAL CLINIC) SCHEMA
+   दोनों क्लीनिक — जानकारी src/data/clinics.js से
 ========================================= */
-
-export const localBusinessSchema = {
+export const clinicSchema = (clinic) => ({
   "@context": "https://schema.org",
-  "@type": "MedicalBusiness",
-
-  name: "AyurVaidya Wellness",
-
-  url: `${getBaseUrl()}/`,
-
-  description:
-    "Ayurveda education and wellness services offered by Nadi Vaidya.",
-
-  telephone: "+91 99922 42267",
-
+  "@type": "MedicalClinic",
+  "@id": `${getBaseUrl()}/${clinic.slug}#clinic`,
+  name: `${clinic.name} — Nadi Vaidya Clinic ${clinic.city}`,
+  url: `${getBaseUrl()}/${clinic.slug}`,
+  image: getAbsoluteUrl(seoConfig.defaultImage),
+  telephone: `+91 ${clinic.phone}`,
+  medicalSpecialty: "Ayurveda",
+  description: `Nadi Pariksha (Ayurvedic pulse assessment) and Ayurveda consultation at ${clinic.name}, ${clinic.city}.`,
   address: {
     "@type": "PostalAddress",
-    addressLocality:
-      seoConfig.organization?.address?.city || "Karnal",
-    addressRegion:
-      seoConfig.organization?.address?.state || "Haryana",
-    addressCountry:
-      seoConfig.organization?.address?.country || "India",
+    streetAddress: clinic.street,
+    addressLocality: clinic.locality,
+    addressRegion: clinic.region,
+    postalCode: clinic.postalCode,
+    addressCountry: "IN",
   },
-};
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday",
+      ],
+      opens: OPD_TIME.opens,
+      closes: OPD_TIME.closes,
+    },
+  ],
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(clinic.mapQuery)}`,
+  parentOrganization: {
+    "@type": "Organization",
+    name: "Nadi Vaidya Group",
+    url: `${getBaseUrl()}/`,
+  },
+  employee: doctors.map((d) => ({
+    "@type": "Physician",
+    name: d.name,
+    honorificSuffix: d.qual,
+  })),
+});
+
+export const allClinicSchemas = clinics.map(clinicSchema);
 
 /* =========================================
    BREADCRUMB SCHEMA
@@ -278,7 +297,8 @@ const seoUtils = {
   getCanonicalUrl,
   organizationSchema,
   websiteSchema,
-  localBusinessSchema,
+  clinicSchema,
+  allClinicSchemas,
   createBreadcrumbSchema,
   createArticleSchema,
   createWebPageSchema,

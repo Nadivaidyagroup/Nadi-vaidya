@@ -45,3 +45,6 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+# Server-only secrets
+api/config/db.secret.php
+error_log

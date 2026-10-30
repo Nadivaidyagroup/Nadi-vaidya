@@ -7,27 +7,27 @@ const seoConfig = {
 
   siteName: "Nadi Vaidya",
 
-  siteUrl: "https://nadivadiya.in",
+  siteUrl: "https://nadivaidya.in",
 
   defaultTitle:
-    "Nadi Vaidya | Ayurveda, Nadi Pariksha & Wellness",
+    "Nadi Vaidya Clinic | Nadi Pariksha in Karnal & Vrindavan",
 
   titleTemplate: "%s | Nadi Vaidya",
 
   defaultDescription:
-    "Discover Nadi Vaidya Gurukul, traditional Nadi Pariksha, Ayurveda education, wellness programs and holistic health awareness across India.",
+    "Nadi Vaidya clinics in Karnal (AyurVaidya Wellness) and Vrindavan (Vrindavan Swasthya Seva Kendra) — traditional Nadi Pariksha and Ayurveda consultation. OPD 8 AM–1 PM. Book on WhatsApp or call.",
 
   /* =========================================
      BRANDING
   ========================================= */
 
-  logo: "https://nadivadiya.in/src/assets/logo/logo.png",
+  logo: "https://nadivaidya.in/logo.png",
 
-  defaultImage: "https://nadivadiya.in/og-image.jpg",
+  defaultImage: "https://nadivaidya.in/og-image.jpg",
 
   favicon: "/favicon.ico",
 
-  themeColor: "#ffffff",
+  themeColor: "#4f5137",
 
   /* =========================================
      LANGUAGE & SOCIAL SHARING
@@ -50,13 +50,12 @@ const seoConfig = {
   ========================================= */
 
   organization: {
-    name: "Nadi Vaidya Gurukul Pvt. Ltd.",
+    name: "Nadi Vaidya Clinics",
 
     alternateName: "Nadi Vaidya",
 
-    phone: "+91 8950770385",
+    phone: "+91 99922 42267",
 
-    email: "nadivaidyapharmacy@gmail.com",
 
     address: {
       city: "Karnal",
@@ -80,7 +79,7 @@ const seoConfig = {
   ========================================= */
 
   externalLinks: {
-    workshop: "https://nadivaidya.com/",
+    gurukul: "https://nadivaidya.com/",
     pharmacy: "https://nadivaidyapharmacy.com/",
   },
 
@@ -92,14 +91,12 @@ const seoConfig = {
   keywords: [
     "Nadi Vaidya",
     "Nadi Pariksha",
-    "Ayurveda",
-    "Ayurveda education",
-    "Nadi Vaidya Gurukul",
-    "Ayurvedic wellness",
-    "Ayurveda workshops",
+    "Nadi Vaidya Karnal",
+    "Nadi Vaidya Vrindavan",
+    "Ayurvedic clinic Karnal",
+    "Ayurvedic clinic Vrindavan",
+    "Nadi Pariksha clinic",
     "Vata Pitta Kapha",
-    "Ayurveda Haryana",
-    "Nadi Pariksha training",
   ],
 };
 

@@ -2,7 +2,7 @@
 
 import { Helmet } from "react-helmet-async";
 
-import "./vataDiet.css";
+import "./VataDiet.css";
 
 const sections = [
 

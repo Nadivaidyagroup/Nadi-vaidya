@@ -11,46 +11,17 @@ import {
 } from "react";
 
 import logoUrl from "../assets/logo/logo.png";
+import { OPD_TIME, todaysClinic, whatsappLink } from "../data/clinics.js";
 
 import "./header.css";
 
 const menuItems = [
-
-  {
-    label: "Home",
-    path: "/"
-  },
-
-  {
-    label: "About Us",
-    path: "/about-us"
-  },
-
-  {
-    label: "Gallery",
-    path: "/gallery"
-  },
-
-  {
-    label: "Free Workshop",
-    path: "https://www.nadivaidya.com/"
-  },
-
-  {
-    label: "Dosha Quiz",
-    path: "/dosha-quiz"
-  },
-
-  {
-    label: "News & Blogs",
-    path: "/news-blogs"
-  },
-
-  {
-    label: "Contact Us",
-    path: "/contact-us"
-  }
-
+  { label: "Home", path: "/" },
+  { label: "Karnal Clinic", path: "/karnal-clinic" },
+  { label: "Vrindavan Clinic", path: "/vrindavan-clinic" },
+  { label: "About Us", path: "/about-us" },
+  { label: "Dosha Quiz", path: "/dosha-quiz" },
+  { label: "Contact", path: "/contact-us" }
 ];
 
 export default function Header() {
@@ -112,18 +83,13 @@ export default function Header() {
           <div className="top-strip-inner">
 
             <p className="top-strip-text">
-
-              🌿 Ayurveda Wellness & Nadi Pariksha
-
+              🕗 OPD {OPD_TIME.label} • Karnal 1–10 • Vrindavan 11–30
             </p>
-
             <a
-              href="tel:+918950770385"
+              href={`tel:+91${todaysClinic().phone.replace(/\D/g, "")}`}
               className="top-call-link"
             >
-
-              📞 +91 8950770385
-
+              📞 {todaysClinic().city}: {todaysClinic().phone}
             </a>
 
           </div>
@@ -200,18 +166,17 @@ export default function Header() {
 
               {/* STORE BUTTON */}
               <a
-                href="https://nadivaidyapharmacy.com/"
+                href={whatsappLink(todaysClinic().phone, `${todaysClinic().city} clinic`)}
                 target="_blank"
                 rel="noreferrer"
                 className="header-store-btn"
               >
-
-                Shop Now
-
+                Appointment
               </a>
 
               {/* MOBILE MENU BUTTON */}
               <button
+                aria-label="Open menu"
                 className={`mobile-toggle1 ${
                   open
                     ? "active"
@@ -252,6 +217,7 @@ export default function Header() {
           />
 
           <button
+            aria-label="Close menu"
             className="mobile-close-btn"
             onClick={() =>
               setOpen(false)
@@ -303,14 +269,12 @@ export default function Header() {
 
         {/* BUTTON */}
         <a
-          href="https://nadivaidyapharmacy.com/"
+          href={whatsappLink(todaysClinic().phone, `${todaysClinic().city} clinic`)}
           target="_blank"
           rel="noreferrer"
           className="mobile-shop-btn"
         >
-
-          🛒 Visit Store
-
+          📲 WhatsApp Appointment
         </a>
 
       </div>

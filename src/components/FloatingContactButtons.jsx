@@ -23,6 +23,7 @@ import {
 } from "react-icons/io5";
 
 import "./floatingContactButtons.css";
+import { clinics, whatsappLink } from "../data/clinics.js";
 
 export default function FloatingContactButtons() {
 
@@ -228,8 +229,7 @@ export default function FloatingContactButtons() {
 
           <p>
 
-            👋 Welcome to Nadi Vaidya.
-            How can we help you today?
+            👋 नमस्ते! अपॉइंटमेंट के लिए WhatsApp या कॉल करें — OPD सुबह 8 से दोपहर 1 बजे।
 
           </p>
 
@@ -237,28 +237,17 @@ export default function FloatingContactButtons() {
 
         {/* WHATSAPP */}
         <a
-          href="https://wa.me/918950770385"
+          href={whatsappLink(clinics[0].phone, "Karnal clinic")}
           target="_blank"
           rel="noopener noreferrer"
           className="floating-card whatsapp-card"
         >
-
           <div className="floating-card-icon">
-
             <FaWhatsapp />
-
           </div>
-
           <div className="floating-card-content">
-
-            <h4>
-              WhatsApp Chat
-            </h4>
-
-            <span>
-              Instant Support
-            </span>
-
+            <h4>WhatsApp — Karnal</h4>
+            <span>{clinics[0].phone}</span>
           </div>
 
           <div className="floating-arrow">
@@ -271,26 +260,17 @@ export default function FloatingContactButtons() {
 
         {/* CALL */}
         <a
-          href="tel:+918950770385"
-          className="floating-card call-card"
+          href={whatsappLink(clinics[1].phone, "Vrindavan clinic")}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="floating-card whatsapp-card"
         >
-
           <div className="floating-card-icon">
-
-            <FaPhoneAlt />
-
+            <FaWhatsapp />
           </div>
-
           <div className="floating-card-content">
-
-            <h4>
-              Call Expert
-            </h4>
-
-            <span>
-              Talk Directly
-            </span>
-
+            <h4>WhatsApp — Vrindavan</h4>
+            <span>{clinics[1].phone}</span>
           </div>
 
           <div className="floating-arrow">
@@ -303,26 +283,30 @@ export default function FloatingContactButtons() {
 
         {/* EMAIL */}
         <a
-          href="mailto:nadivaidyapharmacy@gmail.com"
-          className="floating-card email-card"
+          href={`tel:+91${clinics[0].phone.replace(/\D/g, "")}`}
+          className="floating-card call-card"
         >
-
           <div className="floating-card-icon">
-
-            <FaEnvelope />
-
+            <FaPhoneAlt />
           </div>
-
           <div className="floating-card-content">
-
-            <h4>
-              Email Us
-            </h4>
-
-            <span>
-              Send Inquiry
-            </span>
-
+            <h4>Call — Karnal</h4>
+            <span>{clinics[0].phone}</span>
+          </div>
+          <div className="floating-arrow">
+            ↗
+          </div>
+        </a>
+        <a
+          href={`tel:+91${clinics[1].phone.replace(/\D/g, "")}`}
+          className="floating-card call-card"
+        >
+          <div className="floating-card-icon">
+            <FaPhoneAlt />
+          </div>
+          <div className="floating-card-content">
+            <h4>Call — Vrindavan</h4>
+            <span>{clinics[1].phone}</span>
           </div>
 
           <div className="floating-arrow">
