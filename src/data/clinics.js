@@ -41,7 +41,7 @@ export const clinics = [
     phone: "99922 42267",
     opdDays: "1st – 10th of every month",
     opdDaysHi: "हर महीने 1 से 10 तारीख़",
-    mapQuery: "AyurVaidya Wellness, R.K. Puram, Karnal, Haryana 132001",
+    mapQuery: "4, RK Puram, Gali No 10, Kunjpura Road, Karnal, Haryana 132001",
     logo: ayurVaidyaLogo,
   },
   {

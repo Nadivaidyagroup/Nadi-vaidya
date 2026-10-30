@@ -142,13 +142,14 @@ export default function Footer() {
               </li>
 
               <li>
-
+                <a href="https://nadivaidya.com/pages/gallery">
+                  Gallery
+                </a>
+              </li>
+              <li>
                 <Link to="/dosha-quiz">
-
                   Dosha Quiz
-
                 </Link>
-
               </li>
 
               <li>
