@@ -83,7 +83,7 @@ export default function Header() {
           <div className="top-strip-inner">
 
             <p className="top-strip-text">
-              🕗 OPD {OPD_TIME.label} • Karnal 1–10 • Vrindavan 11–30
+              🕗 OPD {OPD_TIME.label} • Karnal 1–10 • Vrindavan 11–31
             </p>
             <a
               href={`tel:+91${todaysClinic().phone.replace(/\D/g, "")}`}

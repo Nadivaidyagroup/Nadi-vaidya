@@ -94,8 +94,7 @@ export default function Home() {
         <div className="container">
           <h2 className="home-section-title">हमारे क्लीनिक</h2>
           <p className="home-section-sub">
-            हर महीने 1–10 तारीख़ करनाल और 11–30 तारीख़ वृंदावन में नाड़ी वैद्य
-            OPD।
+            हर महीने 1–10 तारीख़ करनाल और 11 से 31 तारीख़ तक वृंदावन में नाड़ी वैद्य OPD। तीनों नाड़ी वैद्य दोनों क्लीनिक में।
           </p>
           <div className="clinic-grid">
             {clinics.map((c) => (

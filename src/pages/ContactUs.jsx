@@ -253,7 +253,7 @@ export default function ContactUs() {
 
                 <p className="info-description">
 
-                  OPD {OPD_TIME.label} ({OPD_TIME.labelHi}). नाड़ी वैद्य OPD: हर महीने 1–10 तारीख़ करनाल, 11–30 तारीख़ वृंदावन।
+                  OPD {OPD_TIME.label} ({OPD_TIME.labelHi}). नाड़ी वैद्य OPD: हर महीने 1–10 तारीख़ करनाल, 11 से 31 तारीख़ वृंदावन।
 
                 </p>
 
