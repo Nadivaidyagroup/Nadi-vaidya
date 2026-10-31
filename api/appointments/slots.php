@@ -30,7 +30,7 @@ if (!apptClinicOpenOn($clinic, $date)) {
 }
 
 $stmt = apptPrepare($conn, 
-    "SELECT appt_time FROM appointments
+    "SELECT appt_time FROM clinic_appointments
      WHERE clinic = ? AND appt_date = ? AND active = 1"
 );
 $stmt->bind_param("ss", $clinic, $date);

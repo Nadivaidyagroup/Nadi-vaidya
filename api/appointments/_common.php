@@ -111,10 +111,11 @@ $APPT_CLINICS = [
     ],
 ];
 
-/* टेबल पहली बार अपने-आप बन जाती है */
+/* टेबल पहली बार अपने-आप बन जाती है।
+   नाम clinic_appointments — database में पुरानी साइट की एक अलग "appointments" टेबल पहले से है, उसे नहीं छूते। */
 function apptEnsureTable($conn) {
     $sql = "
-        CREATE TABLE IF NOT EXISTS appointments (
+        CREATE TABLE IF NOT EXISTS clinic_appointments (
             id INT PRIMARY KEY AUTO_INCREMENT,
             clinic VARCHAR(20) NOT NULL,
             appt_date DATE NOT NULL,

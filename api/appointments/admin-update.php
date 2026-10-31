@@ -21,11 +21,11 @@ if ($id <= 0 || !in_array($status, ["booked", "visited", "no_show", "cancelled"]
 }
 
 if ($status === "cancelled") {
-    $stmt = apptPrepare($conn, "UPDATE appointments SET status = ?, active = NULL WHERE id = ?");
+    $stmt = apptPrepare($conn, "UPDATE clinic_appointments SET status = ?, active = NULL WHERE id = ?");
     $stmt->bind_param("si", $status, $id);
 } else {
     /* cancelled से वापस लाने पर slot फिर से रोकें */
-    $stmt = apptPrepare($conn, "UPDATE appointments SET status = ?, active = 1 WHERE id = ?");
+    $stmt = apptPrepare($conn, "UPDATE clinic_appointments SET status = ?, active = 1 WHERE id = ?");
     $stmt->bind_param("si", $status, $id);
 }
 

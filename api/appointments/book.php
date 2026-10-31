@@ -58,7 +58,7 @@ $problem = mb_substr($problem, 0, 1000);
 
 /* एक नंबर से बहुत ज़्यादा आगे की बुकिंग नहीं */
 $stmt = apptPrepare($conn, 
-    "SELECT COUNT(*) AS c FROM appointments
+    "SELECT COUNT(*) AS c FROM clinic_appointments
      WHERE phone = ? AND active = 1 AND appt_date >= CURDATE()"
 );
 $stmt->bind_param("s", $phone);
@@ -71,7 +71,7 @@ if ($count >= APPT_MAX_ACTIVE_PER_PHONE) {
 }
 
 $stmt = apptPrepare($conn, 
-    "INSERT INTO appointments
+    "INSERT INTO clinic_appointments
         (clinic, appt_date, appt_time, name, phone, age, gender, city, problem)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 );

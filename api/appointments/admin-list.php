@@ -23,7 +23,7 @@ if (!$isDate($to)) $to = "2100-01-01";
 
 $sql = "SELECT id, clinic, appt_date, appt_time, name, phone, age, gender,
                city, problem, status, created_at
-        FROM appointments
+        FROM clinic_appointments
         WHERE appt_date BETWEEN ? AND ?";
 $types = "ss";
 $params = [$from, $to];
