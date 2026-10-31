@@ -139,7 +139,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--hero-img) center / cover no-repeat;
+  background: var(--hero-img) center 45% / cover no-repeat;
   opacity: .35;
 }
 .home-clinic-hero .container { position: relative; padding: 72px 15px 64px; }

@@ -17,7 +17,7 @@ import { ClinicCard, DoctorsStrip } from "./ClinicPage.jsx";
 
 // नाड़ी देखते हुए हाथ — Gurukul Shopify CDN पर पहले से अपलोड फ़ोटो
 const HERO_IMG =
-  "https://cdn.shopify.com/s/files/1/0814/7638/6916/files/nvg-hero-nadi.jpg?v=1792081941";
+  "https://cdn.shopify.com/s/files/1/0814/7638/6916/files/nvg-hero-nadi-pariksha.png?v=1792082984&width=1400";
 
 const reasons = [
   {
