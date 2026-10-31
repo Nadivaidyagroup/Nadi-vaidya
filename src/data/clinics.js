@@ -7,9 +7,9 @@
 // =====================================================
 
 import ayurVaidyaLogo from "../assets/images/AyurVaidya.jpeg";
-import team1 from "../assets/images/team/1.jpg";
-import team2 from "../assets/images/team/2.jpg";
-import team3 from "../assets/images/team/3.jpg";
+import drAjit from "../assets/images/doctors/ajit-singh-yadav.jpg";
+import drMohit from "../assets/images/doctors/mohit-vashist.jpg";
+import drSaloni from "../assets/images/doctors/saloni-yadav-vashist.jpg";
 
 export const OPD_TIME = {
   label: "8:00 AM – 1:00 PM",
@@ -80,18 +80,18 @@ export const doctors = [
     name: "Nadi Vaidya Dr. Ajit Singh Yadav",
     qual: "BAMS",
     role: "Founder & Chairman, Nadi Vaidya Group • 36+ years of clinical experience",
-    photo: team1,
+    photo: drAjit,
   },
   {
     name: "Nadi Vaidya Dr. Saloni Yadav Vashist",
     qual: "BAMS, MD (DN)",
     role: "Nadi Vaidya • Clinical Ayurveda",
-    photo: team3,
+    photo: drSaloni,
   },
   {
     name: "Nadi Vaidya Dr. Mohit Vashist",
     qual: "BAMS, MD (AM)",
     role: "Nadi Vaidya • Clinical Ayurveda",
-    photo: team2,
+    photo: drMohit,
   },
 ];
