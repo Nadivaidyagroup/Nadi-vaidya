@@ -1,5 +1,5 @@
 /* src/components/ourTeam.css */
-.ourteam { padding: 56px 0; background: #fff; }
+.ourteam { padding: 56px 0 136px; background: #fff; position: relative; z-index: 6; }
 .ourteam-eyebrow { text-align: center; color: #8a6d2f; font-weight: 600; letter-spacing: .04em; margin: 0 0 4px; }
 .ourteam-title { text-align: center; color: #7a1f1f; font-size: clamp(28px, 4vw, 38px); font-weight: 700; margin: 0 0 28px; }
 .ourteam-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 24px; }
