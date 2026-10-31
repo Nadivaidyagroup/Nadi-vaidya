@@ -12,7 +12,7 @@ import wellnessImg from "../assets/images/AyurVaidya.jpeg";
 import trustImg from "../assets/images/Nadi-Vaidya-Trust.jpeg";
 import pharmacyImg from "../assets/images/NADI-VAIDYA-PHARMACY.png";
 
-import TeamSection from "../components/TeamSection";
+import OurTeam from "../components/OurTeam";
 
 import { team } from "../data/homeData";
 
@@ -600,7 +600,7 @@ export default function AboutUs() {
 
         {/* TEAM */}
 
-        <TeamSection team={team} />
+        <OurTeam />
 
         {/* =========================================
         CONTACT

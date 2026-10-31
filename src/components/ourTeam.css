@@ -1,0 +1,13 @@
+/* src/components/ourTeam.css */
+.ourteam { padding: 56px 0; background: #fff; }
+.ourteam-eyebrow { text-align: center; color: #8a6d2f; font-weight: 600; letter-spacing: .04em; margin: 0 0 4px; }
+.ourteam-title { text-align: center; color: #7a1f1f; font-size: clamp(28px, 4vw, 38px); font-weight: 700; margin: 0 0 28px; }
+.ourteam-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 24px; }
+@media (max-width: 991px) { .ourteam-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .ourteam-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; } }
+.ourteam-card { margin: 0; text-align: center; }
+.ourteam-photo { aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; background: #f3efe6; }
+.ourteam-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.ourteam-card figcaption { padding: 12px 4px 0; display: flex; flex-direction: column; gap: 4px; }
+.ourteam-card strong { color: #7a1f1f; font-size: clamp(16px, 2.2vw, 20px); font-weight: 700; line-height: 1.3; }
+.ourteam-card span { color: #3b3b30; font-size: clamp(13px, 1.8vw, 15px); line-height: 1.5; }
