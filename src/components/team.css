@@ -155,6 +155,8 @@ DESKTOP SLIDER
 
   object-fit: cover;
 
+  object-position: center top;
+
   display: block;
 
 }

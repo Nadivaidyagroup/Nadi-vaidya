@@ -141,25 +141,25 @@ export const diets = [
 export const team = [
   {
     id: 1,
-    name: "Nadi Vaidya Dr Ajit Singh Yadav",
+    name: "Nadi Vaidya Dr. Ajit Singh Yadav",
     role: "Founder and Owner",
     image: team1
   },
   {
     id: 2,
-    name: "Nadi Vaidya Dr Mohit Vashist",
+    name: "Nadi Vaidya Dr. Mohit Vashist",
     role: "CEO, NADI VAIDYA PHARMACY PVT. LTD.",
     image: team2
   },
   {
     id: 3,
-    name: "Nadi Vaidya Dr Saloni Yadav Vashist",
+    name: "Nadi Vaidya Dr. Saloni Yadav Vashist",
     role: "CEO, NADI VAIDYA GURUKUL PVT. LTD.",
     image: team3
   },
   {
     id: 4,
-    name: "Nadi Vaidya Dr Mana Yadav",
+    name: "Nadi Vaidya Dr. Mana Yadav",
     role: "President, Nadi Vaidya Trust Healing hands",
     image: team4
   },
