@@ -13,10 +13,85 @@ FILE: api/appointments/_common.php
 =========================================
 */
 
+/* कोई भी error हो तो खाली 500 नहीं, साफ़ JSON मिले (जाँच आसान) */
+set_exception_handler(function ($e) {
+    if (!headers_sent()) {
+        http_response_code(500);
+        header("Content-Type: application/json");
+    }
+    echo json_encode([
+        "success" => false,
+        "message" => "Server error",
+        "detail" => get_class($e) . ": " . $e->getMessage(),
+    ]);
+    exit;
+});
+register_shutdown_function(function () {
+    $err = error_get_last();
+    if ($err && in_array($err["type"], [E_ERROR, E_PARSE, E_COMPILE_ERROR, E_CORE_ERROR], true)) {
+        if (!headers_sent()) {
+            http_response_code(500);
+            header("Content-Type: application/json");
+        }
+        echo json_encode([
+            "success" => false,
+            "message" => "Server error",
+            "detail" => $err["message"] . " (line " . $err["line"] . ")",
+        ]);
+    }
+});
+
 require_once __DIR__ . "/../config/security.php";
 require_once __DIR__ . "/../config/db.php";
 
+/* PHP 8.1+ में mysqli errors exception बन जाते हैं; हम खुद errno देखते हैं */
+mysqli_report(MYSQLI_REPORT_OFF);
+
 date_default_timezone_set("Asia/Kolkata");
+
+if (!function_exists("mb_strlen")) {
+    function mb_strlen($s) { return strlen($s); }
+    function mb_substr($s, $start, $len = null) { return $len === null ? substr($s, $start) : substr($s, $start, $len); }
+}
+
+/* prepare() fail हो तो साफ़ error */
+function apptPrepare($conn, $sql) {
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        http_response_code(500);
+        sendJsonResponse(false, "Database Error", ["detail" => $conn->error]);
+    }
+    return $stmt;
+}
+
+/* get_result() हर hosting पर नहीं होता — दोनों तरीके */
+function apptFetchAll($stmt) {
+    if (method_exists($stmt, "get_result")) {
+        $res = $stmt->get_result();
+        if ($res !== false) {
+            $out = [];
+            while ($row = $res->fetch_assoc()) $out[] = $row;
+            return $out;
+        }
+    }
+    $meta = $stmt->result_metadata();
+    if (!$meta) return [];
+    $row = [];
+    $refs = [];
+    foreach ($meta->fetch_fields() as $f) {
+        $row[$f->name] = null;
+        $refs[] = &$row[$f->name];
+    }
+    $stmt->store_result();
+    $stmt->bind_result(...$refs);
+    $out = [];
+    while ($stmt->fetch()) {
+        $copy = [];
+        foreach ($row as $k => $v) $copy[$k] = $v;
+        $out[] = $copy;
+    }
+    return $out;
+}
 
 const APPT_SLOT_MINUTES = 15;
 const APPT_START = "08:00";
@@ -60,7 +135,7 @@ function apptEnsureTable($conn) {
     ";
     if (!$conn->query($sql)) {
         http_response_code(500);
-        sendJsonResponse(false, "Database Error");
+        sendJsonResponse(false, "Database Error", ["detail" => $conn->error]);
     }
 }
 

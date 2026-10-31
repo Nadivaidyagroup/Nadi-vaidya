@@ -29,16 +29,14 @@ if (!apptClinicOpenOn($clinic, $date)) {
     ]);
 }
 
-$stmt = $conn->prepare(
+$stmt = apptPrepare($conn, 
     "SELECT appt_time FROM appointments
      WHERE clinic = ? AND appt_date = ? AND active = 1"
 );
 $stmt->bind_param("ss", $clinic, $date);
 $stmt->execute();
-$res = $stmt->get_result();
-
 $booked = [];
-while ($row = $res->fetch_assoc()) {
+foreach (apptFetchAll($stmt) as $row) {
     $booked[$row["appt_time"]] = true;
 }
 

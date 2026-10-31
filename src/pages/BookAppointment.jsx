@@ -33,6 +33,7 @@ export default function BookAppointment() {
   const [date, setDate] = useState("");
   const [slots, setSlots] = useState([]);
   const [slotState, setSlotState] = useState("idle"); // idle | loading | ready | error
+  const [slotErr, setSlotErr] = useState("");
   const [time, setTime] = useState("");
   const [form, setForm] = useState({
     name: "", phone: "", age: "", gender: "", city: "", problem: "", website: "",
@@ -73,11 +74,20 @@ export default function BookAppointment() {
         if (r.data?.success) {
           setSlots(r.data.slots || []);
           setSlotState("ready");
-        } else {
+                } else {
+          setSlotErr(r.data?.detail || r.data?.message || "");
           setSlotState("error");
         }
       })
-      .catch(() => !cancel && setSlotState("error"));
+      .catch((e) => {
+        if (cancel) return;
+        const d = e?.response?.data;
+        setSlotErr(
+          (d && (d.detail || d.message)) ||
+            (e?.response ? `HTTP ${e.response.status}` : e?.message || "")
+        );
+        setSlotState("error");
+      });
     return () => {
       cancel = true;
     };
@@ -240,6 +250,7 @@ export default function BookAppointment() {
               {slotState === "error" && (
                 <p className="book-error">
                   समय लोड नहीं हो पाए। कृपया page refresh करें या {clinic?.phone} पर कॉल करें।
+                  {slotErr && <small className="book-errcode"> ({slotErr})</small>}
                 </p>
               )}
               {slotState === "ready" && freeCount === 0 && (

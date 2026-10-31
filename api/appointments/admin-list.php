@@ -36,13 +36,11 @@ if (isset($APPT_CLINICS[$clinic])) {
 
 $sql .= " ORDER BY appt_date ASC, appt_time ASC, id ASC LIMIT 2000";
 
-$stmt = $conn->prepare($sql);
+$stmt = apptPrepare($conn, $sql);
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
-$res = $stmt->get_result();
-
 $rows = [];
-while ($row = $res->fetch_assoc()) {
+foreach (apptFetchAll($stmt) as $row) {
     $row["time_label"] = apptLabel($row["appt_time"]);
     $rows[] = $row;
 }

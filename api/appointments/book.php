@@ -57,19 +57,20 @@ $city = mb_substr($city, 0, 80);
 $problem = mb_substr($problem, 0, 1000);
 
 /* एक नंबर से बहुत ज़्यादा आगे की बुकिंग नहीं */
-$stmt = $conn->prepare(
+$stmt = apptPrepare($conn, 
     "SELECT COUNT(*) AS c FROM appointments
      WHERE phone = ? AND active = 1 AND appt_date >= CURDATE()"
 );
 $stmt->bind_param("s", $phone);
 $stmt->execute();
-$count = (int) ($stmt->get_result()->fetch_assoc()["c"] ?? 0);
+$found = apptFetchAll($stmt);
+$count = (int) ($found[0]["c"] ?? 0);
 if ($count >= APPT_MAX_ACTIVE_PER_PHONE) {
     http_response_code(409);
     sendJsonResponse(false, "इस नंबर से पहले से अपॉइंटमेंट बुक है। बदलाव के लिए क्लीनिक पर कॉल करें।");
 }
 
-$stmt = $conn->prepare(
+$stmt = apptPrepare($conn, 
     "INSERT INTO appointments
         (clinic, appt_date, appt_time, name, phone, age, gender, city, problem)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
