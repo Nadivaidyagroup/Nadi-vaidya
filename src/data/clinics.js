@@ -83,13 +83,13 @@ export const doctors = [
     photo: team1,
   },
   {
-    name: "Nadi Vaidya Dr. Saloni Yadav Vashishth",
+    name: "Nadi Vaidya Dr. Saloni Yadav Vashist",
     qual: "BAMS, MD (DN)",
     role: "Nadi Vaidya • Clinical Ayurveda",
     photo: team3,
   },
   {
-    name: "Nadi Vaidya Dr. Mohit Vashishth",
+    name: "Nadi Vaidya Dr. Mohit Vashist",
     qual: "BAMS, MD (AM)",
     role: "Nadi Vaidya • Clinical Ayurveda",
     photo: team2,
