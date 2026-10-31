@@ -1,0 +1,28 @@
+/* src/admin/pages/appointments.css */
+.appt-page { padding: 24px; }
+.appt-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.appt-top h1 { font-size: 26px; margin: 0; font-weight: 700; color: #1f2418; }
+.appt-top p { margin: 4px 0 0; color: #6b6b5a; }
+.appt-btn { background: #4f5137; color: #fff; border: 0; border-radius: 10px; padding: 10px 16px; font-weight: 600; min-height: 44px; cursor: pointer; }
+.appt-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.appt-filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; background: #fff; border: 1px solid #e5e5dc; border-radius: 12px; padding: 12px; margin-bottom: 14px; }
+.appt-filters label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: #4a4a3c; margin: 0; }
+.appt-filters input, .appt-filters select { border: 1px solid #d5d5c8; border-radius: 8px; padding: 8px 10px; min-height: 40px; font-size: 14px; }
+.appt-quick { display: flex; flex-wrap: wrap; gap: 6px; }
+.appt-quick button { border: 1px solid #d5d5c8; background: #f5f6ef; border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; min-height: 36px; }
+
+.appt-msg { background: #fdecea; color: #a3261b; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
+.appt-empty { color: #6b6b5a; padding: 24px 0; }
+
+.appt-scroll { overflow-x: auto; background: #fff; border: 1px solid #e5e5dc; border-radius: 12px; }
+.appt-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.appt-table th { text-align: left; background: #f5f6ef; padding: 10px 12px; font-size: 13px; color: #4a4a3c; border-bottom: 1px solid #e5e5dc; white-space: nowrap; }
+.appt-table td { padding: 10px 12px; border-bottom: 1px solid #efefe7; vertical-align: top; }
+.appt-table select { border: 1px solid #d5d5c8; border-radius: 8px; padding: 6px 8px; min-height: 36px; }
+.appt-table .nowrap { white-space: nowrap; }
+.appt-sub { color: #6b6b5a; font-size: 12px; margin-top: 2px; }
+.appt-wa { color: #1e9e53; font-size: 12px; font-weight: 600; }
+.appt-problem { max-width: 260px; color: #3b3b30; }
+.appt-table tr.is-cancelled td { color: #9a9a8c; text-decoration: line-through; }
+.appt-table tr.is-cancelled select { text-decoration: none; }

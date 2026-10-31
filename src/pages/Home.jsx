@@ -68,13 +68,16 @@ export default function Home() {
           </div>
 
           <div className="home-hero-actions">
+            <Link className="clinic-btn clinic-btn-book" to="/appointment">
+              📅 ऑनलाइन अपॉइंटमेंट बुक करें
+            </Link>
             <a
               className="clinic-btn clinic-btn-wa"
               href={whatsappLink(today.phone, `${today.city} clinic`)}
               target="_blank"
               rel="noopener noreferrer"
             >
-              WhatsApp पर अपॉइंटमेंट
+              WhatsApp
             </a>
             <a
               className="clinic-btn clinic-btn-call"

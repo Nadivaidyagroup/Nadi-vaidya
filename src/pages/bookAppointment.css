@@ -1,0 +1,150 @@
+/* src/pages/bookAppointment.css — ऑनलाइन अपॉइंटमेंट पेज */
+
+.book-wrap { margin-top: -24px; }
+.book-card {
+  background: #fff;
+  border: 1px solid var(--main-border, #dcdccf);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(31, 36, 24, .08);
+  max-width: 760px;
+  margin: 0 auto;
+}
+@media (max-width: 520px) { .book-card { padding: 16px; } }
+
+.book-step { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+.book-step legend {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--main-dark, #4f5137);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+}
+.book-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--main-dark, #4f5137); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+
+.book-clinics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .book-clinics { grid-template-columns: 1fr; } }
+.book-clinic {
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--main-border, #dcdccf);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 2px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.book-clinic strong { color: var(--text-dark, #1f2418); font-size: 16px; }
+.book-clinic span { color: #4a4a3c; font-size: 14px; }
+.book-clinic small { color: #8a6d2f; font-size: 13px; font-weight: 600; }
+.book-clinic.is-on { border-color: var(--main-dark, #4f5137); background: var(--main-soft, #f5f6ef); box-shadow: 0 0 0 2px var(--main-dark, #4f5137) inset; }
+
+.book-dates {
+  display: flex; gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+}
+.book-date {
+  flex: 0 0 64px;
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1.5px solid var(--main-border, #dcdccf);
+  border-radius: 12px;
+  padding: 8px 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  cursor: pointer;
+  line-height: 1.2;
+}
+.book-date strong { font-size: 20px; color: var(--text-dark, #1f2418); }
+.book-date small { font-size: 12px; color: #6b6b5a; }
+.book-date.is-on { background: var(--main-dark, #4f5137); border-color: var(--main-dark, #4f5137); }
+.book-date.is-on strong, .book-date.is-on small { color: #fff; }
+
+.book-slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 520px) { .book-slots { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.book-slot {
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1.5px solid var(--main-border, #dcdccf);
+  background: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-dark, #1f2418);
+  cursor: pointer;
+}
+.book-slot:disabled {
+  background: #f0f0ea;
+  color: #8a8a7c;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.book-slot.is-on { background: #1e9e53; border-color: #1e9e53; color: #fff; }
+
+.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .book-grid { grid-template-columns: 1fr; } }
+.book-span2 { grid-column: 1 / -1; }
+.book-field { display: flex; flex-direction: column; gap: 4px; margin: 0; }
+.book-field span { font-size: 14px; font-weight: 600; color: #4a4a3c; }
+.book-field input, .book-field select, .book-field textarea {
+  border: 1.5px solid var(--main-border, #dcdccf);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 16px;
+  font-family: inherit;
+  min-height: 44px;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+.book-field input:focus, .book-field select:focus, .book-field textarea:focus {
+  outline: 2px solid var(--main-dark, #4f5137);
+  outline-offset: 1px;
+}
+.book-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.book-review {
+  margin: 16px 0 12px;
+  background: var(--main-soft, #f5f6ef);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: var(--text-dark, #1f2418);
+}
+.book-submit { width: 100%; font-size: 17px; padding: 14px 18px; border: 0; cursor: pointer; }
+.book-submit:disabled { opacity: .6; cursor: wait; }
+
+.book-muted { color: #6b6b5a; font-size: 14px; margin: 8px 0 0; }
+.book-error {
+  color: #a3261b;
+  background: #fdecea;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.book-done { text-align: center; margin-top: 40px; }
+.book-done h1 { font-size: 26px; color: var(--main-dark, #4f5137); font-weight: 700; margin: 8px 0; }
+.book-done-badge {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #1e9e53; color: #fff;
+  font-size: 34px; line-height: 64px;
+  margin: 0 auto;
+}
+.book-ref { font-size: 16px; margin: 0 0 14px; }
+.book-summary { text-align: left; margin: 0 auto 14px; max-width: 420px; }
+.book-summary div { display: flex; gap: 12px; padding: 8px 0; border-top: 1px solid #eeeee4; }
+.book-summary dt { width: 80px; color: #6b6b5a; font-weight: 500; }
+.book-summary dd { margin: 0; font-weight: 600; color: var(--text-dark, #1f2418); }
+.book-tips { text-align: left; max-width: 460px; margin: 0 auto 18px; padding-left: 20px; line-height: 1.7; }
+.book-done .clinic-actions { justify-content: center; max-width: 460px; margin: 0 auto; }
+.book-note { margin-top: 16px; }

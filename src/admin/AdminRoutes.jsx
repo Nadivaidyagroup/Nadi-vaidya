@@ -22,6 +22,7 @@ import EditBlog from "./pages/EditBlog";
 import ContactForms from "./pages/ContactForms";
 import NadiForms from "./pages/NadiForms";
 import DoshaForms from "./pages/DoshaForms";
+import Appointments from "./pages/Appointments";
 
 /* PROTECTED ROUTE */
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -129,6 +130,18 @@ export default function AdminRoutes() {
         element={
           <ProtectedRoute>
             <NadiForms />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* =========================
+          APPOINTMENTS
+      ========================= */}
+      <Route
+        path="/appointments"
+        element={
+          <ProtectedRoute>
+            <Appointments />
           </ProtectedRoute>
         }
       />

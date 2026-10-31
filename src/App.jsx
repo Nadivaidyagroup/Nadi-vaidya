@@ -36,6 +36,7 @@ import ContactUs from "./pages/ContactUs.jsx";
 
 /* CLINICS */
 import ClinicPage from "./pages/ClinicPage.jsx";
+import BookAppointment from "./pages/BookAppointment.jsx";
 
 /* DOSHA DIET PAGES */
 import VataDiet from "./pages/VataDiet.jsx";
@@ -89,6 +90,12 @@ const PAGE_SEO = {
     title: "Nadi Vaidya Clinic Vrindavan | Swasthya Seva Kendra",
     description:
       "Vrindavan Swasthya Seva Kendra, Parikrama Marg, Vrindavan — Nadi Pariksha and Ayurveda consultation. OPD 8 AM–1 PM; Nadi Vaidya OPD 11th to month-end. Call 83960 66555.",
+  },
+
+    "/appointment": {
+    title: "Book Appointment | Nadi Vaidya Clinics Karnal & Vrindavan",
+    description:
+      "Book a Nadi Pariksha appointment online at our Karnal or Vrindavan clinic. Choose your date and 15-minute time slot. OPD 8 AM–1 PM.",
   },
 
   "/about-us": {
@@ -395,9 +402,14 @@ function AppRoutes() {
             element={<ClinicPage slug="karnal-clinic" />}
           />
 
-          <Route
+                    <Route
             path="vrindavan-clinic"
             element={<ClinicPage slug="vrindavan-clinic" />}
+          />
+
+          <Route
+            path="appointment"
+            element={<BookAppointment />}
           />
 
           {/* VATA DIET */}

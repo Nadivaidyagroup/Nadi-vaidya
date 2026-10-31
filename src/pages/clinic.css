@@ -192,3 +192,7 @@
 .org-card h3 { font-size: 18px; color: var(--main-dark, #4f5137); margin: 0 0 4px; font-weight: 700; }
 .org-card p { margin: 0; color: #6b6b5a; font-size: 15px; }
 .org-card span { display: inline-block; margin-top: 8px; color: #8a6d2f; font-weight: 600; }
+
+/* ऑनलाइन बुकिंग — सबसे प्रमुख बटन */
+.clinic-btn-book { background: #b8861b; color: #fff !important; flex-basis: 100%; }
+.home-hero-actions .clinic-btn-book { flex-basis: auto; }

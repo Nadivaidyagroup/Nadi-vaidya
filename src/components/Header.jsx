@@ -166,14 +166,12 @@ export default function Header() {
             <div className="header-right">
 
               {/* STORE BUTTON */}
-              <a
-                href={whatsappLink(todaysClinic().phone, `${todaysClinic().city} clinic`)}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to="/appointment"
                 className="header-store-btn"
               >
-                Appointment
-              </a>
+                Book Appointment
+              </Link>
 
               {/* MOBILE MENU BUTTON */}
               <button
@@ -269,14 +267,13 @@ export default function Header() {
         </ul>
 
         {/* BUTTON */}
-        <a
-          href={whatsappLink(todaysClinic().phone, `${todaysClinic().city} clinic`)}
-          target="_blank"
-          rel="noreferrer"
+        <Link
+          to="/appointment"
           className="mobile-shop-btn"
+          onClick={() => setOpen(false)}
         >
-          📲 WhatsApp Appointment
-        </a>
+          📅 Book Appointment
+        </Link>
 
       </div>
 

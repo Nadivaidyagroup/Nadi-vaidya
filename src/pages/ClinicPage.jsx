@@ -55,13 +55,18 @@ export function ClinicCard({ clinic, compact = false }) {
       </ul>
 
       <div className="clinic-actions">
-        <a
-          className="clinic-btn clinic-btn-wa"
+        <Link
+          className="clinic-btn clinic-btn-book"
+          to={`/appointment?clinic=${clinic.slug === "karnal-clinic" ? "karnal" : "vrindavan"}`}
+        >
+          ऑनलाइन अपॉइंटमेंट बुक करें
+        </Link>
+        <a className="clinic-btn clinic-btn-wa"
           href={whatsappLink(clinic.phone, `${clinic.city} clinic`)}
           target="_blank"
           rel="noopener noreferrer"
         >
-          WhatsApp पर अपॉइंटमेंट
+          WhatsApp
         </a>
         <a className="clinic-btn clinic-btn-call" href={tel}>
           कॉल करें
