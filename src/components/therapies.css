@@ -28,13 +28,10 @@
 .th-body small { display: block; color: #6b6b5a; font-size: 13px; margin: 2px 0 8px; letter-spacing: .02em; }
 .th-body p { margin: 0; color: #3b3b30; font-size: 15px; line-height: 1.6; }
 
-/* फ़ोन पर: photo बाईं ओर, text दाईं ओर — छोटा और साफ़ */
+/* फ़ोन पर भी: ऊपर photo, नीचे जानकारी */
 @media (max-width: 560px) {
-  .th-card { flex-direction: row; align-items: stretch; }
-  .th-img { aspect-ratio: auto; width: 38%; flex: none; }
-  .th-body { border-top: 0; border-left: 3px solid #c9a24a; padding: 12px 12px 12px 14px; }
-  .th-body h3 { font-size: 17px; }
-  .th-body p { font-size: 14px; }
+  .th-body { padding: 12px 14px 16px; }
+  .th-body h3 { font-size: 18px; }
 }
 
 .th-band {
@@ -55,7 +52,5 @@
 
 /* आख़िरी अकेला card (आहार मार्गदर्शन) — कंप्यूटर पर पूरी चौड़ाई में */
 @media (min-width: 961px) {
-  .th-card:last-child:nth-child(3n + 1) { grid-column: 1 / -1; flex-direction: row; }
-  .th-card:last-child:nth-child(3n + 1) .th-img { width: 33.3%; aspect-ratio: auto; flex: none; }
-  .th-card:last-child:nth-child(3n + 1) .th-body { border-top: 0; border-left: 3px solid #c9a24a; display: flex; flex-direction: column; justify-content: center; padding: 20px 24px; }
+  .th-card:last-child:nth-child(3n + 1) { grid-column: 2 / 3; }
 }
