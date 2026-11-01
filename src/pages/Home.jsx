@@ -9,6 +9,7 @@ import DietSection from "../components/DietSection";
 import { diets } from "../data/homeData";
 import {
   OPD_TIME,
+  CELEB_LINE,
   clinics,
   todaysClinic,
   whatsappLink,
@@ -60,17 +61,15 @@ export default function Home() {
         </div>
         <div className="container home-hero2-text">
           <h1>
-            Nadi Vaidya Clinics
+            नाड़ी वैद्य क्लीनिक
             <span>नाड़ी परीक्षा परामर्श — करनाल व वृंदावन</span>
           </h1>
-          <p>
-            पारंपरिक आयुर्वेदिक नाड़ी परीक्षा से अपने शरीर और मन के संतुलन को
-            समझिए। OPD {OPD_TIME.labelHi}।
+          <p className="home-celeb">
+            {CELEB_LINE.hi} — 1989 से, 36 वर्षों का अनुभव
           </p>
 
           <div className="home-today">
-            🗓️ आज नाड़ी वैद्य OPD: <strong>{today.cityHi}</strong> (
-            {today.opdDaysHi})
+            🗓️ आज नाड़ी वैद्य OPD: <strong>{today.cityHi}</strong> • {OPD_TIME.labelHi}
           </div>
 
           <div className="home-hero-actions">

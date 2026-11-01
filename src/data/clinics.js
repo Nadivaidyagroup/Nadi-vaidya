@@ -75,23 +75,35 @@ export const getClinic = (slug) => clinics.find((c) => c.slug === slug);
 export const todaysClinic = (date = new Date()) =>
   date.getDate() <= 10 ? clinics[0] : clinics[1];
 
+// डॉक्टरों के नीचे दिखने वाली पंक्ति
+export const CELEB_LINE = {
+  hi: "बॉलीवुड, शीर्ष व्यापारिक घरानों एवं राजपरिवारों के परामर्शदाता",
+  en: "Consultant to Bollywood, Top Business & Royal Families",
+};
+
 export const doctors = [
   {
     name: "Nadi Vaidya Dr. Ajit Singh Yadav",
+    nameHi: "नाड़ी वैद्य डॉ. अजीत सिंह यादव",
     qual: "BAMS",
     role: "Founder & Chairman, Nadi Vaidya Group • 36+ years of clinical experience",
+    roleHi: "संस्थापक एवं अध्यक्ष, नाड़ी वैद्य ग्रुप • 1989 से, 36 वर्षों का अनुभव",
     photo: drAjit,
   },
   {
     name: "Nadi Vaidya Dr. Saloni Yadav Vashist",
+    nameHi: "नाड़ी वैद्य डॉ. सलोनी यादव वशिष्ठ",
     qual: "BAMS, MD (DN)",
     role: "Nadi Vaidya • Clinical Ayurveda",
+    roleHi: "आहार, जीवनशैली एवं आयुर्वेदिक चिकित्सा • नाड़ी परीक्षा विशेषज्ञ",
     photo: drSaloni,
   },
   {
     name: "Nadi Vaidya Dr. Mohit Vashist",
+    nameHi: "नाड़ी वैद्य डॉ. मोहित वशिष्ठ",
     qual: "BAMS, MD (AM)",
     role: "Nadi Vaidya • Clinical Ayurveda",
+    roleHi: "आयुर्वेदिक चिकित्सा एवं मर्म विशेषज्ञ • नाड़ी परीक्षा विशेषज्ञ",
     photo: drMohit,
   },
 ];

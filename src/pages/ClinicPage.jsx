@@ -5,6 +5,7 @@
 import { Link } from "react-router-dom";
 import {
   OPD_TIME,
+  CELEB_LINE,
   clinics,
   doctors,
   getClinic,
@@ -19,29 +20,29 @@ export function ClinicCard({ clinic, compact = false }) {
       <p className="clinic-card-city">
         📍 {clinic.city} • {clinic.cityHi}
       </p>
-      <h3 className="clinic-card-name">{clinic.name}</h3>
-      <p className="clinic-card-namehi">{clinic.nameHi}</p>
+      <h3 className="clinic-card-name">{clinic.nameHi}</h3>
+      <p className="clinic-card-namehi">{clinic.name}</p>
 
       <ul className="clinic-facts">
         <li>
           <span>🕗</span>
           <div>
-            <strong>{OPD_TIME.label}</strong>
-            <small>{OPD_TIME.labelHi}</small>
+            <strong>{OPD_TIME.labelHi}</strong>
+            <small>{OPD_TIME.label}</small>
           </div>
         </li>
         <li>
           <span>🗓️</span>
           <div>
-            <strong>Nadi Vaidya OPD: {clinic.opdDays}</strong>
-            <small>नाड़ी वैद्य OPD: {clinic.opdDaysHi}</small>
+            <strong>नाड़ी वैद्य OPD: {clinic.opdDaysHi}</strong>
+            <small>Nadi Vaidya OPD: {clinic.opdDays}</small>
           </div>
         </li>
         <li>
           <span>🏠</span>
           <div>
-            <strong>{clinic.address}</strong>
-            {!compact && <small>{clinic.addressHi}</small>}
+            <strong>{clinic.addressHi}</strong>
+            <small>{clinic.address}</small>
           </div>
         </li>
         <li>
@@ -102,9 +103,11 @@ export function DoctorsStrip() {
         <figure className="doctor-card" key={d.name}>
           <img src={d.photo} alt={d.name} loading="lazy" />
           <figcaption>
-            <strong>{d.name}</strong>
+            <strong>{d.nameHi}</strong>
+            <em className="doctor-en">{d.name}</em>
             <span>{d.qual}</span>
-            <small>{d.role}</small>
+            <small>{d.roleHi}</small>
+            <small className="doctor-celeb">{CELEB_LINE.hi}</small>
           </figcaption>
         </figure>
       ))}
@@ -121,11 +124,11 @@ export default function ClinicPage({ slug }) {
       <section className="clinic-hero">
         <div className="container">
           <p className="clinic-eyebrow">
-            Nadi Vaidya Clinic • नाड़ी वैद्य क्लीनिक
+            नाड़ी वैद्य क्लीनिक • Nadi Vaidya Clinic
           </p>
           <h1>
-            Nadi Pariksha Clinic in {clinic.city}
-            <span>{clinic.cityHi} में नाड़ी परीक्षा परामर्श</span>
+            {clinic.cityHi} में नाड़ी परीक्षा परामर्श
+            <span>Nadi Pariksha Clinic in {clinic.city}</span>
           </h1>
           <p className="clinic-lead">
             {clinic.name} — नाड़ी वैद्य परिवार का {clinic.cityHi} क्लीनिक। यहाँ

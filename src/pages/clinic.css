@@ -237,3 +237,9 @@
   .home-hero2 .home-hero-actions .clinic-btn-book { flex: 1 1 100%; }
   .home-hero2 .home-hero-actions .clinic-btn-map { flex: 0 1 auto; }
 }
+
+/* हिंदी मुख्य, अंग्रेज़ी छोटी */
+.doctor-card .doctor-en { font-style: normal; font-size: 12.5px; color: #6b6b5a; font-weight: 400; }
+.doctor-card .doctor-celeb { color: #8a6d2f; font-weight: 600; }
+.clinic-card-namehi { font-size: 14px; }
+.home-hero2 .home-celeb { color: #f1e6cc; font-weight: 600; font-size: 16px; line-height: 1.55; }
