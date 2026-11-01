@@ -1,761 +1,184 @@
-// =========================================
-// ABOUTUS.JSX
-// PREMIUM MODERN AYURVEDA ABOUT PAGE
-// =========================================
+// src/pages/AboutUs.jsx
+// हमारे बारे में — नाड़ी वैद्य परिवार, संस्थापक, नाड़ी परीक्षा, उद्देश्य, क्लीनिक, टीम
 
-import { Helmet } from "react-helmet-async";
-
-import "./about.css";
-
-import gurukulImg from "../assets/images/Nadi-Vaidya-Gurukul.png";
-import wellnessImg from "../assets/images/AyurVaidya.jpeg";
-import trustImg from "../assets/images/Nadi-Vaidya-Trust.jpeg";
-import pharmacyImg from "../assets/images/NADI-VAIDYA-PHARMACY.png";
+import { Link } from "react-router-dom";
+import "./clinic.css";
+import "./aboutNew.css";
 
 import OurTeam from "../components/OurTeam";
+import { ClinicCard } from "./ClinicPage.jsx";
+import { clinics, CELEB_LINE, OPD_TIME } from "../data/clinics.js";
 
-import { team } from "../data/homeData";
+import drAjit from "../assets/images/doctors/ajit-singh-yadav.jpg";
+import pulseImg from "../assets/images/workshop-dec-2023/33.jpg";
+import groupImg from "../assets/images/workshop-dec-2023/37.jpg";
+import teachImg from "../assets/images/workshop-dec-2023/2.jpg";
+
+const stats = [
+  { n: "1989", hi: "से निरंतर सेवा", en: "Serving since" },
+  { n: "36+", hi: "वर्षों का क्लिनिकल अनुभव", en: "Years of practice" },
+  { n: "2", hi: "क्लीनिक — करनाल व वृंदावन", en: "Clinics" },
+  { n: "भारत व विदेश", hi: "के रोगियों का विश्वास", en: "Patients served" },
+];
+
+const steps = [
+  {
+    t: "नाड़ी परीक्षा",
+    d: "वैद्य कलाई पर तीन उँगलियों से नाड़ी की गति, बल और लय देखकर वात, पित्त और कफ की स्थिति समझते हैं।",
+  },
+  {
+    t: "प्रकृति व कारण की पहचान",
+    d: "आपकी मूल प्रकृति, वर्तमान असंतुलन, पाचन-अग्नि, नींद और दिनचर्या को मिलाकर तकलीफ़ की जड़ तक पहुँचने का प्रयास।",
+  },
+  {
+    t: "आहार, दिनचर्या व औषधि",
+    d: "आपकी प्रकृति के अनुसार भोजन, दिनचर्या, योग-प्राणायाम और आवश्यकता होने पर आयुर्वेदिक औषधि का मार्गदर्शन।",
+  },
+];
 
 export default function AboutUs() {
-
   return (
-
-    <>
-
-      <Helmet>
-
-        <title>
-          About Us | Nadi Vaidya Ayurveda & Wellness
-        </title>
-
-        <meta
-          name="description"
-          content="Learn about Nadi Vaidya Gurukul, AyurVaidya Wellness, Nadi Vaidya Trust and Nadi Vaidya Pharmacy."
-        />
-
-      </Helmet>
-
-      <main className="about-page">
-
-        {/* =========================================
-        HERO
-        ========================================= */}
-
-        <section className="about-hero">
-
-          <div className="hero-overlay"></div>
-
-          <div className="container">
-
-            <div className="about-hero-content">
-
-              <span className="hero-badge">
-
-                🌿 Ayurveda • Nadi Vigyan • Wellness
-
-              </span>
-
-              <h1>
-
-                Ancient Healing
-                <span>
-                  Modern Wellness
-                </span>
-
-              </h1>
-
-              <p>
-
-                Preserving authentic Ayurveda,
-                Nadi Pariksha and holistic healing
-                through education, wellness,
-                pharmacy and social healthcare missions.
-
-              </p>
-
-              <div className="hero-stats">
-
-                <div className="hero-stat">
-
-                  <h3>
-                    35+
-                  </h3>
-
-                  <span>
-                    Years Experience
-                  </span>
-
-                </div>
-
-                <div className="hero-stat">
-
-                  <h3>
-                    1L+
-                  </h3>
-
-                  <span>
-                    Wellness Lives
-                  </span>
-
-                </div>
-
-                <div className="hero-stat">
-
-                  <h3>
-                    100+
-                  </h3>
-
-                  <span>
-                    Health Camps
-                  </span>
-
-                </div>
-
-              </div>
-
+    <div className="ab-page">
+      {/* HERO */}
+      <section className="ab-hero">
+        <div className="container ab-hero-grid">
+          <div className="ab-hero-text">
+            <p className="ab-eyebrow">हमारे बारे में • About Us</p>
+            <h1>
+              नाड़ी वैद्य परिवार
+              <span>घर-घर नाड़ी • घर-घर आयुर्वेद</span>
+            </h1>
+            <p className="ab-lead">
+              1989 से नाड़ी वैद्य डॉ. अजीत सिंह यादव और उनका परिवार प्राचीन
+              नाड़ी परीक्षा विद्या से रोगियों की सेवा कर रहा है। करनाल और
+              वृंदावन के हमारे क्लीनिक में आज भी वही परंपरा — कलाई की नाड़ी से
+              शरीर और मन को समझना — पूरी निष्ठा से निभाई जाती है।
+            </p>
+            <p className="ab-celeb">{CELEB_LINE.hi}</p>
+            <div className="ab-hero-actions">
+              <Link className="clinic-btn clinic-btn-book" to="/appointment">
+                📅 ऑनलाइन अपॉइंटमेंट बुक करें
+              </Link>
             </div>
-
           </div>
-
-        </section>
-
-        {/* =========================================
-        GURUKUL
-        ========================================= */}
-
-        <section className="about-section">
-
-          <div className="container">
-
-            <div className="about-grid">
-
-              <div className="about-image">
-
-                <img
-                  src={gurukulImg}
-                  alt="Nadi Vaidya Gurukul"
-                  loading="lazy"
-                />
-
-              </div>
-
-              <div className="about-content">
-
-                <span className="section-badge">
-
-                  🎓 Ayurveda Education
-
-                </span>
-
-                <h2>
-
-                  Nadi Vaidya Gurukul
-
-                </h2>
-
-                <p>
-
-                  Nadi Vaidya Gurukul is the dream initiative
-                  of Nadi Vaidya Dr. Ajit Singh Yadav,
-                  established with the vision of preserving
-                  and spreading authentic Ayurveda and
-                  Nadi Pariksha knowledge globally.
-
-                </p>
-
-                <p>
-
-                  The Gurukul follows the ancient
-                  Guru-Shishya Parampara combined
-                  with modern scientific understanding,
-                  offering practical Ayurvedic learning
-                  for students, doctors and wellness seekers.
-
-                </p>
-
-                <blockquote>
-
-                  “Anyone who sincerely learns
-                  Nadi Pariksha with discipline
-                  and devotion can master this
-                  healing science.”
-
-                </blockquote>
-
-                <div className="feature-grid">
-
-                  <div className="feature-card">
-
-                    <span>
-                      📚
-                    </span>
-
-                    <h4>
-                      Traditional Learning
-                    </h4>
-
-                  </div>
-
-                  <div className="feature-card">
-
-                    <span>
-                      🌿
-                    </span>
-
-                    <h4>
-                      Nadi Pariksha Training
-                    </h4>
-
-                  </div>
-
-                  <div className="feature-card">
-
-                    <span>
-                      🧘
-                    </span>
-
-                    <h4>
-                      Holistic Education
-                    </h4>
-
-                  </div>
-
-                  <div className="feature-card">
-
-                    <span>
-                      🌎
-                    </span>
-
-                    <h4>
-                      Global Ayurveda Mission
-                    </h4>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
+          <div className="ab-hero-photo">
+            <img src={pulseImg} alt="नाड़ी वैद्य द्वारा कलाई पर नाड़ी परीक्षा" />
           </div>
+        </div>
+      </section>
 
-        </section>
-
-        {/* =========================================
-        WELLNESS
-        ========================================= */}
-
-        <section className="about-section about-alt">
-
-          <div className="container">
-
-            <div className="about-grid reverse">
-
-              <div className="about-image">
-
-                <img
-                  src={wellnessImg}
-                  alt="AyurVaidya Wellness"
-                  loading="lazy"
-                />
-
-              </div>
-
-              <div className="about-content">
-
-                <span className="section-badge">
-
-                  🌼 Wellness Center
-
-                </span>
-
-                <h2>
-
-                  AyurVaidya Wellness
-
-                </h2>
-
-                <p>
-
-                  AyurVaidya Wellness offers
-                  root-cause holistic healing
-                  through Ayurveda,
-                  Nadi Pariksha,
-                  Yoga and lifestyle medicine.
-
-                </p>
-
-                <p>
-
-                  Dr. Ajit Singh Yadav has over
-                  35 years of clinical experience
-                  in pulse diagnosis and wellness transformation,
-                  helping thousands of people
-                  achieve healthier lives naturally.
-
-                </p>
-
-                <h3>
-
-                  Our Wellness Approach
-
-                </h3>
-
-                <ul>
-
-                  <li>
-                    Nadi Pariksha (Pulse Diagnosis)
-                  </li>
-
-                  <li>
-                    Personalized Ayurvedic Treatments
-                  </li>
-
-                  <li>
-                    Ayurvedic Diet Planning
-                  </li>
-
-                  <li>
-                    Lifestyle Correction
-                  </li>
-
-                  <li>
-                    Yoga & Detox Programs
-                  </li>
-
-                  <li>
-                    Preventive Wellness Care
-                  </li>
-
-                </ul>
-
-                <blockquote>
-
-                  “Pulse speaks what body hides,
-                  and lifestyle heals what medicine can’t.”
-
-                </blockquote>
-
-              </div>
-
-            </div>
-
+      {/* STATS */}
+      <section className="container ab-stats">
+        {stats.map((s) => (
+          <div className="ab-stat" key={s.hi}>
+            <strong>{s.n}</strong>
+            <span>{s.hi}</span>
+            <small>{s.en}</small>
           </div>
+        ))}
+      </section>
 
-        </section>
-
-        {/* =========================================
-        TRUST
-        ========================================= */}
-
-        <section className="about-section">
-
-          <div className="container">
-
-            <div className="section-heading">
-
-              <span className="section-badge">
-
-                🤝 Social Mission
-
-              </span>
-
-              <h2>
-
-                Nadi Vaidya Trust – Healing Hands
-
-              </h2>
-
-              <p>
-
-                A national wellness movement dedicated
-                to bringing Ayurveda, healthcare
-                and wellness awareness to every village.
-
-              </p>
-
-            </div>
-
-            <div className="trust-grid">
-
-              <div className="trust-image">
-
-                <img
-                  src={trustImg}
-                  alt="Nadi Vaidya Trust"
-                  loading="lazy"
-                />
-
-              </div>
-
-              <div className="trust-content">
-
-                <div className="trust-card">
-
-                  <h3>
-                    🌿 परिचय
-                  </h3>
-
-                  <p>
-
-                    Nadi Vaidya Trust – Healing Hands
-                    एक समग्र स्वास्थ्य को बढ़ावा देने वाला
-                    गैर-लाभकारी संगठन है जिसकी स्थापना
-                    नाड़ी वैद्य डॉ. अजीत सिंह यादव द्वारा
-                    प्राचीन नाड़ी परीक्षा एवं आयुर्वेद के
-                    विज्ञान को जन-जन तक पहुँचाने के उद्देश्य से की गई।
-
-                  </p>
-
-                </div>
-
-                <div className="trust-card">
-
-                  <h3>
-                    🎯 मिशन एवं विज़न
-                  </h3>
-
-                  <ul>
-
-                    <li>
-                      स्वस्थ भारत – श्रेष्ठ भारत
-                    </li>
-
-                    <li>
-                      मेरा गाँव – स्वस्थ गाँव
-                    </li>
-
-                    <li>
-                      घर-घर आयुर्वेद
-                    </li>
-
-                    <li>
-                      घर-घर नाड़ी विज्ञान
-                    </li>
-
-                  </ul>
-
-                </div>
-
-                <div className="trust-card">
-
-                  <h3>
-                    🏥 प्रमुख पहल
-                  </h3>
-
-                  <ul>
-
-                    <li>
-                      निःशुल्क स्वास्थ्य शिविर
-                    </li>
-
-                    <li>
-                      ग्रामीण स्वास्थ्य जागरूकता अभियान
-                    </li>
-
-                    <li>
-                      महिला एवं बाल स्वास्थ्य कार्यक्रम
-                    </li>
-
-                    <li>
-                      आयुर्वेदिक प्राथमिक उपचार किट
-                    </li>
-
-                    <li>
-                      औषधीय पौधारोपण अभियान
-                    </li>
-
-                  </ul>
-
-                </div>
-
-                <div className="trust-card">
-
-                  <h3>
-                    👥 ट्रस्ट से कौन जुड़ सकता है?
-                  </h3>
-
-                  <ul>
-
-                    <li>
-                      आयुर्वेद एवं चिकित्सा विशेषज्ञ
-                    </li>
-
-                    <li>
-                      मेडिकल छात्र एवं शोधकर्ता
-                    </li>
-
-                    <li>
-                      ग्राम वेलनेस कोऑर्डिनेटर
-                    </li>
-
-                    <li>
-                      कॉर्पोरेट वेलनेस कोऑर्डिनेटर
-                    </li>
-
-                    <li>
-                      समाजसेवी एवं स्वयंसेवक
-                    </li>
-
-                  </ul>
-
-                </div>
-
-              </div>
-
-            </div>
-
+      {/* FOUNDER */}
+      <section className="ab-section">
+        <div className="container ab-founder">
+          <div className="ab-founder-photo">
+            <img src={drAjit} alt="नाड़ी वैद्य डॉ. अजीत सिंह यादव" />
           </div>
-
-        </section>
-
-        {/* =========================================
-        PHARMACY
-        ========================================= */}
-
-        <section className="about-section about-alt">
-
-          <div className="container">
-
-            <div className="about-grid reverse">
-
-              <div className="about-image">
-
-                <img
-                  src={pharmacyImg}
-                  alt="Nadi Vaidya Pharmacy"
-                  loading="lazy"
-                />
-
-              </div>
-
-              <div className="about-content">
-
-                <span className="section-badge">
-
-                  💊 Ayurvedic Products
-
-                </span>
-
-                <h2>
-
-                  Nadi Vaidya Pharmacy
-
-                </h2>
-
-                <p>
-
-                  Nadi Vaidya Pharmacy develops
-                  Ayurvedic wellness products
-                  using classical Ayurveda
-                  and modern wellness research.
-
-                </p>
-
-                <p>
-
-                  The pharmacy provides herbal
-                  wellness support products
-                  designed for preventive healthcare,
-                  lifestyle balance and holistic healing.
-
-                </p>
-
-                <ul>
-
-                  <li>
-                    Herbal Ayurvedic Formulations
-                  </li>
-
-                  <li>
-                    Research-Based Wellness Products
-                  </li>
-
-                  <li>
-                    Lifestyle & Diet Integration
-                  </li>
-
-                  <li>
-                    Preventive Healthcare Support
-                  </li>
-
-                  <li>
-                    Holistic Healing Solutions
-                  </li>
-
-                  <li>
-                    Ayurvedic Wellness Care
-                  </li>
-
-                </ul>
-
-              </div>
-
-            </div>
-
+          <div className="ab-founder-text">
+            <p className="ab-eyebrow">संस्थापक • Founder</p>
+            <h2>
+              नाड़ी वैद्य डॉ. अजीत सिंह यादव
+              <small>Nadi Vaidya Dr. Ajit Singh Yadav • B.A.M.S.</small>
+            </h2>
+            <p>
+              संस्थापक एवं अध्यक्ष, नाड़ी वैद्य ग्रुप। अंतरराष्ट्रीय स्तर पर
+              प्रसिद्ध नाड़ी परीक्षा विशेषज्ञ, जिन्हें 36 वर्षों से अधिक का
+              क्लिनिकल अनुभव है। वे वाना रिट्रीट, देहरादून में मुख्य परामर्शदाता
+              रह चुके हैं और हज़ारों डॉक्टरों को नाड़ी परीक्षा सिखा चुके हैं।
+            </p>
+            <ul className="ab-points">
+              <li>1989 से नाड़ी परीक्षा द्वारा रोगी सेवा</li>
+              <li>{CELEB_LINE.hi}</li>
+              <li>पूर्व मुख्य परामर्शदाता — वाना रिट्रीट, देहरादून</li>
+              <li>हज़ारों डॉक्टरों के मार्गदर्शक; गुरुकुल से प्रशिक्षित नाड़ी वैद्य आज लगभग हर राज्य में</li>
+            </ul>
+            <blockquote>
+              “नाड़ी को केवल छूना नहीं — नाड़ी से जुड़ना पड़ता है।”
+            </blockquote>
           </div>
+        </div>
+      </section>
 
-        </section>
-
-        {/* TEAM */}
-
-        <OurTeam />
-
-        {/* =========================================
-        CONTACT
-        ========================================= */}
-
-        <section className="contact-section">
-
-          <div className="container">
-
-            <div className="section-heading">
-
-              <span className="section-badge">
-
-                📞 Contact Information
-
-              </span>
-
-              <h2>
-
-                Connect With Us
-
-              </h2>
-
-              <p>
-
-                We are here to support your wellness journey.
-
-              </p>
-
-            </div>
-
-            <div className="contact-grid">
-
-              <div className="contact-card">
-
-                <div className="contact-icon">
-
-                  🌿
-
-                </div>
-
-                <h3>
-
-                  Wellness Center
-
-                </h3>
-
-                <p>
-
-                  Karnal, Haryana
-
-                </p>
-
-                <a href="tel:+919992242267">
-
-                  +91 99922 42267
-
-                </a>
-
+      {/* WHAT IS NADI PARIKSHA */}
+      <section className="ab-section ab-soft">
+        <div className="container">
+          <p className="ab-eyebrow ab-center">नाड़ी परीक्षा • Nadi Pariksha</p>
+          <h2 className="ab-title">क्लीनिक में परामर्श कैसे होता है</h2>
+          <p className="ab-sub">
+            नाड़ी परीक्षा आयुर्वेद की अष्टविध परीक्षा का प्रमुख अंग है। इसमें
+            रोग के साथ-साथ व्यक्ति को समझा जाता है।
+          </p>
+          <div className="ab-steps">
+            {steps.map((s, i) => (
+              <div className="ab-step" key={s.t}>
+                <span className="ab-step-n">{i + 1}</span>
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
               </div>
-
-              <div className="contact-card">
-
-                <div className="contact-icon">
-
-                  🎓
-
-                </div>
-
-                <h3>
-
-                  Gurukul
-
-                </h3>
-
-                <p>
-
-                  Ayurveda Education
-
-                </p>
-
-                <a href="tel:+918950770385">
-
-                  +91 89507 70385
-
-                </a>
-
-              </div>
-
-              <div className="contact-card">
-
-                <div className="contact-icon">
-
-                  💊
-
-                </div>
-
-                <h3>
-
-                  Pharmacy
-
-                </h3>
-
-                <p>
-
-                  Wellness Products
-
-                </p>
-
-                <a href="tel:+917015614500">
-
-                  +91 70156 14500
-
-                </a>
-
-              </div>
-
-              <div className="contact-card">
-
-                <div className="contact-icon">
-
-                  ❤️
-
-                </div>
-
-                <h3>
-
-                  Trust Support
-
-                </h3>
-
-                <p>
-
-                  Community Wellness
-
-                </p>
-
-                <a href="tel:+918396066555">
-
-                  +91 83960 66555
-
-                </a>
-
-              </div>
-
-            </div>
-
+            ))}
           </div>
+          <p className="clinic-disclaimer ab-disclaimer">
+            नाड़ी परीक्षा एक पारंपरिक आयुर्वेदिक समग्र मूल्यांकन पद्धति है; यह
+            लैब टेस्ट या आधुनिक जाँचों का विकल्प नहीं है। आपातकालीन या गंभीर
+            लक्षणों में तुरंत नज़दीकी अस्पताल जाएँ।
+          </p>
+        </div>
+      </section>
 
-        </section>
+      {/* MISSION */}
+      <section className="ab-section">
+        <div className="container ab-mission">
+          <div className="ab-mission-photos">
+            <img src={groupImg} alt="नाड़ी परीक्षा कार्यशाला के प्रतिभागी" />
+            <img src={teachImg} alt="डॉ. अजीत सिंह यादव कार्यशाला में" />
+          </div>
+          <div>
+            <p className="ab-eyebrow">हमारा उद्देश्य • Our Mission</p>
+            <h2 className="ab-title ab-left">हर गाँव तक एक नाड़ी वैद्य</h2>
+            <p>
+              हमारा सपना है कि देश के हर राज्य, ज़िले, शहर, तहसील, ब्लॉक और गाँव
+              में एक प्रशिक्षित नाड़ी वैद्य हो — ताकि यह प्राचीन विद्या हर घर तक
+              पहुँचे।
+            </p>
+            <p>
+              इसी उद्देश्य से नाड़ी वैद्य गुरुकुल में नियमित नाड़ी परीक्षा
+              कार्यशालाएँ होती हैं, नाड़ी वैद्य फार्मेसी शुद्ध आयुर्वेदिक उत्पाद
+              बनाती है और नाड़ी वैद्य ट्रस्ट – हीलिंग हैंड्स सेवा कार्य करता है।
+            </p>
+            <p className="ab-motto">स्वस्थ भारत • श्रेष्ठ भारत</p>
+          </div>
+        </div>
+      </section>
 
-      </main>
+      {/* CLINICS */}
+      <section className="ab-section ab-soft" id="clinics">
+        <div className="container">
+          <p className="ab-eyebrow ab-center">हमारे क्लीनिक • Our Clinics</p>
+          <h2 className="ab-title">करनाल और वृंदावन</h2>
+          <p className="ab-sub">
+            OPD {OPD_TIME.labelHi} • हर महीने 1–10 तारीख़ करनाल, 11 से 31
+            तारीख़ वृंदावन। तीनों नाड़ी वैद्य दोनों क्लीनिक में।
+          </p>
+          <div className="ab-clinics">
+            {clinics.map((c) => (
+              <ClinicCard clinic={c} compact key={c.slug} />
+            ))}
+          </div>
+        </div>
+      </section>
 
-    </>
-
+      {/* TEAM */}
+      <OurTeam />
+    </div>
   );
-
 }
