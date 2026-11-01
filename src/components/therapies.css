@@ -21,7 +21,7 @@
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .th-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(122, 31, 31, .12); }
-.th-img { aspect-ratio: 16 / 9; overflow: hidden; background: #f3ece0; }
+.th-img { aspect-ratio: 1 / 1; overflow: hidden; background: #f3ece0; }
 .th-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .th-body { padding: 14px 16px 18px; border-top: 3px solid #c9a24a; }
 .th-body h3 { font-size: 19px; color: #7a1f1f; font-weight: 700; margin: 0; line-height: 1.35; }
