@@ -1,4 +1,4 @@
-// src/components/Therapies.jsx — होम पेज: हमारी प्रमुख थेरेपी
+// src/components/Therapies.jsx — होम पेज: हमारी प्रमुख थेरेपी (photo cards)
 import { Link } from "react-router-dom";
 import { therapies } from "../data/therapies.js";
 import "./therapies.css";
@@ -12,22 +12,34 @@ export default function Therapies() {
         <p className="th-sub">
           आयुर्वेद, योग एवं आधुनिक चिकित्सा का समन्वित कार्यक्रम — आपकी प्रकृति,
           नाड़ी परीक्षा एवं स्वास्थ्य स्थिति के अनुसार व्यक्तिगत उपचार योजना।
+          करनाल व वृंदावन, दोनों क्लीनिक में।
         </p>
-        <p className="th-tags">समग्र शरीर शुद्धि • दर्द से राहत • सम्पूर्ण स्वास्थ्य</p>
+        <ul className="th-tags" aria-label="कार्यक्रम के लाभ">
+          <li>समग्र शरीर शुद्धि</li>
+          <li>दर्द से राहत</li>
+          <li>सम्पूर्ण स्वास्थ्य</li>
+        </ul>
+
         <div className="th-grid">
-          {therapies.map((t, i) => (
+          {therapies.map((t) => (
             <article className="th-card" key={t.en}>
-              <span className="th-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-              <h3>{t.hi}</h3>
-              <small>{t.en}</small>
-              <p>{t.d}</p>
+              <div className="th-img">
+                <img src={t.img} alt={t.hi} loading="lazy" />
+              </div>
+              <div className="th-body">
+                <h3>{t.hi}</h3>
+                <small>{t.en}</small>
+                <p>{t.d}</p>
+              </div>
             </article>
           ))}
         </div>
-        <p className="th-note">
-          कौन-सी थेरेपी आपके लिए उपयुक्त है, यह नाड़ी परीक्षा के बाद वैद्य तय करते हैं।
-        </p>
-        <div className="th-cta">
+
+        <div className="th-band">
+          <p className="th-band-line">शुद्ध शरीर • संतुलित मन • ऊर्जावान जीवन</p>
+          <p className="th-band-note">
+            कौन-सी थेरेपी आपके लिए उपयुक्त है, यह नाड़ी परीक्षा के बाद वैद्य तय करते हैं।
+          </p>
           <Link className="clinic-btn clinic-btn-book" to="/appointment">
             📅 नाड़ी परीक्षा व थेरेपी के लिए अपॉइंटमेंट बुक करें
           </Link>
