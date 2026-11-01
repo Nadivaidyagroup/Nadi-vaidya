@@ -1,0 +1,17 @@
+/* src/components/therapies.css */
+.th-section { padding: 60px 0; background: #fbf7ef; }
+.th-eyebrow { text-align: center; color: #8a6d2f; font-weight: 600; font-size: 14px; margin: 0 0 6px; }
+.th-title { text-align: center; color: #7a1f1f; font-size: clamp(26px, 4vw, 36px); font-weight: 700; margin: 0 0 10px; }
+.th-sub { text-align: center; max-width: 720px; margin: 0 auto 10px; color: #4a4a3c; line-height: 1.7; font-size: 16px; }
+.th-tags { text-align: center; color: #4f5137; font-weight: 700; margin: 0 0 26px; }
+.th-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 900px) { .th-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .th-grid { grid-template-columns: 1fr; gap: 12px; } }
+.th-card { position: relative; background: #fff; border: 1px solid #eadfc8; border-radius: 16px; padding: 18px 18px 16px 64px; }
+.th-n { position: absolute; left: 16px; top: 18px; width: 36px; height: 36px; border-radius: 50%; background: #7a1f1f; color: #fff; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; }
+.th-card h3 { font-size: 18px; color: #2a1d1a; font-weight: 700; margin: 0; line-height: 1.35; }
+.th-card small { display: block; color: #6b6b5a; font-size: 13px; margin: 2px 0 6px; }
+.th-card p { margin: 0; color: #4a4a3c; font-size: 14.5px; line-height: 1.6; }
+.th-note { text-align: center; color: #6b6b5a; font-size: 14px; margin: 22px auto 14px; max-width: 640px; }
+.th-cta { display: flex; justify-content: center; }
+.th-cta .clinic-btn { flex: 0 1 auto; padding: 14px 22px; text-align: center; }

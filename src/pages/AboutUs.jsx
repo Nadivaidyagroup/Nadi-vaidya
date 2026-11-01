@@ -6,6 +6,7 @@ import "./clinic.css";
 import "./aboutNew.css";
 
 import OurTeam from "../components/OurTeam";
+import OurOrgs from "../components/OurOrgs";
 import { ClinicCard } from "./ClinicPage.jsx";
 import { clinics, CELEB_LINE, OPD_TIME } from "../data/clinics.js";
 
@@ -179,6 +180,9 @@ export default function AboutUs() {
 
       {/* TEAM */}
       <OurTeam />
+
+      {/* ORGANISATIONS */}
+      <OurOrgs />
     </div>
   );
 }

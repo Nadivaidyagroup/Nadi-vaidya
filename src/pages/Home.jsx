@@ -13,6 +13,7 @@ import {
   whatsappLink,
 } from "../data/clinics.js";
 import { ClinicCard, DoctorsStrip } from "./ClinicPage.jsx";
+import Therapies from "../components/Therapies.jsx";
 
 // नाड़ी देखते हुए हाथ — Gurukul Shopify CDN पर पहले से अपलोड फ़ोटो
 const HERO_IMG =
@@ -145,6 +146,9 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* THERAPIES */}
+      <Therapies />
     </>
   );
 }
