@@ -247,3 +247,37 @@
 .org-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 900px) { .org-grid-3 { grid-template-columns: 1fr; } }
 .org-card .org-en { display: block; color: #6b6b5a; font-size: 13px; margin: 0 0 6px; }
+
+/* ===== डॉक्टर card: गोल photo + सुनहरा घेरा, बीच में text (Gurukul जैसा) ===== */
+.doctor-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 900px) { .doctor-grid { grid-template-columns: 1fr; gap: 20px; } }
+.doctor-card,
+.doctor-card:is(*) {
+  flex-direction: column !important;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #eadfc8;
+  border-radius: 26px;
+  padding: 28px 20px 24px;
+  box-shadow: 0 8px 24px rgba(79, 81, 55, .06);
+}
+.doctor-card img,
+.doctor-grid .doctor-card img {
+  width: 190px !important;
+  height: 190px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 5px solid #fff;
+  box-shadow: 0 0 0 4px #c9a24a, 0 10px 24px rgba(0, 0, 0, .12);
+  flex: none;
+  margin: 4px auto 18px;
+}
+.doctor-card figcaption { padding: 0; align-items: center; gap: 4px; }
+.doctor-card strong { font-size: 21px; line-height: 1.35; color: #2a1d1a; }
+.doctor-card .doctor-en { font-size: 14px; }
+.doctor-card span { font-size: 15px; }
+.doctor-card small { font-size: 15px; line-height: 1.6; }
+.doctor-card .doctor-celeb { font-size: 15px; margin-top: 2px; }
