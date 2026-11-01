@@ -49,10 +49,16 @@ export default function Home() {
     <>
       {/* HERO */}
       <section
-        className="home-clinic-hero"
-        style={{ "--hero-img": `url(${HERO_IMG})` }}
+        className="home-clinic-hero home-hero2"
       >
-        <div className="container">
+        <div className="home-hero2-photo">
+          <img
+            src={HERO_IMG}
+            alt="नाड़ी वैद्य द्वारा कलाई पर नाड़ी परीक्षा"
+            fetchpriority="high"
+          />
+        </div>
+        <div className="container home-hero2-text">
           <h1>
             Nadi Vaidya Clinics
             <span>नाड़ी परीक्षा परामर्श — करनाल व वृंदावन</span>

@@ -196,3 +196,44 @@
 /* ऑनलाइन बुकिंग — सबसे प्रमुख बटन */
 .clinic-btn-book { background: #b8861b; color: #fff !important; flex-basis: 100%; }
 .home-hero-actions .clinic-btn-book { flex-basis: auto; }
+
+/* ===== होम hero: ऊपर साफ़ photo, नीचे matter (फ़ोन) / अगल-बगल (कंप्यूटर) ===== */
+.home-hero2 { background: #2f3123; }
+.home-hero2::before { display: none; }
+.home-hero2-photo { position: relative; }
+.home-hero2-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  object-position: center 62%;
+}
+.home-clinic-hero.home-hero2 .container.home-hero2-text { padding: 22px 16px 28px; }
+.home-hero2 h1 { font-size: clamp(28px, 7.4vw, 48px); margin-bottom: 8px; }
+.home-hero2 p { font-size: 16px; line-height: 1.6; margin-bottom: 14px; }
+.home-hero2 .home-today { margin-bottom: 16px; font-size: 14px; padding: 8px 12px; }
+.home-hero2 .home-hero-actions { gap: 10px; }
+.home-hero2 .home-hero-actions .clinic-btn-book { flex: 1 1 100%; font-size: 17px; }
+.home-hero2 .home-hero-actions .clinic-btn-wa,
+.home-hero2 .home-hero-actions .clinic-btn-call { flex: 1 1 0; text-align: center; padding: 12px 10px; }
+.home-hero2 .home-hero-actions .clinic-btn-map { flex: 1 1 100%; padding: 10px; }
+
+@media (min-width: 900px) {
+  .home-hero2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+    padding: 48px 24px;
+    background: #2f3123;
+    box-shadow: 0 0 0 100vmax #2f3123;
+    clip-path: inset(0 -100vmax);
+  }
+  .home-hero2-photo { order: 2; }
+  .home-hero2-photo img { aspect-ratio: 4 / 5; border-radius: 22px; object-position: center 55%; max-height: 560px; }
+  .home-clinic-hero.home-hero2 .container.home-hero2-text { order: 1; padding: 0; max-width: none; width: auto; }
+  .home-hero2 .home-hero-actions .clinic-btn-book { flex: 1 1 100%; }
+  .home-hero2 .home-hero-actions .clinic-btn-map { flex: 0 1 auto; }
+}
