@@ -20,7 +20,6 @@ const menuItems = [
   { label: "Karnal Clinic", path: "/karnal-clinic" },
   { label: "Vrindavan Clinic", path: "/vrindavan-clinic" },
   { label: "About Us", path: "/about-us" },
-  { label: "Gallery", path: "/gallery" },
   { label: "Dosha Quiz", path: "/dosha-quiz" },
   { label: "Contact", path: "/contact-us" }
 ];
