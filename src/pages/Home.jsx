@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import "./home.css";
 import "./clinic.css";
 
-import DietSection from "../components/DietSection";
-import { diets } from "../data/homeData";
 import {
   OPD_TIME,
   CELEB_LINE,
@@ -147,40 +145,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* DOSHA DIET */}
-      <DietSection diets={diets} />
-
-      {/* ORGANISATIONS */}
-      <section className="home-orgs">
-        <div className="container">
-          <h2 className="home-section-title">नाड़ी वैद्य परिवार की दूसरी संस्थाएँ</h2>
-          <p className="home-section-sub">
-            आयुर्वेदिक उत्पाद और नाड़ी परीक्षा प्रशिक्षण अब अपनी-अपनी वेबसाइट पर।
-          </p>
-          <div className="org-grid">
-            <a
-              className="org-card"
-              href="https://nadivaidyapharmacy.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h3>Nadi Vaidya Pharmacy</h3>
-              <p>आयुर्वेदिक उत्पाद — ऑनलाइन ऑर्डर</p>
-              <span>nadivaidyapharmacy.com →</span>
-            </a>
-            <a
-              className="org-card"
-              href="https://nadivaidya.com/pages/nadi-pariksha-course"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h3>Nadi Vaidya Gurukul</h3>
-              <p>नाड़ी परीक्षा कार्यशाला व कोर्स</p>
-              <span>nadivaidya.com →</span>
-            </a>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

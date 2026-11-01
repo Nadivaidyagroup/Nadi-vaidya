@@ -243,3 +243,7 @@
 .doctor-card .doctor-celeb { color: #8a6d2f; font-weight: 600; }
 .clinic-card-namehi { font-size: 14px; }
 .home-hero2 .home-celeb { color: #f1e6cc; font-weight: 600; font-size: 16px; line-height: 1.55; }
+
+.org-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .org-grid-3 { grid-template-columns: 1fr; } }
+.org-card .org-en { display: block; color: #6b6b5a; font-size: 13px; margin: 0 0 6px; }
