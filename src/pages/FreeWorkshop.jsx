@@ -69,7 +69,7 @@ export default function FreeWorkshop() {
 
         <meta
           property="og:image"
-          content="https://www.nadivaidya.in/og-image.jpg"
+          content="https://www.nadivaidya.in/og-image.jpg?v=2"
         />
 
         {/* TWITTER */}
@@ -90,7 +90,7 @@ export default function FreeWorkshop() {
 
         <meta
           name="twitter:image"
-          content="https://www.nadivaidya.in/og-image.jpg"
+          content="https://www.nadivaidya.in/og-image.jpg?v=2"
         />
 
         {/* SCHEMA */}

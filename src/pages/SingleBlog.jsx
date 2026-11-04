@@ -281,7 +281,7 @@ export default function SingleBlog() {
 
     blog.image ||
 
-    "https://www.nadivaidya.in/og-image.jpg";
+    "https://www.nadivaidya.in/og-image.jpg?v=2";
 
   const blogUrl =
 

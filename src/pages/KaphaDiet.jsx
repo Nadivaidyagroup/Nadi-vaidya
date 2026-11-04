@@ -247,7 +247,7 @@ export default function KaphaDiet() {
 
         <meta
           property="og:image"
-          content="https://www.nadivaidya.in/og-image.jpg"
+          content="https://www.nadivaidya.in/og-image.jpg?v=2"
         />
 
         {/* TWITTER */}
@@ -268,7 +268,7 @@ export default function KaphaDiet() {
 
         <meta
           name="twitter:image"
-          content="https://www.nadivaidya.in/og-image.jpg"
+          content="https://www.nadivaidya.in/og-image.jpg?v=2"
         />
 
         {/* SCHEMA */}

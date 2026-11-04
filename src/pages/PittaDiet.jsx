@@ -263,7 +263,7 @@ export default function PittaDiet() {
 
         <meta
           property="og:image"
-          content="https://www.nadivaidya.in/og-image.jpg"
+          content="https://www.nadivaidya.in/og-image.jpg?v=2"
         />
 
         {/* TWITTER */}
@@ -284,7 +284,7 @@ export default function PittaDiet() {
 
         <meta
           name="twitter:image"
-          content="https://www.nadivaidya.in/og-image.jpg"
+          content="https://www.nadivaidya.in/og-image.jpg?v=2"
         />
 
         {/* STRUCTURED DATA */}

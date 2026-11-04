@@ -23,7 +23,7 @@ const seoConfig = {
 
   logo: "https://nadivaidya.in/logo.png",
 
-  defaultImage: "https://nadivaidya.in/og-image.jpg",
+  defaultImage: "https://nadivaidya.in/og-image.jpg?v=2",
 
   favicon: "/favicon.ico",
 
