@@ -55,6 +55,57 @@ function blogEnsureTable($conn) {
         http_response_code(500);
         sendJsonResponse(false, "Database Error", ["detail" => $conn->error]);
     }
+    blogRunSeeds($conn);
+}
+
+/*
+ seed/*.json में रखे लेख (जो code के साथ आते हैं) पहली बार अपने-आप प्रकाशित होते हैं।
+ हर फ़ाइल केवल एक बार डाली जाती है — admin बाद में उसे बदले या हटाए तो वापस नहीं आएगी।
+*/
+function blogRunSeeds($conn) {
+    $files = glob(__DIR__ . "/seed/*.json");
+    if (!$files) return;
+    $conn->query("CREATE TABLE IF NOT EXISTS clinic_blog_seeds (
+        seed VARCHAR(160) PRIMARY KEY,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $done = [];
+    $res = $conn->query("SELECT seed FROM clinic_blog_seeds");
+    if (!$res) return;
+    while ($r = $res->fetch_assoc()) $done[$r["seed"]] = true;
+
+    foreach ($files as $file) {
+        $seed = basename($file, ".json");
+        if (isset($done[$seed])) continue;
+        $p = json_decode((string) file_get_contents($file), true);
+        if (!is_array($p) || empty($p["slug"]) || empty($p["title"])) continue;
+
+        $slug = blogSlugify($p["slug"]);
+        $stmt = blogPrepare($conn, "SELECT id FROM clinic_blogs WHERE slug = ? LIMIT 1");
+        $stmt->bind_param("s", $slug);
+        $stmt->execute();
+        $exists = blogFetchAll($stmt);
+        $stmt->close();
+
+        if (!$exists) {
+            $title = (string) $p["title"];
+            $titleEn = (string) ($p["title_en"] ?? "");
+            $category = (string) ($p["category"] ?? "");
+            $excerpt = (string) ($p["excerpt"] ?? "");
+            $content = blogSanitizeHtml($p["content"] ?? "");
+            $image = (string) ($p["image"] ?? "");
+            $author = (string) ($p["author"] ?? "");
+            $status = ($p["status"] ?? "published") === "draft" ? "draft" : "published";
+            $stmt = blogPrepare($conn, "INSERT INTO clinic_blogs (slug, title, title_en, category, excerpt, content, image, author, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssssss", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status);
+            if (!$stmt->execute()) { $stmt->close(); continue; }
+            $stmt->close();
+        }
+        $stmt = blogPrepare($conn, "INSERT IGNORE INTO clinic_blog_seeds (seed) VALUES (?)");
+        $stmt->bind_param("s", $seed);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
 
 function blogPrepare($conn, $sql) {
