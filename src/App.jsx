@@ -433,6 +433,11 @@ function AppRoutes() {
             element={<BlogPost />}
           />
 
+          <Route
+            path="blog/:slug/:lang"
+            element={<BlogPost />}
+          />
+
           {/* VATA DIET */}
           <Route
             path="vata-diet"

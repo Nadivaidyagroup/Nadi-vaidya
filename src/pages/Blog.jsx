@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { BLOG_CATEGORIES } from "../data/blogCategories.js";
 import { BlogGrid } from "../components/BlogCards.jsx";
+import { BLOG_LANGS, saveLang, savedLang } from "../data/blogLanguages.js";
 import "./clinic.css";
 import "./blog.css";
 
@@ -14,12 +15,13 @@ export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [counts, setCounts] = useState({});
   const [state, setState] = useState("loading"); // loading | ok | error
+  const [lang, setLang] = useState(savedLang);
 
   useEffect(() => {
     let alive = true;
     setState("loading");
     axios
-      .get("/api/clinic-blogs/list.php", { params: active ? { category: active } : {} })
+      .get("/api/clinic-blogs/list.php", { params: active ? { category: active, lang } : { lang } })
       .then((r) => {
         if (!alive) return;
         if (r.data?.success) {
@@ -32,7 +34,7 @@ export default function Blog() {
     return () => {
       alive = false;
     };
-  }, [active]);
+  }, [active, lang]);
 
   // वही रोग-वर्ग दिखाओ जिन पर लेख हैं
   const cats = BLOG_CATEGORIES.filter((c) => counts[c.key] || c.key === active);
@@ -58,6 +60,26 @@ export default function Blog() {
       </section>
 
       <div className="container blog-wrap">
+        <div className="blog-langs blog-langs-list-page">
+          <span className="blog-langs-label">🌐 भाषा चुनें · Language</span>
+          <div className="blog-langs-list">
+            {BLOG_LANGS.map((l) => (
+              <button
+                type="button"
+                key={l.code}
+                lang={l.code}
+                className={l.code === lang ? "on" : ""}
+                onClick={() => {
+                  setLang(l.code);
+                  saveLang(l.code);
+                }}
+              >
+                {l.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {cats.length > 0 && (
           <div className="blog-filter" role="tablist" aria-label="रोग के अनुसार लेख">
             <button type="button" className={!active ? "on" : ""} onClick={() => choose("")}>

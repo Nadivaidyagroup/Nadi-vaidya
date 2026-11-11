@@ -82,7 +82,7 @@ export default function Blogs() {
                   <div className="ba-info">
                     <div className="ba-title">{r.title}</div>
                     <div className="appt-sub">
-                      {categoryOf(r.category)?.hi || "—"} • {hindiDate(r.created_at)}{" "}
+                      {categoryOf(r.category)?.hi || "—"} • {hindiDate(r.created_at)} • 🌐 {r.langs?.length || 1}/12 भाषाएँ{" "}
                       {r.status === "draft" ? (
                         <span className="ba-draft">Draft (वेबसाइट पर नहीं दिखेगा)</span>
                       ) : (

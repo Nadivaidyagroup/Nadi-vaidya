@@ -15,6 +15,11 @@ $rows = blogFetchAll($stmt);
 $stmt->close();
 if (!$rows) sendJsonResponse(false, "लेख नहीं मिला");
 
+$stmt = blogPrepare($conn, "DELETE FROM clinic_blog_translations WHERE blog_id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->close();
+
 $stmt = blogPrepare($conn, "DELETE FROM clinic_blogs WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();

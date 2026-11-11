@@ -5,12 +5,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { categoryOf, hindiDate } from "../data/blogCategories.js";
+import { BASE_LANG, blogText, langDate, postPath } from "../data/blogLanguages.js";
 import "../pages/blog.css";
 
 export function BlogCard({ post }) {
   const cat = categoryOf(post.category);
+  const lang = post.lang || BASE_LANG;
+  const hi = lang === BASE_LANG;
   return (
-    <Link to={`/blog/${post.slug}`} className="blog-card">
+    <Link to={postPath(post.slug, lang)} className="blog-card" lang={lang}>
       <div className="blog-card-img">
         {post.image ? (
           <img src={post.image} alt={post.title} loading="lazy" />
@@ -19,12 +22,14 @@ export function BlogCard({ post }) {
         )}
       </div>
       <div className="blog-card-body">
-        {cat && <span className="blog-chip">{cat.hi}</span>}
+        {cat && <span className="blog-chip">{hi ? cat.hi : cat.en}</span>}
         <h3>{post.title}</h3>
-        {post.title_en && <p className="blog-card-en">{post.title_en}</p>}
+        {hi && post.title_en && <p className="blog-card-en">{post.title_en}</p>}
         {post.excerpt && <p className="blog-card-excerpt">{post.excerpt}</p>}
         <span className="blog-card-meta">
-          {hindiDate(post.created_at)} • <span className="blog-read">पूरा पढ़ें →</span>
+          {hi ? hindiDate(post.created_at) : langDate(post.created_at, lang)} •{" "}
+          <span className="blog-read">{blogText(lang).readMore}</span>
+          {post.langs?.length > 1 && <span className="blog-card-langs"> • 🌐 {post.langs.length}</span>}
         </span>
       </div>
     </Link>

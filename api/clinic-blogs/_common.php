@@ -27,6 +27,14 @@ date_default_timezone_set("Asia/Kolkata");
 /* लेख की तारीख़ भारत के समय से (hosting का MySQL किसी और time zone में हो सकता है) */
 $conn->query("SET time_zone = '+05:30'");
 
+/* लेख की भाषाएँ — मूल लेख हिंदी (hi) में; बाकी अनुवाद clinic_blog_translations में */
+const BLOG_BASE_LANG = "hi";
+const BLOG_LANGS = ["hi", "en", "pa", "gu", "mr", "bn", "ta", "te", "kn", "ml", "or", "as"];
+
+function blogValidLang($lang) {
+    return in_array($lang, BLOG_LANGS, true) ? $lang : BLOG_BASE_LANG;
+}
+
 const BLOG_MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const BLOG_UPLOAD_DIR = __DIR__ . "/../../uploads/blogs/";
 const BLOG_UPLOAD_URL = "/uploads/blogs/";
@@ -55,7 +63,86 @@ function blogEnsureTable($conn) {
         http_response_code(500);
         sendJsonResponse(false, "Database Error", ["detail" => $conn->error]);
     }
+    $sql = "
+        CREATE TABLE IF NOT EXISTS clinic_blog_translations (
+            blog_id INT NOT NULL,
+            lang VARCHAR(5) NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            excerpt TEXT DEFAULT NULL,
+            content MEDIUMTEXT DEFAULT NULL,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (blog_id, lang)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    ";
+    if (!$conn->query($sql)) {
+        http_response_code(500);
+        sendJsonResponse(false, "Database Error", ["detail" => $conn->error]);
+    }
     blogRunSeeds($conn);
+}
+
+/* अनुवाद सेव करना (खाली content = अनुवाद हटाना) */
+function blogSaveTranslation($conn, $blogId, $lang, $title, $excerpt, $content, $onlyIfMissing = false) {
+    $content = blogSanitizeHtml($content);
+    if (trim(strip_tags($content)) === "" || trim($title) === "") {
+        if ($onlyIfMissing) return false;
+        $stmt = blogPrepare($conn, "DELETE FROM clinic_blog_translations WHERE blog_id = ? AND lang = ?");
+        $stmt->bind_param("is", $blogId, $lang);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+    $sql = $onlyIfMissing
+        ? "INSERT IGNORE INTO clinic_blog_translations (blog_id, lang, title, excerpt, content) VALUES (?, ?, ?, ?, ?)"
+        : "INSERT INTO clinic_blog_translations (blog_id, lang, title, excerpt, content) VALUES (?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE title = VALUES(title), excerpt = VALUES(excerpt), content = VALUES(content), updated_at = NOW()";
+    $stmt = blogPrepare($conn, $sql);
+    $stmt->bind_param("issss", $blogId, $lang, $title, $excerpt, $content);
+    $ok = $stmt->execute();
+    $stmt->close();
+    return $ok;
+}
+
+/* किन लेखों के किन भाषाओं में अनुवाद हैं: [blog_id => ["hi","en",...]] */
+function blogLangsFor($conn, $ids) {
+    $out = [];
+    $ids = array_values(array_filter(array_map("intval", $ids)));
+    foreach ($ids as $id) $out[$id] = [BLOG_BASE_LANG];
+    if (!$ids) return $out;
+    $res = $conn->query("SELECT blog_id, lang FROM clinic_blog_translations WHERE blog_id IN (" . implode(",", $ids) . ")");
+    if ($res) while ($r = $res->fetch_assoc()) $out[(int) $r["blog_id"]][] = $r["lang"];
+    foreach ($out as $id => $langs) {
+        $out[$id] = array_values(array_filter(BLOG_LANGS, fn($l) => in_array($l, $langs, true)));
+    }
+    return $out;
+}
+
+/* सूची की rows में चुनी भाषा का शीर्षक/सार (हो तो) और उपलब्ध भाषाएँ जोड़ना */
+function blogLocalizeRows($conn, $rows, $lang) {
+    $ids = array_map(fn($r) => (int) $r["id"], $rows);
+    $langs = blogLangsFor($conn, $ids);
+    $tr = [];
+    if ($lang !== BLOG_BASE_LANG && $ids) {
+        $stmt = blogPrepare($conn, "SELECT blog_id, title, excerpt FROM clinic_blog_translations WHERE lang = ? AND blog_id IN (" . implode(",", $ids) . ")");
+        $stmt->bind_param("s", $lang);
+        $stmt->execute();
+        foreach (blogFetchAll($stmt) as $t) $tr[(int) $t["blog_id"]] = $t;
+        $stmt->close();
+    }
+    $out = [];
+    foreach ($rows as $r) {
+        $row = blogRow($r);
+        $id = $row["id"];
+        $row["langs"] = $langs[$id] ?? [BLOG_BASE_LANG];
+        $row["lang"] = BLOG_BASE_LANG;
+        if (isset($tr[$id])) {
+            $row["title"] = $tr[$id]["title"];
+            $row["excerpt"] = $tr[$id]["excerpt"] ?? "";
+            $row["lang"] = $lang;
+        }
+        $out[] = $row;
+    }
+    return $out;
 }
 
 /*
@@ -74,13 +161,38 @@ function blogRunSeeds($conn) {
     if (!$res) return;
     while ($r = $res->fetch_assoc()) $done[$r["seed"]] = true;
 
+    /* पहले मूल (हिंदी) लेख, फिर अनुवाद — ताकि अनुवाद को उसका लेख मिल जाए */
+    $todo = [];
     foreach ($files as $file) {
         $seed = basename($file, ".json");
         if (isset($done[$seed])) continue;
         $p = json_decode((string) file_get_contents($file), true);
         if (!is_array($p) || empty($p["slug"]) || empty($p["title"])) continue;
+        $todo[] = [$seed, $p];
+    }
+    usort($todo, fn($a, $b) => (int) (($a[1]["lang"] ?? BLOG_BASE_LANG) !== BLOG_BASE_LANG) - (int) (($b[1]["lang"] ?? BLOG_BASE_LANG) !== BLOG_BASE_LANG));
+
+    foreach ($todo as [$seed, $p]) {
 
         $slug = blogSlugify($p["slug"]);
+        $lang = (string) ($p["lang"] ?? BLOG_BASE_LANG);
+
+        /* अनुवाद वाली फ़ाइल: {"slug", "lang", "title", "excerpt", "content"} */
+        if ($lang !== BLOG_BASE_LANG) {
+            if (!in_array($lang, BLOG_LANGS, true)) continue;
+            $stmt = blogPrepare($conn, "SELECT id FROM clinic_blogs WHERE slug = ? LIMIT 1");
+            $stmt->bind_param("s", $slug);
+            $stmt->execute();
+            $post = blogFetchAll($stmt);
+            $stmt->close();
+            if (!$post) continue; /* मूल लेख अभी नहीं है — बाद में फिर कोशिश */
+            blogSaveTranslation($conn, (int) $post[0]["id"], $lang, (string) $p["title"], (string) ($p["excerpt"] ?? ""), (string) ($p["content"] ?? ""), true);
+            $stmt = blogPrepare($conn, "INSERT IGNORE INTO clinic_blog_seeds (seed) VALUES (?)");
+            $stmt->bind_param("s", $seed);
+            $stmt->execute();
+            $stmt->close();
+            continue;
+        }
         $stmt = blogPrepare($conn, "SELECT id FROM clinic_blogs WHERE slug = ? LIMIT 1");
         $stmt->bind_param("s", $slug);
         $stmt->execute();

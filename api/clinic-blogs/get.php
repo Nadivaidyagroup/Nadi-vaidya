@@ -1,10 +1,11 @@
 <?php
-/* सार्वजनिक: एक लेख — GET ?slug= */
+/* सार्वजनिक: एक लेख — GET ?slug=&lang= (lang का अनुवाद हो तो वही, नहीं तो हिंदी) */
 require_once __DIR__ . "/_common.php";
 requireGetMethod();
 blogEnsureTable($conn);
 
 $slug = trim($_GET["slug"] ?? "");
+$lang = blogValidLang($_GET["lang"] ?? BLOG_BASE_LANG);
 if ($slug === "" || !preg_match('/^[a-z0-9-]{1,160}$/', $slug)) {
     http_response_code(404);
     blogOut(["success" => false, "message" => "Not found"]);
@@ -21,10 +22,27 @@ if (!$rows) {
     blogOut(["success" => false, "message" => "Not found"]);
 }
 $post = $rows[0];
+$id = (int) $post["id"];
+$data = blogRow($post, true);
+$data["lang"] = BLOG_BASE_LANG;
+$data["langs"] = blogLangsFor($conn, [$id])[$id];
+
+if ($lang !== BLOG_BASE_LANG) {
+    $stmt = blogPrepare($conn, "SELECT title, excerpt, content FROM clinic_blog_translations WHERE blog_id = ? AND lang = ? LIMIT 1");
+    $stmt->bind_param("is", $id, $lang);
+    $stmt->execute();
+    $t = blogFetchAll($stmt);
+    $stmt->close();
+    if ($t) {
+        $data["title"] = $t[0]["title"];
+        $data["excerpt"] = $t[0]["excerpt"] ?? "";
+        $data["content"] = $t[0]["content"] ?? "";
+        $data["lang"] = $lang;
+    }
+}
 
 /* उसी रोग के और लेख (न हों तो नए लेख) */
 $cols = "id, slug, title, title_en, category, excerpt, image, author, status, created_at, updated_at";
-$id = (int) $post["id"];
 $cat = (string) ($post["category"] ?? "");
 $stmt = blogPrepare($conn, "SELECT $cols FROM clinic_blogs WHERE status = 'published' AND id <> ? ORDER BY (category = ?) DESC, created_at DESC LIMIT 3");
 $stmt->bind_param("is", $id, $cat);
@@ -33,5 +51,5 @@ $related = blogFetchAll($stmt);
 $stmt->close();
 
 header("Cache-Control: no-cache");
-blogOut(["success" => true, "data" => blogRow($post, true), "related" => array_map("blogRow", $related)]);
+blogOut(["success" => true, "data" => $data, "related" => blogLocalizeRows($conn, $related, $data["lang"])]);
 ?>

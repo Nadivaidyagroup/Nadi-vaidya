@@ -8,6 +8,7 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import Sidebar from "../components/Sidebar";
 import { BLOG_CATEGORIES } from "../../data/blogCategories.js";
+import { BLOG_LANGS, postPath } from "../../data/blogLanguages.js";
 import "./appointments.css";
 import "./blogAdmin.css";
 
@@ -51,9 +52,13 @@ export default function BlogEditor() {
   const [loading, setLoading] = useState(Boolean(id));
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
+  const [tab, setTab] = useState("hi"); // कौन-सी भाषा edit हो रही है
+  const [translations, setTranslations] = useState({});
 
   useEffect(() => {
     setSavedId(null);
+    setTab("hi");
+    setTranslations({});
     if (!id) {
       setForm(EMPTY);
       setSlugTouched(false);
@@ -67,7 +72,9 @@ export default function BlogEditor() {
       .get("/api/clinic-blogs/admin-get.php", { params: { id }, withCredentials: true })
       .then((r) => {
         if (r.data?.success) {
-          setForm({ ...EMPTY, ...r.data.data });
+          const { translations: tr, ...rest } = r.data.data;
+          setForm({ ...EMPTY, ...rest });
+          setTranslations(tr || {});
           setSlugTouched(true);
           setPreview(r.data.data.image || "");
         } else setMsg({ type: "err", text: r.data?.message || "लेख नहीं मिला" });
@@ -171,7 +178,42 @@ export default function BlogEditor() {
             </div>
           </div>
 
-          {loading ? (
+          {!loading && (
+            <div className="ba-tabs" role="tablist">
+              {BLOG_LANGS.map((l) => (
+                <button
+                  type="button"
+                  key={l.code}
+                  className={tab === l.code ? "on" : ""}
+                  onClick={() => setTab(l.code)}
+                  disabled={l.code !== "hi" && !postId}
+                  title={l.code !== "hi" && !postId ? "पहले हिंदी लेख सेव करें" : l.en}
+                >
+                  {l.name}
+                  {l.code === "hi" ? " (मूल)" : translations[l.code] ? " ✓" : ""}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {!loading && tab !== "hi" && postId ? (
+            <TranslationPanel
+              key={tab}
+              postId={postId}
+              lang={tab}
+              slug={form.slug}
+              base={form}
+              initial={translations[tab]}
+              onSaved={(tr) =>
+                setTranslations((all) => {
+                  const next = { ...all };
+                  if (tr) next[tab] = tr;
+                  else delete next[tab];
+                  return next;
+                })
+              }
+            />
+          ) : loading ? (
             <p className="appt-empty">Loading…</p>
           ) : (
             <div className="ba-form">
@@ -306,6 +348,97 @@ export default function BlogEditor() {
             </div>
           )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+
+/* =========================================
+   एक भाषा का अनुवाद
+========================================= */
+function TranslationPanel({ postId, lang, slug, base, initial, onSaved }) {
+  const L = BLOG_LANGS.find((l) => l.code === lang);
+  const [tr, setTr] = useState({
+    title: initial?.title || "",
+    excerpt: initial?.excerpt || "",
+    content: initial?.content || "",
+  });
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState({ type: "", text: "" });
+
+  const modules = useMemo(
+    () => ({
+      toolbar: [
+        [{ header: [2, 3, false] }],
+        ["bold", "italic", "underline"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["blockquote", "link"],
+        ["clean"],
+      ],
+    }),
+    []
+  );
+
+  const save = async (remove = false) => {
+    if (remove && !window.confirm(`${L.name} का अनुवाद हटाना है?`)) return;
+    const body = remove ? { id: postId, lang, title: "", excerpt: "", content: "" } : { id: postId, lang, ...tr };
+    if (!remove && !tr.content.replace(/<[^>]*>/g, "").trim()) {
+      return setMsg({ type: "err", text: "अनुवाद का मुख्य भाग लिखें" });
+    }
+    setSaving(true);
+    setMsg({ type: "", text: "" });
+    try {
+      const r = await axios.post("/api/clinic-blogs/admin-save-translation.php", body, { withCredentials: true });
+      if (r.data?.success) {
+        if (remove) {
+          setTr({ title: "", excerpt: "", content: "" });
+          onSaved(null);
+        } else onSaved({ ...tr });
+        setMsg({ type: "ok", text: "✅ " + r.data.message });
+      } else setMsg({ type: "err", text: r.data?.message || "सेव नहीं हुआ" });
+    } catch (e) {
+      setMsg({ type: "err", text: e?.response?.status === 401 ? "Login समाप्त — दोबारा login करें" : "Server error" });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="ba-form" lang={lang}>
+      <p className="ba-tr-note">
+        <strong>{L.name} ({L.en})</strong> — हिंदी लेख “{base.title}” का अनुवाद। फ़ोटो, रोग-वर्ग और link हिंदी लेख वाले ही रहते हैं।
+        {initial && base.status === "published" && (
+          <>
+            {" "}
+            <a href={postPath(slug, lang)} target="_blank" rel="noopener noreferrer">वेबसाइट पर देखें ↗</a>
+          </>
+        )}
+      </p>
+      <label className="ba-field">
+        <span>शीर्षक ({L.name}) *</span>
+        <input value={tr.title} onChange={(e) => setTr({ ...tr, title: e.target.value })} maxLength={250} />
+      </label>
+      <label className="ba-field">
+        <span>छोटा सार ({L.name})</span>
+        <textarea rows={3} value={tr.excerpt} onChange={(e) => setTr({ ...tr, excerpt: e.target.value })} maxLength={600} />
+      </label>
+      <div className="ba-field">
+        <span>पूरा लेख ({L.name}) *</span>
+        <div className="ba-quill">
+          <ReactQuill theme="snow" value={tr.content} onChange={(v) => setTr((x) => ({ ...x, content: v }))} modules={modules} />
+        </div>
+      </div>
+      {msg.text && <div className={msg.type === "ok" ? "ba-ok" : "appt-msg"}>{msg.text}</div>}
+      <div className="ba-save">
+        <button type="button" className="appt-btn" disabled={saving} onClick={() => save(false)}>
+          {saving ? "सेव हो रहा है…" : `${L.name} अनुवाद सेव करें`}
+        </button>
+        {initial && (
+          <button type="button" className="ba-ghost" disabled={saving} onClick={() => save(true)}>
+            यह अनुवाद हटाएँ
+          </button>
+        )}
       </div>
     </div>
   );

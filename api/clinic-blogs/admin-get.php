@@ -14,5 +14,16 @@ if (!$rows) {
     http_response_code(404);
     blogOut(["success" => false, "message" => "लेख नहीं मिला"]);
 }
-blogOut(["success" => true, "data" => blogRow($rows[0], true)]);
+$data = blogRow($rows[0], true);
+
+/* सारे अनुवाद */
+$stmt = blogPrepare($conn, "SELECT lang, title, excerpt, content, updated_at FROM clinic_blog_translations WHERE blog_id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$tr = [];
+foreach (blogFetchAll($stmt) as $t) $tr[$t["lang"]] = $t;
+$stmt->close();
+$data["translations"] = (object) $tr;
+
+blogOut(["success" => true, "data" => $data]);
 ?>
