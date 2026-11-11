@@ -102,7 +102,7 @@ export default function Dashboard() {
         ] = await Promise.all([
 
           axios.get(
-            "/api/blogs/get-blogs.php"
+            "/api/clinic-blogs/admin-list.php"
           ),
 
           axios.get(
@@ -125,9 +125,9 @@ export default function Dashboard() {
 
         const blogs =
           Array.isArray(
-            blogsRes.data
+            blogsRes.data?.data
           )
-            ? blogsRes.data
+            ? blogsRes.data.data
             : [];
 
         /*

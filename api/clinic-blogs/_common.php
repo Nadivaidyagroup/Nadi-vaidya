@@ -1,0 +1,270 @@
+<?php
+/*
+=========================================
+क्लीनिक ब्लॉग (स्वास्थ्य लेख) — साझा नियम
+FILE: api/clinic-blogs/_common.php
+
+- टेबल: clinic_blogs (पहली बार अपने-आप बनती है)
+  database में पुरानी साइट की "blogs" टेबल अलग है — उसे नहीं छूते।
+- फ़ोटो: /uploads/blogs/ में (deploy इस फ़ोल्डर को नहीं छूता)
+=========================================
+*/
+
+set_exception_handler(function ($e) {
+    if (!headers_sent()) {
+        http_response_code(500);
+        header("Content-Type: application/json");
+    }
+    echo json_encode(["success" => false, "message" => "Server error", "detail" => $e->getMessage()]);
+    exit;
+});
+
+require_once __DIR__ . "/../config/security.php";
+require_once __DIR__ . "/../config/db.php";
+
+mysqli_report(MYSQLI_REPORT_OFF);
+date_default_timezone_set("Asia/Kolkata");
+/* लेख की तारीख़ भारत के समय से (hosting का MySQL किसी और time zone में हो सकता है) */
+$conn->query("SET time_zone = '+05:30'");
+
+const BLOG_MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const BLOG_UPLOAD_DIR = __DIR__ . "/../../uploads/blogs/";
+const BLOG_UPLOAD_URL = "/uploads/blogs/";
+
+function blogEnsureTable($conn) {
+    $sql = "
+        CREATE TABLE IF NOT EXISTS clinic_blogs (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            slug VARCHAR(160) NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            title_en VARCHAR(255) DEFAULT NULL,
+            category VARCHAR(60) DEFAULT NULL,
+            excerpt TEXT DEFAULT NULL,
+            content MEDIUMTEXT DEFAULT NULL,
+            image VARCHAR(255) DEFAULT NULL,
+            author VARCHAR(120) DEFAULT NULL,
+            status VARCHAR(12) NOT NULL DEFAULT 'published',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NULL DEFAULT NULL,
+            UNIQUE KEY uniq_slug (slug),
+            KEY idx_status (status, created_at),
+            KEY idx_category (category)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    ";
+    if (!$conn->query($sql)) {
+        http_response_code(500);
+        sendJsonResponse(false, "Database Error", ["detail" => $conn->error]);
+    }
+}
+
+function blogPrepare($conn, $sql) {
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        http_response_code(500);
+        sendJsonResponse(false, "Database Error", ["detail" => $conn->error]);
+    }
+    return $stmt;
+}
+
+/* get_result() हर hosting पर नहीं होता — दोनों तरीके */
+function blogFetchAll($stmt) {
+    if (method_exists($stmt, "get_result")) {
+        $res = $stmt->get_result();
+        if ($res !== false) {
+            $out = [];
+            while ($row = $res->fetch_assoc()) $out[] = $row;
+            return $out;
+        }
+    }
+    $meta = $stmt->result_metadata();
+    if (!$meta) return [];
+    $row = [];
+    $refs = [];
+    foreach ($meta->fetch_fields() as $f) {
+        $row[$f->name] = null;
+        $refs[] = &$row[$f->name];
+    }
+    $stmt->store_result();
+    $stmt->bind_result(...$refs);
+    $out = [];
+    while ($stmt->fetch()) {
+        $copy = [];
+        foreach ($row as $k => $v) $copy[$k] = $v;
+        $out[] = $copy;
+    }
+    return $out;
+}
+
+function blogOut($data) {
+    echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+/* English शब्दों से URL बनाना: "Knee Pain Ayurveda" → "knee-pain-ayurveda" */
+function blogSlugify($text) {
+    $s = strtolower(trim((string) $text));
+    $s = preg_replace('/[^a-z0-9]+/', '-', $s);
+    $s = trim($s, '-');
+    return substr($s, 0, 120);
+}
+
+/* slug पहले से है तो -2, -3 ... जोड़ दो */
+function blogUniqueSlug($conn, $slug, $ignoreId = 0) {
+    $base = $slug !== "" ? $slug : "lekh-" . date("Ymd-His");
+    $try = $base;
+    for ($i = 2; $i < 100; $i++) {
+        $stmt = blogPrepare($conn, "SELECT id FROM clinic_blogs WHERE slug = ? AND id <> ? LIMIT 1");
+        $stmt->bind_param("si", $try, $ignoreId);
+        $stmt->execute();
+        $rows = blogFetchAll($stmt);
+        $stmt->close();
+        if (!$rows) return $try;
+        $try = $base . "-" . $i;
+    }
+    return $base . "-" . time();
+}
+
+/*
+ लेख का HTML साफ़ करना — केवल सामान्य formatting रहे,
+ कोई script / onclick / iframe वगैरह नहीं।
+*/
+function blogSanitizeHtml($html) {
+    $html = (string) $html;
+    if (trim($html) === "") return "";
+
+    $allowed = [
+        "p" => [], "br" => [], "h2" => [], "h3" => [], "h4" => [],
+        "strong" => [], "b" => [], "em" => [], "i" => [], "u" => [],
+        "ul" => [], "ol" => [], "li" => ["data-list"],
+        "blockquote" => [], "a" => ["href"],
+    ];
+
+    if (!class_exists("DOMDocument")) {
+        $html = strip_tags($html, "<p><br><h2><h3><h4><strong><b><em><i><u><ul><ol><li><blockquote><a>");
+        $html = preg_replace('/\s+(on\w+|style|class|id)\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html);
+        $html = preg_replace('/href\s*=\s*("|\')\s*(javascript|data|vbscript):[^"\']*\1/i', 'href="#"', $html);
+        return $html;
+    }
+
+    $doc = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $doc->loadHTML('<?xml encoding="UTF-8"><div id="blog-root">' . $html . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
+    $root = $doc->getElementById("blog-root");
+    if (!$root) return "";
+
+    $walk = function ($node) use (&$walk, $allowed, $doc) {
+        for ($i = $node->childNodes->length - 1; $i >= 0; $i--) {
+            $child = $node->childNodes->item($i);
+            if ($child->nodeType === XML_COMMENT_NODE) {
+                $node->removeChild($child);
+                continue;
+            }
+            if ($child->nodeType !== XML_ELEMENT_NODE) continue;
+
+            $tag = strtolower($child->nodeName);
+
+            /* Quill के अंदरूनी निशान और ख़तरनाक tags — पूरा हटाओ */
+            if (in_array($tag, ["script", "style", "iframe", "object", "embed", "form", "input", "button", "textarea", "select", "img", "video", "audio", "svg", "math", "link", "meta"], true)
+                || ($tag === "span" && strpos((string) $child->getAttribute("class"), "ql-ui") !== false)) {
+                $node->removeChild($child);
+                continue;
+            }
+
+            $walk($child);
+
+            if (!isset($allowed[$tag])) {
+                /* अनजान tag (जैसे span/div) हटाओ, अंदर का text रखो */
+                while ($child->firstChild) {
+                    $node->insertBefore($child->firstChild, $child);
+                }
+                $node->removeChild($child);
+                continue;
+            }
+
+            for ($a = $child->attributes->length - 1; $a >= 0; $a--) {
+                $name = strtolower($child->attributes->item($a)->nodeName);
+                if (!in_array($name, $allowed[$tag], true)) {
+                    $child->removeAttribute($child->attributes->item($a)->nodeName);
+                }
+            }
+
+            if ($tag === "li" && $child->hasAttribute("data-list")) {
+                $v = $child->getAttribute("data-list");
+                if (!in_array($v, ["bullet", "ordered"], true)) $child->removeAttribute("data-list");
+            }
+
+            if ($tag === "a") {
+                $href = trim($child->getAttribute("href"));
+                if (!preg_match('#^(https?://|mailto:|tel:|/)#i', $href)) {
+                    $child->removeAttribute("href");
+                } else if (preg_match('#^https?://#i', $href)) {
+                    $child->setAttribute("target", "_blank");
+                    $child->setAttribute("rel", "noopener noreferrer");
+                }
+            }
+        }
+    };
+    $walk($root);
+
+    $out = "";
+    foreach ($root->childNodes as $c) $out .= $doc->saveHTML($c);
+    return trim($out);
+}
+
+/* cover फ़ोटो सेव करना (jpg/png/webp, 5 MB तक) — सफल हो तो "/uploads/blogs/xyz.jpg" */
+function blogSaveImage($file) {
+    if (!isset($file) || !is_array($file) || ($file["error"] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        return "";
+    }
+    if ($file["error"] !== UPLOAD_ERR_OK) {
+        sendJsonResponse(false, "फ़ोटो upload नहीं हुई (बहुत बड़ी हो सकती है — 5 MB तक की फ़ोटो लगाएँ)");
+    }
+    if ($file["size"] > BLOG_MAX_IMAGE_BYTES) {
+        sendJsonResponse(false, "फ़ोटो 5 MB से छोटी होनी चाहिए");
+    }
+    $info = @getimagesize($file["tmp_name"]);
+    $types = [IMAGETYPE_JPEG => "jpg", IMAGETYPE_PNG => "png", IMAGETYPE_WEBP => "webp"];
+    if (!$info || !isset($types[$info[2]])) {
+        sendJsonResponse(false, "केवल JPG, PNG या WEBP फ़ोटो लगाएँ");
+    }
+    if (!is_dir(BLOG_UPLOAD_DIR)) {
+        @mkdir(BLOG_UPLOAD_DIR, 0755, true);
+    }
+    $ht = BLOG_UPLOAD_DIR . ".htaccess";
+    if (!file_exists($ht)) {
+        @file_put_contents($ht, "Options -Indexes\n<FilesMatch \"\\.(php|phtml|phar|pl|py|cgi|sh)$\">\n  Require all denied\n</FilesMatch>\n");
+    }
+    $name = date("Ymd") . "-" . bin2hex(random_bytes(6)) . "." . $types[$info[2]];
+    if (!move_uploaded_file($file["tmp_name"], BLOG_UPLOAD_DIR . $name)) {
+        http_response_code(500);
+        sendJsonResponse(false, "फ़ोटो server पर सेव नहीं हो पाई");
+    }
+    return BLOG_UPLOAD_URL . $name;
+}
+
+function blogDeleteImage($path) {
+    if (!$path || strpos($path, BLOG_UPLOAD_URL) !== 0) return;
+    $file = BLOG_UPLOAD_DIR . basename($path);
+    if (is_file($file)) @unlink($file);
+}
+
+/* DB की row → API वाला रूप */
+function blogRow($r, $withContent = false) {
+    $out = [
+        "id" => (int) $r["id"],
+        "slug" => $r["slug"],
+        "title" => $r["title"],
+        "title_en" => $r["title_en"] ?? "",
+        "category" => $r["category"] ?? "",
+        "excerpt" => $r["excerpt"] ?? "",
+        "image" => $r["image"] ?? "",
+        "author" => $r["author"] ?? "",
+        "status" => $r["status"] ?? "published",
+        "created_at" => $r["created_at"] ?? "",
+        "updated_at" => $r["updated_at"] ?? "",
+    ];
+    if ($withContent) $out["content"] = $r["content"] ?? "";
+    return $out;
+}
+?>

@@ -21,6 +21,7 @@ const menuItems = [
   { label: "Vrindavan Clinic", path: "/vrindavan-clinic" },
   { label: "About Us", path: "/about-us" },
   { label: "Dosha Quiz", path: "/dosha-quiz" },
+  { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact-us" }
 ];
 

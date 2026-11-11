@@ -1,0 +1,45 @@
+/* src/admin/pages/blogAdmin.css — ब्लॉग admin */
+.ba-link-btn { display: inline-flex; align-items: center; text-decoration: none !important; color: #fff !important; }
+
+.ba-list { display: flex; flex-direction: column; gap: 10px; }
+.ba-row { display: flex; gap: 14px; align-items: center; background: #fff; border: 1px solid #e5e5dc; border-radius: 12px; padding: 10px 12px; flex-wrap: wrap; }
+.ba-thumb { width: 88px; height: 56px; border-radius: 8px; overflow: hidden; background: #ecebdf; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.ba-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.ba-info { flex: 1 1 260px; min-width: 0; }
+.ba-title { font-weight: 700; color: #1f2418; font-size: 16px; }
+.ba-draft { background: #fff4d6; color: #8a6200; border-radius: 999px; padding: 1px 8px; font-size: 12px; margin-left: 4px; }
+.ba-live { background: #e3f4e8; color: #1e7a42; border-radius: 999px; padding: 1px 8px; font-size: 12px; margin-left: 4px; }
+.ba-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.ba-actions a, .ba-actions button {
+  border: 1px solid #d5d5c8; background: #f5f6ef; border-radius: 8px; padding: 6px 12px; font-size: 14px; min-height: 36px;
+  color: #4f5137; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center;
+}
+.ba-actions button { color: #a3261b; }
+
+.ba-form { background: #fff; border: 1px solid #e5e5dc; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 16px; max-width: 960px; }
+.ba-field { display: flex; flex-direction: column; gap: 6px; margin: 0; }
+.ba-field > span { font-weight: 700; font-size: 14px; color: #3b3b30; }
+.ba-field small { color: #7a7a68; font-size: 12px; font-weight: 400; }
+.ba-field input, .ba-field select, .ba-field textarea {
+  border: 1px solid #d5d5c8; border-radius: 8px; padding: 10px 12px; font-size: 15px; min-height: 44px; width: 100%; margin: 0; font-family: inherit;
+}
+.ba-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 760px) { .ba-two { grid-template-columns: 1fr; } }
+.ba-slug { display: flex; align-items: center; border: 1px solid #d5d5c8; border-radius: 8px; overflow: hidden; }
+.ba-slug em { font-style: normal; background: #f5f6ef; color: #7a7a68; padding: 0 8px; font-size: 13px; align-self: stretch; display: flex; align-items: center; white-space: nowrap; }
+.ba-slug input { border: 0 !important; border-radius: 0 !important; min-width: 0; }
+
+.ba-image { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+.ba-image img, .ba-noimg { width: 240px; max-width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 10px; border: 1px solid #e5e5dc; }
+.ba-noimg { display: flex; align-items: center; justify-content: center; background: #f5f6ef; color: #9a9a8c; font-size: 14px; }
+.ba-image-btns { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; max-width: 320px; }
+.ba-file { display: inline-flex; align-items: center; cursor: pointer; margin: 0; }
+.ba-ghost { border: 1.5px solid #4f5137; background: #fff; color: #4f5137; border-radius: 10px; padding: 9px 16px; font-weight: 600; min-height: 44px; cursor: pointer; }
+.ba-ghost:disabled { opacity: .5; }
+
+.ba-quill .ql-toolbar { border-radius: 8px 8px 0 0; }
+.ba-quill .ql-container { border-radius: 0 0 8px 8px; min-height: 360px; font-size: 17px; font-family: inherit; }
+.ba-quill .ql-editor { min-height: 360px; line-height: 1.8; }
+
+.ba-ok { background: #e3f4e8; color: #1e6b3c; border-radius: 10px; padding: 10px 12px; overflow-wrap: anywhere; }
+.ba-save { display: flex; gap: 10px; flex-wrap: wrap; }

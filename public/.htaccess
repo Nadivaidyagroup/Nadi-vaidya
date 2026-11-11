@@ -21,7 +21,8 @@ AddDefaultCharset UTF-8
   RewriteRule ^nadi-pariksha-form/?$ https://nadivaidya.com/pages/nadi-pariksha-course [R=301,L]
   RewriteRule ^gallery(/.*)?$ https://nadivaidya.com/pages/gallery [R=301,L]
   RewriteRule ^team/?$ https://nadivaidya.com/pages/about-us#team [R=301,L,NE]
-  RewriteRule ^(news-blogs|blog)(/.*)?$ https://nadivaidya.com/blogs/news-blogs [R=301,L]
+  # (/blog अब क्लीनिक का अपना स्वास्थ्य ब्लॉग है — केवल पुराना /news-blogs Gurukul पर)
+  RewriteRule ^news-blogs(/.*)?$ https://nadivaidya.com/blogs/news-blogs [R=301,L]
 
   # ===== Pharmacy (nadivaidyapharmacy.com) =====
   RewriteRule ^(shop|product|products|cart|checkout)(/.*)?$ https://nadivaidyapharmacy.com/ [R=301,L]

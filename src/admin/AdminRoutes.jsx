@@ -15,8 +15,7 @@ import Dashboard from "./pages/Dashboard";
 
 /* BLOGS */
 import Blogs from "./pages/Blogs";
-import AddBlog from "./pages/AddBlog";
-import EditBlog from "./pages/EditBlog";
+import BlogEditor from "./pages/BlogEditor";
 
 /* FORMS */
 import ContactForms from "./pages/ContactForms";
@@ -93,7 +92,7 @@ export default function AdminRoutes() {
         path="/add-blog"
         element={
           <ProtectedRoute>
-            <AddBlog />
+            <BlogEditor />
           </ProtectedRoute>
         }
       />
@@ -105,7 +104,7 @@ export default function AdminRoutes() {
         path="/edit-blog/:id"
         element={
           <ProtectedRoute>
-            <EditBlog />
+            <BlogEditor />
           </ProtectedRoute>
         }
       />

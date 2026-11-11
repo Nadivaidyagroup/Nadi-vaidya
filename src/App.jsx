@@ -36,6 +36,10 @@ import ContactUs from "./pages/ContactUs.jsx";
 
 /* CLINICS */
 import ClinicPage from "./pages/ClinicPage.jsx";
+
+/* HEALTH BLOG */
+import Blog from "./pages/Blog.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
 import BookAppointment from "./pages/BookAppointment.jsx";
 
 /* DOSHA DIET PAGES */
@@ -96,6 +100,12 @@ const PAGE_SEO = {
     title: "Book Appointment | Nadi Vaidya Clinics Karnal & Vrindavan",
     description:
       "Book a Nadi Pariksha appointment online at our Karnal or Vrindavan clinic. Choose your date and 15-minute time slot. OPD 8 AM–1 PM.",
+  },
+
+  "/blog": {
+    title: "स्वास्थ्य लेख | Health Blog | Nadi Vaidya Clinic",
+    description:
+      "Ayurvedic health articles by the Nadi Vaidya family — causes, diet and Ayurvedic treatment for joint pain, digestion, skin, diabetes, thyroid and more.",
   },
 
   "/about-us": {
@@ -210,11 +220,10 @@ function getExternalRedirect(pathname) {
   }
 
   // Old News & Blogs listing and blog URLs
+  // (/blog अब क्लीनिक का अपना स्वास्थ्य ब्लॉग है)
   if (
     path === "/news-blogs" ||
-    path.startsWith("/news-blogs/") ||
-    path === "/blog" ||
-    path.startsWith("/blog/")
+    path.startsWith("/news-blogs/")
   ) {
     return GURUKUL_URLS.newsBlogs;
   }
@@ -285,7 +294,8 @@ function GlobalSEO() {
   const defaultImage = getAbsoluteUrl(seoConfig.defaultImage);
 
   // Do not output old-domain SEO metadata for redirected URLs.
-  if (isExternalRedirect) {
+  // Each blog article sets its own SEO (BlogPost.jsx).
+  if (isExternalRedirect || normalizedPath.startsWith("/blog/")) {
     return null;
   }
 
@@ -410,6 +420,17 @@ function AppRoutes() {
           <Route
             path="appointment"
             element={<BookAppointment />}
+          />
+
+          {/* HEALTH BLOG */}
+          <Route
+            path="blog"
+            element={<Blog />}
+          />
+
+          <Route
+            path="blog/:slug"
+            element={<BlogPost />}
           />
 
           {/* VATA DIET */}

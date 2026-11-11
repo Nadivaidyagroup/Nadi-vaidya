@@ -147,6 +147,11 @@ export default function Footer() {
                   Book Appointment
                 </Link>
               </li>
+              <li>
+                <Link to="/blog">
+                  Health Blog
+                </Link>
+              </li>
 
               
 
