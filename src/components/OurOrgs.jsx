@@ -33,11 +33,16 @@ export default function OurOrgs() {
             <p>नाड़ी परीक्षा कार्यशाला व कोर्स</p>
             <span>nadivaidya.com →</span>
           </a>
-          <a className="org-card" href="tel:+919992242267">
+          <a
+            className="org-card"
+            href="https://www.nadivaidyatrust.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <h3>नाड़ी वैद्य ट्रस्ट – हीलिंग हैंड्स</h3>
             <small className="org-en">Nadi Vaidya Trust – Healing Hands</small>
-            <p>अध्यक्ष: डॉ. माना यादव</p>
-            <span>📞 99922 42267</span>
+            <p>अध्यक्ष: डॉ. माना यादव · 📞 99922 42267</p>
+            <span>nadivaidyatrust.com →</span>
           </a>
         </div>
       </div>

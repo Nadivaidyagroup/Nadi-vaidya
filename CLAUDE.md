@@ -30,7 +30,7 @@ Handoff notes for Claude. Owner talks in Hindi/Hinglish; reply in simple Hindi.
 - Hindi first and bold; English smaller, not bold.
 - Therapy name spelling: "विद्धकर्म" (correct Ayurvedic name).
 - Org cards (Pharmacy / Gurukul / Trust) only on About Us. No Gallery / Dosha Diet on home or menus.
-- Sister sites: Gurukul = nadivaidya.com (Shopify), Pharmacy = nadivaidyapharmacy.com.
+- Sister sites: Gurukul = nadivaidya.com (Shopify), Pharmacy = nadivaidyapharmacy.com, Trust = nadivaidyatrust.com (repo `nadivaidya-trust`, own CLAUDE.md, auto-deploys on push to its main).
 
 ## Pending
 - Make this repo Private; confirm the developer changed the DB password (old one is in git history).
