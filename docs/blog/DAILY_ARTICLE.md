@@ -41,7 +41,8 @@
    node scripts/blog-cover.cjs --out public/blog-covers/<slug>.jpg --title "<छोटा हिंदी नाम>" \
      --sub "(<आयुर्वेदिक नाम>) — <2–4 शब्द>" --chips "क्या खाएँ,क्या न खाएँ,योग,<एक और>" --category <key>
    ```
-   फ़ोटो खोलकर देखें (हिंदी अक्षर ठीक दिख रहे हों, कुछ कटा न हो)।
+   पहले font तैयार करें (इंटरनेट पर Google Fonts न मिले तब भी चले): `npm ci && npm i --no-save @fontsource/mukta@5 @fontsource/poppins@5`।
+   फ़ोटो खोलकर देखें (हिंदी अक्षर ठीक दिख रहे हों, कुछ कटा न हो)। script "Hindi font NOT LOADED" कहे तो फ़ोटो न लगाएँ।
 8. **जाँच:** `python3 -I scripts/check-blog-seed.py <YYYY-MM-DD>-<slug>` → ✅ आना चाहिए। साथ में `npm ci && npm run build` (या पहले से node_modules हों तो केवल build) पास हो।
 9. **topics.json** में उस विषय का `"done": "<YYYY-MM-DD>"` भरें।
 10. **Commit & push to `main`** (मालिक का स्थायी निर्देश — `main` पर push = वेबसाइट deploy):

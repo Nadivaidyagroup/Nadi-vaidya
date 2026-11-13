@@ -29,8 +29,26 @@ const esc = (s) => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const line = esc(args.line || "आयुर्वेद की दृष्टि से कारण, आहार,|दिनचर्या और सावधानियाँ").split("|").join("<br>");
 const chips = (args.chips || "क्या खाएँ,क्या न खाएँ,योग,सावधानियाँ").split(",").filter(Boolean).slice(0, 5);
 
+// Font: पहले node_modules/@fontsource (npm i --no-save @fontsource/mukta@5 @fontsource/poppins@5), नहीं तो Google Fonts
+const fsDir = (pkg) => path.join(__dirname, "..", "node_modules", "@fontsource", pkg, "files");
+const localFont = (pkg, file) => (fs.existsSync(path.join(fsDir(pkg), file)) ? "file://" + path.join(fsDir(pkg), file) : null);
+const faces = [];
+for (const w of [500, 700, 800]) {
+  for (const sub of ["devanagari", "latin"]) {
+    const u = localFont("mukta", `mukta-${sub}-${w}-normal.woff2`);
+    if (u) faces.push(`@font-face{font-family:Mukta;font-weight:${w};src:url(${u}) format("woff2")}`);
+  }
+}
+for (const w of [500, 600]) {
+  const u = localFont("poppins", `poppins-latin-${w}-normal.woff2`);
+  if (u) faces.push(`@font-face{font-family:Poppins;font-weight:${w};src:url(${u}) format("woff2")}`);
+}
+const fontHead = faces.length
+  ? `<style>${faces.join("")}</style>`
+  : `<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;700;800&family=Poppins:wght@500;600&display=swap" rel="stylesheet">`;
+
 const html = `<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;700;800&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+${fontHead}
 <style>
 *{margin:0;box-sizing:border-box}
 body{width:1200px;height:750px;font-family:Mukta,sans-serif;background:#f6f1e2;overflow:hidden;position:relative}
@@ -79,6 +97,6 @@ h1 small{display:block;font-size:46px;font-weight:700;color:#727450;margin-top:8
   fs.mkdirSync(path.dirname(path.resolve(args.out)), { recursive: true });
   await p.screenshot({ path: path.resolve(args.out), type: "jpeg", quality: 86 });
   await b.close();
-  console.log(`cover: ${args.out} (Hindi font ${fontOk ? "OK" : "NOT LOADED — check internet"})`);
+  console.log(`cover: ${args.out} (Hindi font ${fontOk ? "OK" : "NOT LOADED — run: npm i --no-save @fontsource/mukta@5 @fontsource/poppins@5"})`);
   if (!fontOk) process.exit(2);
 })();
