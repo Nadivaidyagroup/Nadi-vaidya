@@ -23,6 +23,7 @@ $content = blogSanitizeHtml($_POST["content"] ?? "");
 $author = trim(strip_tags($_POST["author"] ?? ""));
 $status = ($_POST["status"] ?? "published") === "draft" ? "draft" : "published";
 $removeImage = ($_POST["remove_image"] ?? "") === "1";
+$publishAt = blogParsePublishAt($_POST["publish_at"] ?? "");
 
 if ($title === "") sendJsonResponse(false, "लेख का शीर्षक (Title) लिखें");
 if (trim(strip_tags($content)) === "") sendJsonResponse(false, "लेख का मुख्य भाग (Content) लिखें");
@@ -60,11 +61,17 @@ if ($newImage !== "") {
 }
 
 if ($old) {
-    $stmt = blogPrepare($conn, "UPDATE clinic_blogs SET slug=?, title=?, title_en=?, category=?, excerpt=?, content=?, image=?, author=?, status=?, updated_at=NOW() WHERE id=?");
-    $stmt->bind_param("sssssssssi", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status, $id);
+    if ($publishAt !== "") {
+        $stmt = blogPrepare($conn, "UPDATE clinic_blogs SET slug=?, title=?, title_en=?, category=?, excerpt=?, content=?, image=?, author=?, status=?, created_at=?, updated_at=NOW() WHERE id=?");
+        $stmt->bind_param("ssssssssssi", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status, $publishAt, $id);
+    } else {
+        $stmt = blogPrepare($conn, "UPDATE clinic_blogs SET slug=?, title=?, title_en=?, category=?, excerpt=?, content=?, image=?, author=?, status=?, updated_at=NOW() WHERE id=?");
+        $stmt->bind_param("sssssssssi", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status, $id);
+    }
 } else {
-    $stmt = blogPrepare($conn, "INSERT INTO clinic_blogs (slug, title, title_en, category, excerpt, content, image, author, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssss", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status);
+    $when = $publishAt !== "" ? $publishAt : date("Y-m-d H:i:s");
+    $stmt = blogPrepare($conn, "INSERT INTO clinic_blogs (slug, title, title_en, category, excerpt, content, image, author, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssss", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status, $when);
 }
 if (!$stmt->execute()) {
     if ($newImage) blogDeleteImage($newImage);
@@ -74,5 +81,6 @@ if (!$stmt->execute()) {
 if (!$old) $id = $stmt->insert_id;
 $stmt->close();
 
-blogOut(["success" => true, "message" => $status === "draft" ? "Draft सेव हो गया" : "लेख प्रकाशित हो गया", "id" => $id, "slug" => $slug, "status" => $status]);
+$scheduled = $publishAt !== "" && strtotime($publishAt) > time();
+blogOut(["success" => true, "message" => $status === "draft" ? "Draft सेव हो गया" : ($scheduled ? "लेख schedule हो गया" : "लेख प्रकाशित हो गया"), "id" => $id, "slug" => $slug, "status" => $status, "scheduled" => $scheduled, "publish_at" => $publishAt]);
 ?>

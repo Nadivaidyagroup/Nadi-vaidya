@@ -44,7 +44,8 @@ export default function Blogs() {
     }
   };
 
-  const published = rows.filter((r) => r.status === "published").length;
+  const published = rows.filter((r) => r.status === "published" && !r.scheduled).length;
+  const scheduled = rows.filter((r) => r.status === "published" && r.scheduled).length;
 
   return (
     <div className="admin-layout">
@@ -55,7 +56,7 @@ export default function Blogs() {
             <div>
               <h1>स्वास्थ्य लेख (Blog)</h1>
               <p>
-                {published} प्रकाशित • {rows.length - published} draft •{" "}
+                {published} प्रकाशित • {scheduled} scheduled • {rows.length - published - scheduled} draft •{" "}
                 <a href="/blog" target="_blank" rel="noopener noreferrer">वेबसाइट पर देखें ↗</a>
               </p>
             </div>
@@ -85,13 +86,15 @@ export default function Blogs() {
                       {categoryOf(r.category)?.hi || "—"} • {hindiDate(r.created_at)} • 🌐 {r.langs?.length || 1}/12 भाषाएँ{" "}
                       {r.status === "draft" ? (
                         <span className="ba-draft">Draft (वेबसाइट पर नहीं दिखेगा)</span>
+                      ) : r.scheduled ? (
+                        <span className="ba-draft">⏰ Scheduled: {String(r.created_at).slice(0, 16)}</span>
                       ) : (
                         <span className="ba-live">Published</span>
                       )}
                     </div>
                   </div>
                   <div className="ba-actions">
-                    {r.status === "published" && (
+                    {r.status === "published" && !r.scheduled && (
                       <a href={`/blog/${r.slug}`} target="_blank" rel="noopener noreferrer">देखें</a>
                     )}
                     <Link to={`/admin/edit-blog/${r.id}`}>बदलें</Link>

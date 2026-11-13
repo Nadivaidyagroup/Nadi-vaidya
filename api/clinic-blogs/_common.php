@@ -27,6 +27,16 @@ date_default_timezone_set("Asia/Kolkata");
 /* लेख की तारीख़ भारत के समय से (hosting का MySQL किसी और time zone में हो सकता है) */
 $conn->query("SET time_zone = '+05:30'");
 
+/* "2026-11-14 09:00" या "2026-11-14T09:00" → "2026-11-14 09:00:00" (भारत का समय); गलत हो तो "" */
+function blogParsePublishAt($v) {
+    $v = trim(str_replace("T", " ", (string) $v));
+    if ($v === "") return "";
+    if (preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/', $v)) $v .= ":00";
+    if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $v)) return "";
+    $ts = strtotime($v);
+    return $ts ? date("Y-m-d H:i:s", $ts) : "";
+}
+
 /* लेख की भाषाएँ — मूल लेख हिंदी (hi) में; बाकी अनुवाद clinic_blog_translations में */
 const BLOG_BASE_LANG = "hi";
 const BLOG_LANGS = ["hi", "en", "pa", "gu", "mr", "bn", "ta", "te", "kn", "ml", "or", "as"];
@@ -208,8 +218,10 @@ function blogRunSeeds($conn) {
             $image = (string) ($p["image"] ?? "");
             $author = (string) ($p["author"] ?? "");
             $status = ($p["status"] ?? "published") === "draft" ? "draft" : "published";
-            $stmt = blogPrepare($conn, "INSERT INTO clinic_blogs (slug, title, title_en, category, excerpt, content, image, author, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssssss", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status);
+            /* publish_at: इस समय (IST) से पहले लेख वेबसाइट पर नहीं दिखेगा */
+            $publishAt = blogParsePublishAt($p["publish_at"] ?? "") ?: date("Y-m-d H:i:s");
+            $stmt = blogPrepare($conn, "INSERT INTO clinic_blogs (slug, title, title_en, category, excerpt, content, image, author, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssssss", $slug, $title, $titleEn, $category, $excerpt, $content, $image, $author, $status, $publishAt);
             if (!$stmt->execute()) { $stmt->close(); continue; }
             $stmt->close();
         }
@@ -425,6 +437,7 @@ function blogRow($r, $withContent = false) {
         "author" => $r["author"] ?? "",
         "status" => $r["status"] ?? "published",
         "created_at" => $r["created_at"] ?? "",
+        "scheduled" => !empty($r["created_at"]) && strtotime($r["created_at"]) > time(),
         "updated_at" => $r["updated_at"] ?? "",
     ];
     if ($withContent) $out["content"] = $r["content"] ?? "";

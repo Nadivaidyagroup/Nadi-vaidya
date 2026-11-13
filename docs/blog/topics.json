@@ -1,0 +1,432 @@
+{
+ "_how_to": "रोज़ का लेख इसी list से ऊपर से नीचे लिखा जाता है। नया विषय जोड़ना हो तो एक पंक्ति जोड़ें; क्रम बदलना हो तो पंक्तियाँ ऊपर-नीचे करें। 'done' में प्रकाशित होने की तारीख़ अपने-आप भरती है।",
+ "topics": [
+  {
+   "slug": "diabetes-ayurveda-diet-lifestyle",
+   "category": "diabetes",
+   "hi": "मधुमेह (डायबिटीज़)",
+   "en": "Diabetes (Madhumeha)",
+   "done": "2026-11-12"
+  },
+  {
+   "slug": "acidity-ayurveda",
+   "category": "digestion",
+   "hi": "एसिडिटी व पेट की जलन (अम्लपित्त)",
+   "en": "Acidity & Heartburn (Amlapitta)",
+   "done": null
+  },
+  {
+   "slug": "knee-pain-osteoarthritis-ayurveda",
+   "category": "joint-pain",
+   "hi": "घुटनों का दर्द (संधिवात)",
+   "en": "Knee Pain & Osteoarthritis (Sandhivata)",
+   "done": null
+  },
+  {
+   "slug": "high-blood-pressure-ayurveda",
+   "category": "bp-heart",
+   "hi": "हाई ब्लड प्रेशर",
+   "en": "High Blood Pressure",
+   "done": null
+  },
+  {
+   "slug": "thyroid-hypothyroidism-ayurveda",
+   "category": "thyroid-hormones",
+   "hi": "थायरॉइड (हाइपोथायरॉइडिज़्म)",
+   "en": "Thyroid – Hypothyroidism",
+   "done": null
+  },
+  {
+   "slug": "constipation-ayurveda",
+   "category": "digestion",
+   "hi": "कब्ज़ (विबंध)",
+   "en": "Constipation",
+   "done": null
+  },
+  {
+   "slug": "hair-fall-ayurveda",
+   "category": "hair",
+   "hi": "बाल झड़ना (खालित्य)",
+   "en": "Hair Fall (Khalitya)",
+   "done": null
+  },
+  {
+   "slug": "insomnia-sleep-ayurveda",
+   "category": "stress-sleep",
+   "hi": "अनिद्रा — नींद न आना",
+   "en": "Insomnia & Poor Sleep",
+   "done": null
+  },
+  {
+   "slug": "piles-ayurveda",
+   "category": "piles",
+   "hi": "बवासीर (अर्श)",
+   "en": "Piles (Arsha)",
+   "done": null
+  },
+  {
+   "slug": "pcos-pcod-ayurveda",
+   "category": "womens-health",
+   "hi": "पीसीओएस / पीसीओडी",
+   "en": "PCOS / PCOD",
+   "done": null
+  },
+  {
+   "slug": "asthma-ayurveda",
+   "category": "respiratory-allergy",
+   "hi": "दमा (तमक श्वास)",
+   "en": "Asthma (Tamaka Shwasa)",
+   "done": null
+  },
+  {
+   "slug": "back-pain-ayurveda",
+   "category": "back-neck-pain",
+   "hi": "कमर दर्द",
+   "en": "Low Back Pain",
+   "done": null
+  },
+  {
+   "slug": "obesity-weight-loss-ayurveda",
+   "category": "weight",
+   "hi": "मोटापा (स्थौल्य)",
+   "en": "Obesity (Sthaulya)",
+   "done": null
+  },
+  {
+   "slug": "eczema-ayurveda",
+   "category": "skin",
+   "hi": "एक्ज़िमा (विचर्चिका)",
+   "en": "Eczema (Vicharchika)",
+   "done": null
+  },
+  {
+   "slug": "fatty-liver-ayurveda",
+   "category": "kidney-liver",
+   "hi": "फैटी लिवर",
+   "en": "Fatty Liver",
+   "done": null
+  },
+  {
+   "slug": "what-is-nadi-pariksha",
+   "category": "nadi-pariksha",
+   "hi": "नाड़ी परीक्षा क्या है?",
+   "en": "What is Nadi Pariksha?",
+   "done": null
+  },
+  {
+   "slug": "cervical-spondylosis-ayurveda",
+   "category": "back-neck-pain",
+   "hi": "सर्वाइकल (गर्दन) दर्द",
+   "en": "Cervical Spondylosis",
+   "done": null
+  },
+  {
+   "slug": "migraine-ayurveda",
+   "category": "stress-sleep",
+   "hi": "माइग्रेन (अर्धावभेदक)",
+   "en": "Migraine (Ardhavabhedaka)",
+   "done": null
+  },
+  {
+   "slug": "ibs-ayurveda",
+   "category": "digestion",
+   "hi": "आईबीएस (ग्रहणी)",
+   "en": "IBS (Grahani)",
+   "done": null
+  },
+  {
+   "slug": "psoriasis-ayurveda",
+   "category": "skin",
+   "hi": "सोरायसिस (किटिभ)",
+   "en": "Psoriasis",
+   "done": null
+  },
+  {
+   "slug": "allergic-rhinitis-sinus-ayurveda",
+   "category": "respiratory-allergy",
+   "hi": "एलर्जी, छींक व साइनस (प्रतिश्याय)",
+   "en": "Allergic Rhinitis & Sinusitis",
+   "done": null
+  },
+  {
+   "slug": "uric-acid-gout-ayurveda",
+   "category": "joint-pain",
+   "hi": "यूरिक एसिड व गठिया (वातरक्त)",
+   "en": "Uric Acid & Gout (Vatarakta)",
+   "done": null
+  },
+  {
+   "slug": "irregular-periods-ayurveda",
+   "category": "womens-health",
+   "hi": "अनियमित मासिक धर्म",
+   "en": "Irregular Periods",
+   "done": null
+  },
+  {
+   "slug": "kidney-stone-ayurveda",
+   "category": "kidney-liver",
+   "hi": "पथरी (अश्मरी)",
+   "en": "Kidney Stones (Ashmari)",
+   "done": null
+  },
+  {
+   "slug": "anxiety-stress-ayurveda",
+   "category": "stress-sleep",
+   "hi": "चिंता व तनाव",
+   "en": "Anxiety & Stress",
+   "done": null
+  },
+  {
+   "slug": "cholesterol-ayurveda",
+   "category": "bp-heart",
+   "hi": "कोलेस्ट्रॉल",
+   "en": "High Cholesterol",
+   "done": null
+  },
+  {
+   "slug": "dandruff-ayurveda",
+   "category": "hair",
+   "hi": "रूसी (दारुणक)",
+   "en": "Dandruff (Darunaka)",
+   "done": null
+  },
+  {
+   "slug": "sciatica-ayurveda",
+   "category": "back-neck-pain",
+   "hi": "साइटिका (गृध्रसी)",
+   "en": "Sciatica (Gridhrasi)",
+   "done": null
+  },
+  {
+   "slug": "acne-pimples-ayurveda",
+   "category": "skin",
+   "hi": "मुहाँसे (युवान पिडिका)",
+   "en": "Acne (Yuvana Pidika)",
+   "done": null
+  },
+  {
+   "slug": "dinacharya-daily-routine",
+   "category": "general",
+   "hi": "दिनचर्या — आयुर्वेद की स्वस्थ दैनिक दिनचर्या",
+   "en": "Dinacharya – Ayurvedic Daily Routine",
+   "done": null
+  },
+  {
+   "slug": "gas-bloating-ayurveda",
+   "category": "digestion",
+   "hi": "गैस व पेट फूलना (आध्मान)",
+   "en": "Gas & Bloating",
+   "done": null
+  },
+  {
+   "slug": "rheumatoid-arthritis-ayurveda",
+   "category": "joint-pain",
+   "hi": "रूमेटॉइड आर्थराइटिस (आमवात)",
+   "en": "Rheumatoid Arthritis (Amavata)",
+   "done": null
+  },
+  {
+   "slug": "fissure-fistula-ayurveda",
+   "category": "piles",
+   "hi": "फ़िशर व भगंदर",
+   "en": "Fissure & Fistula",
+   "done": null
+  },
+  {
+   "slug": "menopause-ayurveda",
+   "category": "womens-health",
+   "hi": "रजोनिवृत्ति (मेनोपॉज़)",
+   "en": "Menopause",
+   "done": null
+  },
+  {
+   "slug": "cough-cold-ayurveda",
+   "category": "respiratory-allergy",
+   "hi": "सर्दी-खाँसी",
+   "en": "Cough & Cold",
+   "done": null
+  },
+  {
+   "slug": "prediabetes-ayurveda",
+   "category": "diabetes",
+   "hi": "प्री-डायबिटीज़ — शुगर को बढ़ने से रोकें",
+   "en": "Prediabetes – Stop Sugar Rising",
+   "done": null
+  },
+  {
+   "slug": "vitiligo-ayurveda",
+   "category": "skin",
+   "hi": "सफ़ेद दाग (श्वित्र)",
+   "en": "Vitiligo (Shvitra)",
+   "done": null
+  },
+  {
+   "slug": "premature-greying-ayurveda",
+   "category": "hair",
+   "hi": "समय से पहले बाल सफ़ेद होना (पालित्य)",
+   "en": "Premature Greying (Palitya)",
+   "done": null
+  },
+  {
+   "slug": "anemia-ayurveda",
+   "category": "general",
+   "hi": "ख़ून की कमी (पांडु)",
+   "en": "Anaemia (Pandu)",
+   "done": null
+  },
+  {
+   "slug": "frozen-shoulder-ayurveda",
+   "category": "joint-pain",
+   "hi": "फ्रोज़न शोल्डर (अवबाहुक)",
+   "en": "Frozen Shoulder (Avabahuka)",
+   "done": null
+  },
+  {
+   "slug": "ritucharya-winter",
+   "category": "general",
+   "hi": "सर्दियों की ऋतुचर्या (हेमंत-शिशिर)",
+   "en": "Winter Seasonal Routine (Ritucharya)",
+   "done": null
+  },
+  {
+   "slug": "hyperthyroidism-ayurveda",
+   "category": "thyroid-hormones",
+   "hi": "हाइपरथायरॉइडिज़्म",
+   "en": "Hyperthyroidism",
+   "done": null
+  },
+  {
+   "slug": "leucorrhoea-ayurveda",
+   "category": "womens-health",
+   "hi": "सफ़ेद पानी (श्वेत प्रदर)",
+   "en": "Leucorrhoea (Shweta Pradara)",
+   "done": null
+  },
+  {
+   "slug": "heart-health-ayurveda",
+   "category": "bp-heart",
+   "hi": "दिल की सेहत",
+   "en": "Heart Health",
+   "done": null
+  },
+  {
+   "slug": "depression-ayurveda",
+   "category": "stress-sleep",
+   "hi": "उदासी व अवसाद (विषाद)",
+   "en": "Low Mood & Depression",
+   "done": null
+  },
+  {
+   "slug": "diabetic-neuropathy-ayurveda",
+   "category": "diabetes",
+   "hi": "डायबिटीज़ में पैरों की झनझनाहट",
+   "en": "Diabetic Neuropathy",
+   "done": null
+  },
+  {
+   "slug": "hepatitis-jaundice-ayurveda",
+   "category": "kidney-liver",
+   "hi": "पीलिया (कामला)",
+   "en": "Jaundice (Kamala)",
+   "done": null
+  },
+  {
+   "slug": "vata-pitta-kapha-prakriti",
+   "category": "nadi-pariksha",
+   "hi": "वात, पित्त, कफ — अपनी प्रकृति पहचानें",
+   "en": "Vata, Pitta, Kapha – Know Your Prakriti",
+   "done": null
+  },
+  {
+   "slug": "urticaria-ayurveda",
+   "category": "skin",
+   "hi": "पित्ती (शीतपित्त)",
+   "en": "Urticaria (Sheetapitta)",
+   "done": null
+  },
+  {
+   "slug": "sinusitis-headache-ayurveda",
+   "category": "respiratory-allergy",
+   "hi": "साइनस का सिरदर्द",
+   "en": "Sinus Headache",
+   "done": null
+  },
+  {
+   "slug": "belly-fat-ayurveda",
+   "category": "weight",
+   "hi": "पेट की चर्बी",
+   "en": "Belly Fat",
+   "done": null
+  },
+  {
+   "slug": "loss-of-appetite-ayurveda",
+   "category": "digestion",
+   "hi": "भूख न लगना (अग्निमांद्य)",
+   "en": "Loss of Appetite (Agnimandya)",
+   "done": null
+  },
+  {
+   "slug": "heel-pain-ayurveda",
+   "category": "joint-pain",
+   "hi": "एड़ी का दर्द (वातकंटक)",
+   "en": "Heel Pain (Vatakantaka)",
+   "done": null
+  },
+  {
+   "slug": "infertility-ayurveda",
+   "category": "womens-health",
+   "hi": "संतानहीनता — आयुर्वेदिक दृष्टि",
+   "en": "Infertility – the Ayurvedic View",
+   "done": null
+  },
+  {
+   "slug": "chronic-fatigue-ayurveda",
+   "category": "general",
+   "hi": "हमेशा थकान रहना",
+   "en": "Chronic Tiredness",
+   "done": null
+  },
+  {
+   "slug": "varicose-veins-ayurveda",
+   "category": "bp-heart",
+   "hi": "वैरिकोज़ वेन्स (सिराग्रंथि)",
+   "en": "Varicose Veins",
+   "done": null
+  },
+  {
+   "slug": "ritucharya-summer",
+   "category": "general",
+   "hi": "गर्मियों की ऋतुचर्या (ग्रीष्म)",
+   "en": "Summer Seasonal Routine (Ritucharya)",
+   "done": null
+  },
+  {
+   "slug": "mouth-ulcers-ayurveda",
+   "category": "digestion",
+   "hi": "मुँह के छाले (मुखपाक)",
+   "en": "Mouth Ulcers",
+   "done": null
+  },
+  {
+   "slug": "panchakarma-guide",
+   "category": "general",
+   "hi": "पंचकर्म — कब और क्यों",
+   "en": "Panchakarma – When and Why",
+   "done": null
+  },
+  {
+   "slug": "uti-burning-urine-ayurveda",
+   "category": "kidney-liver",
+   "hi": "पेशाब में जलन (मूत्रकृच्छ्र)",
+   "en": "Burning Urination (UTI)",
+   "done": null
+  },
+  {
+   "slug": "osteoporosis-ayurveda",
+   "category": "joint-pain",
+   "hi": "हड्डियों की कमज़ोरी (ऑस्टियोपोरोसिस)",
+   "en": "Osteoporosis",
+   "done": null
+  }
+ ]
+}

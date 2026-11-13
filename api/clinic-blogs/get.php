@@ -11,7 +11,7 @@ if ($slug === "" || !preg_match('/^[a-z0-9-]{1,160}$/', $slug)) {
     blogOut(["success" => false, "message" => "Not found"]);
 }
 
-$stmt = blogPrepare($conn, "SELECT * FROM clinic_blogs WHERE slug = ? AND status = 'published' LIMIT 1");
+$stmt = blogPrepare($conn, "SELECT * FROM clinic_blogs WHERE slug = ? AND status = 'published' AND created_at <= NOW() LIMIT 1");
 $stmt->bind_param("s", $slug);
 $stmt->execute();
 $rows = blogFetchAll($stmt);
@@ -44,7 +44,7 @@ if ($lang !== BLOG_BASE_LANG) {
 /* उसी रोग के और लेख (न हों तो नए लेख) */
 $cols = "id, slug, title, title_en, category, excerpt, image, author, status, created_at, updated_at";
 $cat = (string) ($post["category"] ?? "");
-$stmt = blogPrepare($conn, "SELECT $cols FROM clinic_blogs WHERE status = 'published' AND id <> ? ORDER BY (category = ?) DESC, created_at DESC LIMIT 3");
+$stmt = blogPrepare($conn, "SELECT $cols FROM clinic_blogs WHERE status = 'published' AND created_at <= NOW() AND id <> ? ORDER BY (category = ?) DESC, created_at DESC LIMIT 3");
 $stmt->bind_param("is", $id, $cat);
 $stmt->execute();
 $related = blogFetchAll($stmt);

@@ -22,7 +22,11 @@ const EMPTY = {
   author: "नाड़ी वैद्य डॉ. अजीत सिंह यादव",
   status: "published",
   image: "",
+  publish_at: "", // "2026-11-14T09:00" — खाली = अभी
 };
+
+// "2026-11-14 09:00:00" → "2026-11-14T09:00" (datetime-local input के लिए)
+const toLocalInput = (s) => (s ? String(s).slice(0, 16).replace(" ", "T") : "");
 
 const AUTHORS = [
   "नाड़ी वैद्य डॉ. अजीत सिंह यादव",
@@ -73,7 +77,7 @@ export default function BlogEditor() {
       .then((r) => {
         if (r.data?.success) {
           const { translations: tr, ...rest } = r.data.data;
-          setForm({ ...EMPTY, ...rest });
+          setForm({ ...EMPTY, ...rest, publish_at: toLocalInput(rest.created_at) });
           setTranslations(tr || {});
           setSlugTouched(true);
           setPreview(r.data.data.image || "");
@@ -126,7 +130,7 @@ export default function BlogEditor() {
 
     const fd = new FormData();
     if (postId) fd.append("id", postId);
-    ["title", "title_en", "slug", "category", "excerpt", "content", "author"].forEach((k) =>
+    ["title", "title_en", "slug", "category", "excerpt", "content", "author", "publish_at"].forEach((k) =>
       fd.append(k, form[k] || "")
     );
     fd.append("status", status);
@@ -143,9 +147,11 @@ export default function BlogEditor() {
         setMsg({
           type: "ok",
           text:
-            r.data.status === "published"
-              ? `✅ लेख वेबसाइट पर प्रकाशित हो गया — nadivaidya.in/blog/${r.data.slug}`
-              : "✅ Draft सेव हो गया (अभी वेबसाइट पर नहीं दिखेगा)",
+            r.data.status !== "published"
+              ? "✅ Draft सेव हो गया (अभी वेबसाइट पर नहीं दिखेगा)"
+              : r.data.scheduled
+              ? `⏰ लेख schedule हो गया — ${r.data.publish_at.slice(0, 16)} बजे वेबसाइट पर अपने-आप आ जाएगा`
+              : `✅ लेख वेबसाइट पर प्रकाशित हो गया — nadivaidya.in/blog/${r.data.slug}`,
         });
       } else setMsg({ type: "err", text: r.data?.message || "सेव नहीं हुआ" });
     } catch (e) {
@@ -282,6 +288,17 @@ export default function BlogEditor() {
                   <small>English शीर्षक से अपने-आप बनता है</small>
                 </label>
               </div>
+
+              <label className="ba-field">
+                <span>कब प्रकाशित हो (तारीख़ व समय)</span>
+                <input
+                  type="datetime-local"
+                  value={form.publish_at}
+                  onChange={(e) => set("publish_at", e.target.value)}
+                  style={{ maxWidth: 280 }}
+                />
+                <small>खाली छोड़ें = अभी। आगे की तारीख़ डालें तो लेख उसी समय (भारत का समय) अपने-आप वेबसाइट पर आएगा।</small>
+              </label>
 
               <div className="ba-field">
                 <span>मुख्य फ़ोटो (cover)</span>
