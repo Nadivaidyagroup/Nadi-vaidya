@@ -23,7 +23,7 @@ Handoff notes for Claude. Owner talks in Hindi/Hinglish; reply in simple Hindi.
 - OPD 8:00 AM–1:00 PM, both clinics. Karnal 1st–10th, Vrindavan 11th–month end (incl. 31st). All three doctors at both clinics. All therapies at both clinics.
 - Booking: 15-min slots, 1 patient per slot, no closed days; WhatsApp + call also offered.
 - Karnal: AyurVaidya Wellness, 4 R.K. Puram, Gali No. 10, Kunjpura Road, Karnal 132001 — 99922 42267 (map pin https://maps.app.goo.gl/z2YwcKdLS9Q5JnwS9).
-- Vrindavan: Vrindavan Swasthya Seva Kendra, Shop No. 5, Radha Rani Palace, near Shri Radha Teela, Parikrama Marg, Vrindavan, Mathura 281121 — 83960 66555.
+- Vrindavan: Vrindavan Swasthya Seva Kendra, Shop No. 5, Radha Rani Palace, near Shri Radha Teela, Parikrama Marg, Vrindavan, Mathura 281121 — 83960 66555 (map pin https://maps.app.goo.gl/CTKHXGrxZEyFbHdG9).
 - Doctors: Dr. Ajit Singh Yadav (BAMS), Dr. Saloni Yadav Vashist (BAMS, MD (DN)), Dr. Mohit Vashist (BAMS, MD (AM)). English spelling "Vashist"; Hindi "वशिष्ठ".
 - Line under doctors/hero: "बॉलीवुड, शीर्ष व्यापारिक घरानों एवं राजपरिवारों के परामर्शदाता".
 

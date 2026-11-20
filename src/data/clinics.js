@@ -65,6 +65,8 @@ export const clinics = [
     opdDays: "11th to month-end (incl. 31st)",
     opdDaysHi: "हर महीने 11 तारीख़ से महीने के अंत (31 तारीख़) तक",
     mapQuery: "Radha Rani Palace, Parikrama Marg, Vrindavan, Mathura 281121",
+    // क्लीनिक का असली Google Maps pin (मालिक ने भेजा)
+    mapUrl: "https://maps.app.goo.gl/CTKHXGrxZEyFbHdG9",
     logo: null,
   },
 ];
