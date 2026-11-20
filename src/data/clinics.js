@@ -64,7 +64,8 @@ export const clinics = [
     phone: "83960 66555",
     opdDays: "11th to month-end (incl. 31st)",
     opdDaysHi: "हर महीने 11 तारीख़ से महीने के अंत (31 तारीख़) तक",
-    mapQuery: "Radha Rani Palace, Parikrama Marg, Vrindavan, Mathura 281121",
+    // नाम से खोजने पर Google अपनी Business listing (Vrindavan Swasthya Seva Kendra) का pin दिखाता है
+    mapQuery: "Vrindavan Swasthya Seva Kendra, Parikrama Marg, Vrindavan, Mathura 281121",
     // क्लीनिक का असली Google Maps pin (मालिक ने भेजा)
     mapUrl: "https://maps.app.goo.gl/CTKHXGrxZEyFbHdG9",
     logo: null,
