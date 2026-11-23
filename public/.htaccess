@@ -24,6 +24,10 @@ AddDefaultCharset UTF-8
   # (/blog अब क्लीनिक का अपना स्वास्थ्य ब्लॉग है — केवल पुराना /news-blogs Gurukul पर)
   RewriteRule ^news-blogs(/.*)?$ https://nadivaidya.com/blogs/news-blogs [R=301,L]
 
+  # ===== Spam पेज (पुरानी साइट/hosting में डाले गए, जैसे /ytrmm/s1983707.html) =====
+  # हमारी साइट में ऐसे पते कभी नहीं थे — "हमेशा के लिए हटाए गए" (410) बताओ ताकि Google इन्हें हटा दे
+  RewriteRule ^[a-z]{5}/[a-z][0-9]{5,8}\.html$ - [G,L]
+
   # ===== Pharmacy (nadivaidyapharmacy.com) =====
   RewriteRule ^(shop|product|products|cart|checkout)(/.*)?$ https://nadivaidyapharmacy.com/ [R=301,L]
 

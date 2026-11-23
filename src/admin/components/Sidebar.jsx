@@ -259,6 +259,19 @@ export default function Sidebar() {
             </NavLink>
 
             <NavLink
+              to="/admin/stats"
+              className={navClass}
+              onClick={() =>
+                setOpen(false)
+              }
+            >
+              <span className="nav-icon">
+                📈
+              </span>
+              Visitors
+            </NavLink>
+
+            <NavLink
               to="/admin/contact-forms"
               className={navClass}
               onClick={() =>

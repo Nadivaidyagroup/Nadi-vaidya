@@ -37,6 +37,9 @@ import ContactUs from "./pages/ContactUs.jsx";
 /* CLINICS */
 import ClinicPage from "./pages/ClinicPage.jsx";
 
+/* VISITOR COUNT */
+import SiteStats from "./components/SiteStats.jsx";
+
 /* HEALTH BLOG */
 import Blog from "./pages/Blog.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
@@ -369,6 +372,8 @@ function AppRoutes() {
       <GlobalSEO />
 
       <ScrollToTop />
+
+      <SiteStats />
 
       <Routes>
         {/* ADMIN */}
