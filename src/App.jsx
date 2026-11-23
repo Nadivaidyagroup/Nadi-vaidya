@@ -96,7 +96,7 @@ const PAGE_SEO = {
   "/vrindavan-clinic": {
     title: "Nadi Vaidya Clinic Vrindavan | Swasthya Seva Kendra",
     description:
-      "Vrindavan Swasthya Seva Kendra, Parikrama Marg, Vrindavan — Nadi Pariksha and Ayurveda consultation. OPD 8 AM–1 PM; Nadi Vaidya OPD 11th to month-end. Call 83960 66555.",
+      "Vrindavan Swasthya Seva Kendra, Parikrama Marg, Vrindavan — Nadi Pariksha and Ayurveda consultation. OPD 8 AM–1 PM; Nadi Vaidya OPD 11th to month-end. Call 99922 42267.",
   },
 
     "/appointment": {

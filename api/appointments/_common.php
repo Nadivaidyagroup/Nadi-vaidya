@@ -107,7 +107,7 @@ $APPT_CLINICS = [
     ],
     "vrindavan" => [
         "name" => "Vrindavan Swasthya Seva Kendra, Vrindavan",
-        "phone" => "8396066555",
+        "phone" => "9992242267",
     ],
 ];
 

@@ -61,7 +61,7 @@ export const clinics = [
     locality: "Vrindavan",
     region: "Uttar Pradesh",
     postalCode: "281121",
-    phone: "83960 66555",
+    phone: "99922 42267", // मालिक: दोनों क्लीनिक का एक ही नंबर (कॉल + WhatsApp)
     opdDays: "11th to month-end (incl. 31st)",
     opdDaysHi: "हर महीने 11 तारीख़ से महीने के अंत (31 तारीख़) तक",
     // नाम से खोजने पर Google अपनी Business listing (Vrindavan Swasthya Seva Kendra) का pin दिखाता है
