@@ -1,19 +1,15 @@
 // src/data/videos.js
-// Home page के वीडियो। नया वीडियो जोड़ना हो तो सबसे ऊपर एक पंक्ति जोड़ें (सबसे नया ऊपर)।
-// driveId: Google Drive वीडियो का ID (link .../file/d/<ID>/view) — Drive में "Anyone with the link → Viewer" होना चाहिए।
-// youtubeId: YouTube पर हो तो उसका ID (driveId की जगह)।
-// blogSlug: इस विषय का स्वास्थ्य लेख (हो तो "पूरा लेख पढ़ें" बटन दिखेगा)।
+// Home page के वीडियो — सबसे नया ऊपर।
+// वीडियो अपनी वेबसाइट से चलते हैं: फ़ाइल public/videos/ में (H.264 MP4, 100 MB से छोटी — ffmpeg से compress करें),
+// poster = पहली झलक वाली फ़ोटो। Drive का link कभी नहीं (मालिक का निर्देश)।
+// YouTube पर हो तो src की जगह youtubeId दें।
 
 export const VIDEOS = [
   {
-    driveId: "1i3XV8FRfm_VGO9QZds7cVK4aVM3-_vFp",
-    titleHi: "डायबिटीज़ (मधुमेह) — नाड़ी वैद्य की सलाह",
-    titleEn: "Diabetes — advice from the Nadi Vaidya",
+    src: "/videos/diabetes-3-30-90.mp4",
+    poster: "/videos/diabetes-3-30-90.jpg",
+    titleHi: "टाइप-2 डायबिटीज़ — 3-30-90 दिन का फ़ॉर्मूला",
+    titleEn: "Type-2 Diabetes: the 3-30-90 days approach — Nadi Vaidya Dr. Ajit Singh Yadav",
     blogSlug: "diabetes-ayurveda-diet-lifestyle",
   },
 ];
-
-export const videoEmbedUrl = (v) =>
-  v.youtubeId
-    ? `https://www.youtube-nocookie.com/embed/${v.youtubeId}?rel=0`
-    : `https://drive.google.com/file/d/${v.driveId}/preview`;

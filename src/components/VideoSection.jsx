@@ -1,7 +1,7 @@
 // src/components/VideoSection.jsx — Home page: नाड़ी वैद्य के वीडियो
 
 import { Link } from "react-router-dom";
-import { VIDEOS, videoEmbedUrl } from "../data/videos.js";
+import { VIDEOS } from "../data/videos.js";
 import "./videoSection.css";
 
 export default function VideoSection() {
@@ -11,17 +11,24 @@ export default function VideoSection() {
   const Card = ({ v, big }) => (
     <figure className={`vid-card ${big ? "vid-big" : ""}`}>
       <div className="vid-frame">
-        <iframe
-          src={videoEmbedUrl(v)}
-          title={v.titleHi}
-          loading="lazy"
-          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-          allowFullScreen
-        />
+        {v.youtubeId ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${v.youtubeId}?rel=0`}
+            title={v.titleHi}
+            loading="lazy"
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <video src={v.src} poster={v.poster} controls preload="none" playsInline controlsList="nodownload">
+            आपका browser यह वीडियो नहीं चला पा रहा।
+          </video>
+        )}
       </div>
       <figcaption>
         <strong>{v.titleHi}</strong>
         {v.titleEn && <span>{v.titleEn}</span>}
+        <small className="vid-note">दवा में कोई भी बदलाव केवल डॉक्टर/वैद्य की सलाह से करें।</small>
         {v.blogSlug && (
           <Link to={`/blog/${v.blogSlug}`} className="vid-read">
             📖 इस विषय पर पूरा लेख पढ़ें →
@@ -40,7 +47,7 @@ export default function VideoSection() {
         {rest.length > 0 && (
           <div className="vid-grid">
             {rest.map((v) => (
-              <Card v={v} key={v.driveId || v.youtubeId} />
+              <Card v={v} key={v.src || v.youtubeId} />
             ))}
           </div>
         )}
