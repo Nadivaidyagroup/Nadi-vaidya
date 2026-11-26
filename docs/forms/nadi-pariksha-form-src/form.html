@@ -19,7 +19,7 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
 .col td.h{font-size:8.5pt;height:5.6mm;vertical-align:middle}
 .blk{display:inline-flex;gap:3.2mm;vertical-align:top}
 .lab{width:12.5mm}.lab td{width:12.5mm;height:5.8mm;font-size:7.5pt}
-.lab td.n{font-size:8pt;vertical-align:middle}
+.lab td.n{font-size:8pt;vertical-align:middle}.lab td.v{font-size:9pt;vertical-align:middle}
 .row{display:flex;align-items:flex-start;margin-bottom:5mm}
 .bp td{height:5.6mm;font-size:7.5pt}
 .bp td:first-child{width:12mm}
@@ -55,13 +55,13 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
  <div class="row" style="justify-content:space-between">
   <div style="display:flex;gap:12mm">
    <div class="blk">
-    <table class="lab"><tr><td class="n">Prakruti</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="lab"><tr><td class="n">Prakruti</td></tr><tr><td class="v">V</td></tr><tr><td class="v">P</td></tr><tr><td class="v">K</td></tr></table>
     <table class="col"><tr><td class="h">Index</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
     <table class="col"><tr><td class="h">Middle</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
     <table class="col"><tr><td class="h">Ring</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
    </div>
    <div class="blk">
-    <table class="lab"><tr><td class="n">Vikruti</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="lab"><tr><td class="n">Vikruti</td></tr><tr><td class="v">V</td></tr><tr><td class="v">P</td></tr><tr><td class="v">K</td></tr></table>
     <table class="col"><tr><td class="h">Index</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
     <table class="col"><tr><td class="h">Middle</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
     <table class="col"><tr><td class="h">Ring</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
@@ -77,7 +77,7 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
  <!-- row 4: Manas + Dosha -->
  <div class="row two">
   <div class="blk">
-   <table class="lab"><tr><td class="n">Manas</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+   <table class="lab"><tr><td class="n">Manas</td></tr><tr><td class="v">V</td></tr><tr><td class="v">P</td></tr><tr><td class="v">K</td></tr></table>
    <table class="col"><tr><td class="h">Index</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
    <table class="col"><tr><td class="h">Middle</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
    <table class="col"><tr><td class="h">Ring</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
@@ -122,7 +122,7 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
 <script>
 function gati(id,num,cols){
   const el=document.getElementById(id);
-  let h='<table class="lab"><tr><td class="n">Organ</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>';
+  let h='<table class="lab"><tr><td class="n">Organ</td></tr><tr><td class="v">V</td></tr><tr><td class="v">P</td></tr><tr><td class="v">K</td></tr></table>';
   for(const c of cols) h+='<table class="col"><tr><td class="h">'+c+'</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>';
   el.innerHTML=h;
 }
