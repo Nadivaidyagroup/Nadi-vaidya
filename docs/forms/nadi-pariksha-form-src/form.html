@@ -45,6 +45,9 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
 small.lv{display:block;font-size:6pt;line-height:1;color:#333;margin-top:.3mm;white-space:nowrap}
 .lab td.n{line-height:1.05}
 .sub .lbl small.lv{font-size:6.5pt;margin-top:.8mm}
+.organs{display:flex;align-items:flex-start;margin-bottom:5mm}
+.org-left,.org-right{display:flex;flex-direction:column;gap:5mm}
+.org-right{margin-left:12mm;border:.35mm solid #222;border-radius:2mm;padding:2.5mm 3mm;margin-top:-2.5mm}
 </style></head><body><div class="page">
 
 <div class="head">
@@ -78,8 +81,10 @@ small.lv{display:block;font-size:6pt;line-height:1;color:#333;margin-top:.3mm;wh
  </div>
 
  <!-- row 2 & 3: Gati -->
- <div class="row"><div class="blk" id="g3"></div></div>
- <div class="row"><div class="blk" id="g4"></div></div>
+ <div class="organs">
+  <div class="org-left"><div class="blk" id="g3a"></div><div class="blk" id="g4a"></div></div>
+  <div class="org-right"><div class="blk" id="g3b"></div><div class="blk" id="g4b"></div></div>
+ </div>
 
  <!-- row 4: Manas + Dosha -->
  <div class="row two">
@@ -132,10 +137,11 @@ small.lv{display:block;font-size:6pt;line-height:1;color:#333;margin-top:.3mm;wh
 
 <script>
 function gati(id,num,cols,level){
-  const el=document.getElementById(id);
-  let h='<table class="lab"><tr><td class="n">Organ<small class="lv">'+level+' Level</small></td></tr><tr><td class="v">V</td></tr><tr><td class="v">P</td></tr><tr><td class="v">K</td></tr></table>';
-  for(const c of cols) h+='<table class="col org"><tr><td class="h">'+c+'</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>';
-  el.innerHTML=h;
+  const col=c=>'<table class="col org"><tr><td class="h">'+c+'</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>';
+  let a='<table class="lab"><tr><td class="n">Organ<small class="lv">'+level+' Level</small></td></tr><tr><td class="v">V</td></tr><tr><td class="v">P</td></tr><tr><td class="v">K</td></tr></table>';
+  a+=cols.slice(0,3).map(col).join('');
+  document.getElementById(id+'a').innerHTML=a;
+  document.getElementById(id+'b').innerHTML=cols.slice(3).map(col).join('');
 }
 gati('g3','3',['Large Intestine','Gall Bladder','Pericardium','Small Intestine','Stomach','Urinary Bladder'],'1st');
 gati('g4','4',['Lungs','Liver','Pranvah Srotas','Heart','Klom','Kidney'],'5th');
