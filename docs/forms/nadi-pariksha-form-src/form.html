@@ -33,11 +33,13 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
 .exam .f{display:flex;align-items:flex-end;flex:1;gap:1mm;white-space:nowrap}
 .exam .f span{flex:1;border-bottom:.25mm solid #222;height:3.2mm}
 .notes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:4mm}
-.notes div{border:.35mm solid #222;border-radius:1.5mm;height:58mm}
-.foot{position:absolute;left:0;right:0;bottom:7mm;text-align:center;font-family:Arial,Helvetica,sans-serif}
-.foot .logos{display:flex;justify-content:center;align-items:center;gap:7mm}
+.notes div{border:.35mm solid #222;border-radius:1.5mm;height:53mm}
+.foot{position:absolute;left:0;right:0;bottom:5mm;text-align:center;font-family:Arial,Helvetica,sans-serif}
+.foot .logos{display:flex;justify-content:center;align-items:flex-end;gap:2mm}
 .foot img{height:19mm;display:block}
-.foot .t{font-size:10pt;margin-top:1.5mm;letter-spacing:.02em}
+.foot .t{font-size:11pt;font-weight:700;margin-top:1.5mm;letter-spacing:.02em}
+.foot figure{margin:0;width:46mm;display:flex;flex-direction:column;align-items:center}
+.foot figcaption{font-size:8.5pt;margin-top:.8mm;color:#222}
 .col.org{width:19mm}.col.org td{width:19mm}.col.org td.h{font-size:7.6pt;line-height:1.05;height:7.2mm;padding:0 .6mm;vertical-align:middle}
 #g3 .lab td.n,#g4 .lab td.n{height:7.2mm}
 </style></head><body><div class="page">
@@ -117,8 +119,12 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
 </div>
 
 <div class="foot">
-  <div class="logos"><img src="gurukul3.png"><img src="pharmacy3.png"><img src="trust.png"></div>
-  <div class="t">nadivaidya.in &nbsp;•&nbsp; nadivaidya.com &nbsp;•&nbsp; nadivaidyapharmacy.com</div>
+  <div class="logos">
+    <figure><img src="gurukul3.png"><figcaption>nadivaidya.com</figcaption></figure>
+    <figure><img src="pharmacy3.png"><figcaption>nadivaidyapharmacy.com</figcaption></figure>
+    <figure><img src="trust.png"><figcaption>nadivaidyatrust.com</figcaption></figure>
+  </div>
+  <div class="t">nadivaidya.in</div>
 </div>
 
 <script>
