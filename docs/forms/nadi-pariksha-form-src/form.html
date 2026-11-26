@@ -38,6 +38,8 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
 .foot .logos{display:flex;justify-content:center;align-items:center;gap:7mm}
 .foot img{height:19mm;display:block}
 .foot .t{font-size:10pt;margin-top:1.5mm;letter-spacing:.02em}
+.col.org{width:19mm}.col.org td{width:19mm}.col.org td.h{font-size:7.6pt;line-height:1.05;height:7.2mm;padding:0 .6mm;vertical-align:middle}
+#g3 .lab td.n,#g4 .lab td.n{height:7.2mm}
 </style></head><body><div class="page">
 
 <div class="head">
@@ -87,7 +89,7 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
    <tr><td class="lbl" style="vertical-align:middle">Dosha</td>
     <td style="height:16mm;text-align:left;position:relative"><div style="display:flex;justify-content:space-between">Pr<span>Ap</span></div><div style="display:flex;justify-content:space-between;margin-top:5mm">Ud<span>Vy</span><span>Sa</span></div></td>
     <td style="text-align:left"><div style="display:flex;justify-content:space-between">Pa<span>Sa</span></div><div style="display:flex;justify-content:space-between;margin-top:5mm">Ra<span>Bh</span><span>Al</span></div></td>
-    <td style="text-align:left"><div style="display:flex;justify-content:space-between">Kh<span>Ta</span></div><div style="display:flex;justify-content:space-between;margin-top:5mm">Av<span>Sh</span><span>Bo</span></div></td>
+    <td style="text-align:left"><div style="display:flex;justify-content:space-between">Kl<span>Ta</span></div><div style="display:flex;justify-content:space-between;margin-top:5mm">Av<span>Sh</span><span>Bo</span></div></td>
    </tr>
   </table>
  </div>
@@ -123,10 +125,10 @@ td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
 function gati(id,num,cols){
   const el=document.getElementById(id);
   let h='<table class="lab"><tr><td class="n">Organ</td></tr><tr><td class="v">V</td></tr><tr><td class="v">P</td></tr><tr><td class="v">K</td></tr></table>';
-  for(const c of cols) h+='<table class="col"><tr><td class="h">'+c+'</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>';
+  for(const c of cols) h+='<table class="col org"><tr><td class="h">'+c+'</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>';
   el.innerHTML=h;
 }
-gati('g3','3',['Li','Gb','Pe','Si','St','Ub']);
-gati('g4','4',['Lu','Liv','PS','He','Kl','Ki']);
+gati('g3','3',['Large Intestine','Gall Bladder','Pericardium','Small Intestine','Stomach','Urinary Bladder']);
+gati('g4','4',['Lungs','Liver','Pranvah Srotas','Heart','Klom','Kidney']);
 </script>
 </body></html>
