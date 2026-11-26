@@ -1,0 +1,132 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:210mm;height:297mm;font-family:"Times New Roman",Times,serif;color:#111;position:relative;background:#fff}
+.page{padding:9mm 9mm 0 9mm}
+.head{display:flex;justify-content:space-between;align-items:flex-start;height:30mm}
+.brand img{height:13mm;display:block;margin-left:-1mm}
+.brand h1{font-family:Arial,Helvetica,sans-serif;font-size:14pt;font-weight:700;margin-top:3mm}
+.clinics{display:flex;gap:4mm;align-items:center}
+.clinics img{height:27mm;display:block}
+.clinics .av{height:25mm}
+.info{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8mm;row-gap:1.6mm;font-family:Arial,Helvetica,sans-serif;font-size:9pt;margin:2mm 0 2.5mm}
+.info div{display:flex;align-items:flex-end;gap:2mm;white-space:nowrap}
+.info span{flex:1;border-bottom:.3mm solid #222;height:3.8mm}
+.box{border:.35mm solid #222;border-radius:2mm;padding:3.5mm 3mm 3.5mm 3mm;position:relative}
+table{border-collapse:collapse;table-layout:fixed}
+td{border:.3mm solid #222;font-size:8pt;text-align:center;vertical-align:top}
+.col{width:11.5mm}.col td{width:11.5mm;height:5.8mm}
+.col td.h{font-size:9pt;height:5.6mm}
+.blk{display:inline-flex;gap:3.2mm;vertical-align:top}
+.lab{width:12.5mm}.lab td{width:12.5mm;height:5.8mm;font-size:7.5pt}
+.lab td.n{font-size:8pt}
+.row{display:flex;align-items:flex-start;margin-bottom:5mm}
+.bp td{height:5.6mm;font-size:7.5pt}
+.bp td:first-child{width:12mm}
+.bp td:last-child{width:12mm}
+.sub td{font-size:8pt;padding:.8mm 1mm}
+.sub .hd{height:5mm;font-size:9pt}
+.sub .lbl{width:12mm;font-size:9pt}
+.two{display:flex;justify-content:space-between;align-items:flex-start}
+.exam{border:.3mm solid #222;width:85mm;padding:2mm 2mm 2mm 1.5mm;font-size:8.4pt;line-height:1.55}
+.exam .r{display:flex;gap:2mm}
+.exam .f{display:flex;align-items:flex-end;flex:1;gap:1mm;white-space:nowrap}
+.exam .f span{flex:1;border-bottom:.25mm solid #222;height:3.2mm}
+.notes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:4mm}
+.notes div{border:.35mm solid #222;border-radius:1.5mm;height:58mm}
+.foot{position:absolute;left:0;right:0;bottom:7mm;text-align:center;font-family:Arial,Helvetica,sans-serif}
+.foot .logos{display:flex;justify-content:center;align-items:center;gap:7mm}
+.foot img{height:19mm;display:block}
+.foot .t{font-size:10pt;margin-top:1.5mm;letter-spacing:.02em}
+</style></head><body><div class="page">
+
+<div class="head">
+  <div class="brand"><img src="nv.png"><h1>Nadi Pariksha Form</h1></div>
+  <div class="clinics"><img class="av" src="ayurvaidya.png"><img src="vrindavan.png"></div>
+</div>
+
+<div class="info">
+  <div>Name <span></span></div><div>Height <span></span></div><div>Date <span></span></div>
+  <div>Age / Sex <span></span></div><div>Weight <span></span></div><div>Address <span></span></div>
+</div>
+
+<div class="box">
+ <!-- row 1: Prakruti, Vikruti, BP -->
+ <div class="row" style="justify-content:space-between">
+  <div style="display:flex;gap:12mm">
+   <div class="blk">
+    <table class="lab"><tr><td class="n">1<br>Prakruti</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="col"><tr><td class="h">V</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="col"><tr><td class="h">P</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="col"><tr><td class="h">K</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+   </div>
+   <div class="blk">
+    <table class="lab"><tr><td class="n">2<br>Vikruti</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="col"><tr><td class="h">V</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="col"><tr><td class="h">P</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+    <table class="col"><tr><td class="h">K</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+   </div>
+  </div>
+  <table class="bp"><tr><td></td><td style="font-size:9pt">BP</td></tr><tr><td>Systole</td><td></td></tr><tr><td>Diastole</td><td></td></tr><tr><td>Pulse</td><td></td></tr></table>
+ </div>
+
+ <!-- row 2 & 3: Gati -->
+ <div class="row"><div class="blk" id="g3"></div></div>
+ <div class="row"><div class="blk" id="g4"></div></div>
+
+ <!-- row 4: Manas + Dosha -->
+ <div class="row two">
+  <div class="blk">
+   <table class="lab"><tr><td class="n">5<br>Manas</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+   <table class="col"><tr><td class="h">V</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+   <table class="col"><tr><td class="h">P</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+   <table class="col"><tr><td class="h">K</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>
+  </div>
+  <table class="sub" style="width:96mm">
+   <tr class="hd"><td class="lbl">6</td><td>V</td><td>P</td><td>K</td></tr>
+   <tr><td class="lbl" style="vertical-align:middle">Dosha</td>
+    <td style="height:16mm;text-align:left;position:relative"><div style="display:flex;justify-content:space-between">Pr<span>Ap</span></div><div style="display:flex;justify-content:space-between;margin-top:5mm">Ud<span>Vy</span><span>Sa</span></div></td>
+    <td style="text-align:left"><div style="display:flex;justify-content:space-between">Pa<span>Sa</span></div><div style="display:flex;justify-content:space-between;margin-top:5mm">Ra<span>Bh</span><span>Al</span></div></td>
+    <td style="text-align:left"><div style="display:flex;justify-content:space-between">Kh<span>Ta</span></div><div style="display:flex;justify-content:space-between;margin-top:5mm">Av<span>Sh</span><span>Bo</span></div></td>
+   </tr>
+  </table>
+ </div>
+
+ <!-- row 5: Exam + Dhatu -->
+ <div class="row two" style="margin-bottom:0">
+  <div class="exam">
+   <div class="r"><div class="f">(2) Nails <span></span></div><div class="f" style="visibility:hidden">x<span></span></div></div>
+   <div class="r"><div class="f">(3) Tongue <span></span></div><div class="f">(6) Shabda <span></span></div></div>
+   <div class="r"><div class="f">(4) Eyes <span></span></div><div class="f">(7) Urine <span></span></div></div>
+   <div class="r"><div class="f">(5) Skin <span></span></div><div class="f">(8) Stool <span></span></div></div>
+  </div>
+  <table class="sub" style="width:96mm">
+   <tr class="hd"><td class="lbl">8</td><td>V</td><td>P</td><td>K</td></tr>
+   <tr><td class="lbl" style="vertical-align:top;padding-top:1.5mm">Dhatu</td>
+    <td style="height:18mm"><div style="display:flex;justify-content:space-between">Majj<span>Asthi</span></div><div style="margin-top:7mm">Shu/Art</div></td>
+    <td><div style="display:flex;justify-content:space-between">Meda<span>Mas</span></div><div style="margin-top:7mm">Shu/Art</div></td>
+    <td><div style="display:flex;justify-content:space-between">Rak<span>Ras</span></div><div style="margin-top:7mm">Shu/Art</div></td>
+   </tr>
+  </table>
+ </div>
+</div>
+
+<div class="notes"><div></div><div></div><div></div></div>
+</div>
+
+<div class="foot">
+  <div class="logos"><img src="gurukul2.png"><img src="pharmacy2.png"><img src="trust.png"></div>
+  <div class="t">nadivaidya.in</div>
+</div>
+
+<script>
+function gati(id,num,cols){
+  const el=document.getElementById(id);
+  let h='<table class="lab"><tr><td class="n">'+num+'</td></tr><tr><td>Gati</td></tr><tr><td></td></tr><tr><td>Dosha</td></tr></table>';
+  for(const c of cols) h+='<table class="col"><tr><td class="h">'+c+'</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>';
+  el.innerHTML=h;
+}
+gati('g3','3',['Li','Gb','Pe','Si','St','Ub']);
+gati('g4','4',['Lu','Liv','PS','He','Kl','Ki']);
+</script>
+</body></html>
