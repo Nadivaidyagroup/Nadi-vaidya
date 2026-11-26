@@ -6,6 +6,13 @@
 
 export const VIDEOS = [
   {
+    src: "/videos/ahar-nidra-brahmacharya-diabetes.mp4",
+    poster: "/videos/ahar-nidra-brahmacharya-diabetes.jpg",
+    titleHi: "स्वस्थ रहने के तीन स्तंभ — आहार, निद्रा और ब्रह्मचर्य (डायबिटीज़ में भी)",
+    titleEn: "Three pillars of health — diet, sleep and brahmacharya, for diabetes and overall wellbeing — Nadi Vaidya Dr. Ajit Singh Yadav",
+    blogSlug: "diabetes-ayurveda-diet-lifestyle",
+  },
+  {
     src: "/videos/diabetes-3-30-90.mp4",
     poster: "/videos/diabetes-3-30-90.jpg",
     titleHi: "टाइप-2 डायबिटीज़ — 3-30-90 दिन का फ़ॉर्मूला",
